@@ -1,0 +1,12 @@
+# Sensibles — NUNCA en el repo (regla de la empresa: van en un .txt local)
+*.local.txt
+accesos*.txt
+secreto*.txt
+.env
+.env.*
+*.pem
+*.key
+
+# Sistema
+Thumbs.db
+.DS_Store
