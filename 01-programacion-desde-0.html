@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Programación desde 0</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+  }
+
+  /* ---------- Paleta ---------- */
+  :root {
+    --azul: #1b4f8a;
+    --azul-vivo: #1d4ed8;
+    --azul-humo: #eaf1fa;
+    --naranja: #c2410c;
+    --naranja-humo: #fff3ec;
+    --verde: #15803d;
+    --verde-humo: #edf9f0;
+    --morado: #6d28d9;
+    --morado-humo: #f4f0ff;
+    --gris: #475569;
+    --borde: #d9e1ec;
+  }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 9px 0; }
+
+  /* ---------- Portada ---------- */
+  .portada {
+    page-break-after: always; padding: 26mm 0 0 0; text-align: left;
+  }
+  .portada .serie {
+    display: inline-block; background: var(--naranja); color: #fff;
+    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  }
+  .portada h1 {
+    font-size: 46pt; letter-spacing: -.02em; margin: 26px 0 0 0; color: var(--azul);
+  }
+  .portada h1 span { color: var(--naranja); display: block; }
+  .portada .regla { height: 5px; background: var(--azul); width: 100%; margin: 26px 0 22px 0; }
+  .portada .sub {
+    font-size: 15pt; color: #33445a; max-width: 95%; line-height: 1.55; margin: 0 0 26px 0;
+  }
+  .portada .caja-que {
+    background: var(--azul-humo); border-left: 6px solid var(--azul);
+    padding: 16px 20px; border-radius: 0 6px 6px 0; font-size: 11pt;
+  }
+  .portada .caja-que strong { color: var(--azul); }
+  .portada .meta {
+    margin-top: 30px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde);
+    padding-top: 12px;
+  }
+
+  /* ---------- Bloques de concepto ---------- */
+  .bloque {
+    background: #fff; border: 1px solid var(--borde); border-left: 5px solid var(--azul);
+    border-radius: 0 7px 7px 0; padding: 13px 17px 6px 17px; margin: 16px 0;
+    page-break-inside: avoid;
+  }
+  .bloque > h3 { font-size: 13.5pt; margin-bottom: 8px; }
+  .fila { margin: 0 0 6px 0; }
+  .lbl {
+    display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: #fff; padding: 2px 8px; border-radius: 3px;
+    margin-right: 7px; vertical-align: 1.5px;
+  }
+  .lbl.teoria    { background: var(--azul); }
+  .lbl.ejemplo   { background: var(--naranja); }
+  .lbl.quehace   { background: var(--verde); }
+  .lbl.como      { background: var(--morado); }
+  .lbl.ejecuta   { background: var(--gris); }
+  .fila b.lead { color: #0f172a; }
+  .fila p { display: inline; }
+
+  /* ---------- Código ---------- */
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-radius: 4px;
+    padding: 1px 5px; color: #9a3412;
+  }
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt; line-height: 1.5;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-left: 4px solid var(--azul);
+    border-radius: 0 5px 5px 0; padding: 10px 14px; margin: 8px 0 12px 0;
+    color: #0f172a; white-space: pre-wrap; page-break-inside: avoid;
+  }
+  pre .c { color: #64748b; }
+  pre .k { color: var(--azul-vivo); font-weight: 700; }
+  pre .s { color: var(--verde); }
+  pre .n { color: var(--naranja); }
+
+  /* ---------- Capítulos ---------- */
+  .cap { page-break-before: always; }
+  .cap h2 {
+    font-size: 24pt; margin: 0 0 4px 0; letter-spacing: -.01em;
+    border-bottom: 3px solid var(--azul); padding-bottom: 10px;
+  }
+  .cap h2 .num {
+    display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--naranja); margin-bottom: 6px;
+  }
+  .cap .promesa {
+    font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0;
+    border-left: 3px solid var(--naranja); padding-left: 12px;
+  }
+  h3.sub { font-size: 14pt; margin: 15px 0 7px 0; color: var(--azul); }
+
+  /* ---------- Llamadas ---------- */
+  .nota {
+    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .aviso {
+    background: var(--verde-humo); border: 1px solid #bbf7d0; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+
+  /* ---------- Tablas ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  .grupo { page-break-inside: avoid; }
+  th {
+    background: var(--azul); color: #fff; text-align: left; padding: 8px 10px;
+    font-weight: 600; font-size: 9.5pt; letter-spacing: .04em;
+  }
+  td { border-bottom: 1px solid var(--borde); padding: 6px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  td b { color: var(--azul); }
+
+  /* ---------- Recursos ---------- */
+  .recurso {
+    border: 1px solid var(--borde); border-radius: 7px; padding: 12px 16px;
+    margin: 12px 0; page-break-inside: avoid; background: #fff;
+  }
+  .recurso h4 { font-size: 12.5pt; margin-bottom: 4px; }
+  .pills { margin: 4px 0 7px 0; }
+  .pill {
+    display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-right: 5px; letter-spacing: .04em;
+  }
+  .pill.gratis   { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+  .pill.mixto    { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+  .pill.nivel    { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+  .recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+  .recurso .porque { color: #475569; font-size: 10pt; }
+  .recurso .porque b { color: var(--naranja); }
+
+  /* ---------- Índice ---------- */
+  .indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+  .indice li {
+    padding: 7px 0; border-bottom: 1px dotted var(--borde); font-size: 11.5pt;
+    display: flex; justify-content: space-between;
+  }
+  .indice li span.t { color: var(--azul); font-weight: 600; }
+  .indice li span.d { color: #64748b; font-size: 10pt; }
+
+  .cierre {
+    background: var(--azul); color: #eaf1fa; padding: 18px 22px; border-radius: 8px;
+    margin-top: 22px; page-break-inside: avoid;
+  }
+  .cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+  .cierre p { color: #dbe7f7; font-size: 10.8pt; }
+  .cierre b { color: #ffd8b0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Muestra 1 de 5</div>
+  <h1>Programación <span>desde 0</span></h1>
+  <div class="regla"></div>
+  <p class="sub">Qué es de verdad un programa, cómo piensa una computadora y cómo escribir tus primeras instrucciones — sin jerga, sin prisa y con analogías de todos los días.</p>
+
+  <div class="caja-que">
+    <strong>Para quién es:</strong> para quien nunca escribió una línea de código y también para quien ya probó y se sintió perdido. No hace falta saber matemáticas, ni inglés perfecto, ni tener una computadora cara.<br><br>
+    <strong>Cómo está escrito:</strong> cada idea nueva se explica de la misma forma — <b>Teoría</b> (qué es), <b>Ejemplo</b> (una analogía cotidiana), <b>Qué hace</b>, <b>Cómo lo hace</b> y <b>Cómo se ejecuta</b> (el mecanismo, paso a paso).
+  </div>
+
+  <p class="meta">Material de estudio personal · Programación · Sistemas · Redes · Seguridad · Hacking<br>Los ejemplos usan Python porque se lee casi como español. Las ideas valen para cualquier lenguaje.</p>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer este material</h2>
+  <p class="promesa">Si entendés estas cinco palabras, ya podés leer el documento entero.</p>
+
+  <p>Este guide usa siempre el mismo molde para cada concepto. Así no importa si leés un capítulo entero o solo una ficha: el formato es el mismo y tu cerebro sabe dónde mirar.</p>
+
+  <table>
+    <tr><th style="width:22%">Etiqueta</th><th>Qué encontrarás</th></tr>
+    <tr><td><span class="lbl teoria">Teoría</span></td><td>La idea en una o dos oraciones. <b>Qué es</b> la cosa, explicada con palabras de todos los días.</td></tr>
+    <tr><td><span class="lbl ejemplo">Ejemplo</span></td><td>Una comparación con algo que ya conocés: una receta, una caja de zapatos, un semáforo. <b>La analogía</b> es lo que hace que algo abstracto se vuelva visible.</td></tr>
+    <tr><td><span class="lbl quehace">Qué hace</span></td><td>Su <b>trabajo</b>, en una frase. Para qué sirve en la vida real.</td></tr>
+    <tr><td><span class="lbl como">Cómo lo hace</span></td><td>El <b>mecanismo</b> por dentro: qué pasa en la memoria, en el disco, en la CPU. La parte técnica, pero igual de simple.</td></tr>
+    <tr><td><span class="lbl ejecuta">Cómo se ejecuta</span></td><td>El <b>paso a paso</b> cuando vos le das al Enter: qué línea se lee primero, qué devuelve, qué cambia.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    No leas esto como una novela. <b>Leé un concepto, y después probalo.</b> La programación no se entiende mirando: se entiende escribiendo algo chico y viendo qué pasa. Aunque sea malo el resultado, <b>un error que aparece es información, no un fracaso.</b>
+  </div>
+</section>
+
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · ¿Qué es un programa?</span><span class="d">La receta que obedece la máquina</span></li>
+    <li><span class="t">2 · Las tres herramientas</span><span class="d">Editor, intérprete y consola</span></li>
+    <li><span class="t">3 · Variables</span><span class="d">Cajitas con etiqueta</span></li>
+    <li><span class="t">4 · Tipos de datos</span><span class="d">Números, textos y verdaderos/falsos</span></li>
+    <li><span class="t">5 · Operaciones</span><span class="d">Sumar, comparar y juntar textos</span></li>
+    <li><span class="t">6 · Entrada y salida</span><span class="d">El programa te escucha y te responde</span></li>
+    <li><span class="t">7 · Condicionales</span><span class="d">Si pasa esto… si no, pasa aquello</span></li>
+    <li><span class="t">8 · Bucles</span><span class="d">Repetir sin aburrirte</span></li>
+    <li><span class="t">9 · Funciones</span><span class="d">Guarda un truco y reusalo</span></li>
+    <li><span class="t">10 · Listas</span><span class="d">Muchas cosas en una sola caja</span></li>
+    <li><span class="t">11 · Errores y depuración</span><span class="d">Cómo leer un error sin miedo</span></li>
+    <li><span class="t">12 · Los mejores cursos para seguir</span><span class="d">Gratis, de 0, y en orden</span></li>
+  </ul>
+
+  <h3 class="sub">Glosario mínimo (para volver si te atascás)</h3>
+  <table>
+    <tr><th style="width:28%">Palabra</th><th>Significado simple</th></tr>
+    <tr><td><b>Programa</b></td><td>Una lista de instrucciones escritas para la computadora.</td></tr>
+    <tr><td><b>Código</b></td><td>El texto que escribís en el editor. Sin más.</td></tr>
+    <tr><td><b>Lenguaje</b></td><td>El "idioma" en que se escribe el código: Python, JavaScript, C…</td></tr>
+    <tr><td><b>Intérprete</b></td><td>El traductor que lee tu código línea por línea y lo hace ejecutar.</td></tr>
+    <tr><td><b>Consola / terminal</b></td><td>La pantalla negra donde escribís comandos y ves las respuestas.</td></tr>
+    <tr><td><b>Memoria (RAM)</b></td><td>El espacio de trabajo temporal de la computadora. Se borra al apagarla.</td></tr>
+    <tr><td><b>Disco</b></td><td>Donde se guardan las cosas de forma permanente (tu SSD o HDD).</td></tr>
+    <tr><td><b>Bug</b></td><td>Un error en el código. Existe en todos los programas del mundo.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== CAP 1 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 1</span>¿Qué es un programa?</h2>
+  <p class="promesa">Un programa no es magia: es una lista de instrucciones ordenadas, como una receta de cocina.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es un programa?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>programa</b> es una lista de instrucciones que la computadora ejecuta <b>en orden, una por una, sin pensar</b>. La máquina no adivina ni interpreta: lee la línea 1, la hace, lee la línea 2, la hace, y así hasta el final. Si vos no escribiste algo, eso no pasa.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como una <b>receta de cocina</b>: "primero lavá los tomates, después cortalos, luego poné el aceite a calentar". Quien cocina no improvisa el orden: sigue los pasos. Si el paso 4 dice "esperá 5 minutos", espera 5 minutos. La computadora hace exactamente lo mismo: obedece.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Le dice a la computadora <b>qué hacer, en qué orden y con qué datos</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Vos escribís el código en un lenguaje humano-para-máquina (Python, JavaScript, C). Un programa llamado <b>intérprete</b> (o compilador) traduce esas palabras a la única cosa que la CPU entiende: <b>números en 0 y 1</b>. La CPU entonces ejecuta esos números a velocidad enorme — miles de millones por segundo.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando corrés el archivo, el intérprete abre tu texto y lo lee <b>de arriba hacia abajo</b>. Ejecuta la línea 1, luego la 2, luego la 3. Si llega a un <code>if</code>, decide. Si llega a una función, la ejecuta y vuelve. Cuando no queda más código, el programa termina.</div>
+  </div>
+
+  <pre><span class="c"># Tu primer programa: la computadora obedece línea por línea</span>
+<span class="k">print</span>(<span class="s">"Hola"</span>)        <span class="c"># 1. se imprime "Hola"</span>
+<span class="k">print</span>(<span class="s">"Esto pasa después"</span>)   <span class="c"># 2. recién ahora se imprime esto</span></pre>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato importante</span><br>
+    El orden importa. Si cambiás las dos líneas de lugar, cambia lo que aparece en pantalla. <b>Un programa es, antes que nada, un orden.</b>
+  </div>
+</section>
+
+<!-- ==================== CAP 2 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 2</span>Las tres herramientas</h2>
+  <p class="promesa">Para escribir código solo necesitás tres cosas: dónde escribir, cómo correrlo y dónde mirar el resultado.</p>
+
+  <div class="bloque">
+    <h3>Editor, intérprete y consola</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>editor</b> es donde escribís el código (un cuaderno). El <b>intérprete</b> es quien lo traduce y lo hace andar (el cocinero). La <b>consola</b> es donde ves lo que pasó (el plato servido). Son tres piezas distintas y muchas veces las tres viven en la misma pantalla.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en una <b>cocina</b>: la receta escrita es tu archivo de código. El cocinero es el intérprete: lee la receta y ejecuta cada paso. La mesada donde deja los platos es la consola: ahí ves el resultado o el plato que se quemó (el error).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span><b>Editor:</b> guardar tu lista de instrucciones. <b>Intérprete:</b> traducir y ejecutar. <b>Consola:</b> devolverte respuestas y errores.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Guardás el archivo (por ejemplo <code>saludo.py</code>). Al ejecutarlo, el sistema le pasa ese archivo al intérprete. El intérprete lo va leyendo y, por cada línea, hace el trabajo o imprime algo en la consola. Si una línea no se entiende, <b>se detiene ahí mismo</b> y te muestra un mensaje de error en la consola.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Abrís el editor y escribís el código. 2. Guardás el archivo. 3. En la consola escribís <code>python saludo.py</code> y apretás Enter. 4. El intérprete recorre el archivo. 5. Lo que diga <code>print()</code> aparece en la consola.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Sin instalar nada</span><br>
+    Podés empezar hoy mismo sin instalar Python: en la web de <b>freeCodeCamp</b> y <b>Codecademy</b> tenés un editor dentro del navegador. Cuando quieras algo serio, instalás <b>Python</b> (gratis) y el editor <b>VS Code</b> (gratis). Ambos funcionan en Windows, Mac y Linux.
+  </div>
+</section>
+
+<!-- ==================== CAP 3 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 3</span>Variables</h2>
+  <p class="promesa">La idea más importante de toda la programación: guardar un valor con un nombre.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es una variable?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una variable es como una <b>cajita con etiqueta</b> donde guardás un valor (un número, una palabra) para usarlo después. Le ponés un nombre ("miEdad") y adentro guardás algo (7). El programa recuerda ese valor mientras corre.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Imaginá una caja de zapatos con "miEdad" escrito en el frente, y adentro el número 7. Si mañana cumplís 8, cambiás el 7 por un 8. La caja (variable) es la misma; cambia lo de adentro (el valor).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Guarda un dato para reusarlo.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El programa reserva un espacio en la memoria (RAM) con el nombre de la variable, y ahí escribe el valor.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando el código dice <code>miEdad = 7</code>, el programa busca el espacio llamado "miEdad" y escribe 7 ahí. Cuando después lee <code>miEdad</code>, devuelve 7.</div>
+  </div>
+
+  <pre><span class="n">miEdad</span> = <span class="k">7</span>            <span class="c"># se crea la cajita "miEdad" y se guarda 7</span>
+<span class="k">print</span>(<span class="n">miEdad</span>)       <span class="c"># -> 7</span>
+<span class="n">miEdad</span> = <span class="k">8</span>            <span class="c"># misma cajita, ahora adentro hay un 8</span>
+<span class="k">print</span>(<span class="n">miEdad</span>)       <span class="c"># -> 8</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El signo = no es "igual"</span><br>
+    En matemática, <code>a = a</code> es una igualdad. En programación, <code>edad = 7</code> es una <b>orden</b>: "guardá el 7 en la caja llamada edad". Para comparar se usa <code>==</code> (dos signos), en el capítulo 7.
+  </div>
+
+  <div class="grupo">
+  <h3 class="sub">Cómo se llama una variable</h3>
+  <table>
+    <tr><th style="width:45%">Regla</th><th>Ejemplo</th></tr>
+    <tr><td>Usá letras, números y guion bajo. <b>Empieza por letra</b>.</td><td><code>mi_edad</code>, <code>total3</code></td></tr>
+    <tr><td>No puede empezar por número.</td><td><del><code>3raVariable</code></del></td></tr>
+    <tr><td>Evitá espacios y tildes; usá nombres que se entiendan.</td><td><del><code>mi edad</code></del> → <code>precio_final</code></td></tr>
+    <tr><td>Las mayúsculas cuentan: <code>Edad</code> y <code>edad</code> son dos cajitas distintas.</td><td><code>Edad</code> ≠ <code>edad</code></td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ==================== CAP 4 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 4</span>Tipos de datos</h2>
+  <p class="promesa">Las cajitas no guardan cualquier cosa: tienen un tipo, y el tipo decide qué se puede hacer.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es un tipo de dato?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>tipo de dato</b> es la categoría de lo que guardás en una variable: si es un <b>número</b>, si es un <b>texto</b>, o si es un <b>verdadero/falso</b>. El tipo define qué operaciones tiene sentido hacer con ese valor.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en las <b>cajas de un supermercado</b>: una caja de huevos no es la misma que una de leche. Si intentás "sumar" dos cajas de leche, te da una caja más grande de leche. Pero si sumás el precio de la leche con el precio del pan, tenés un total en plata. Y si preguntás "¿la caja tiene 12 huevos?", la respuesta es <b>verdadero</b> o <b>falso</b> — no es un número más.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Dice <b>qué podés hacer</b> con ese valor y evita errores tontos, como sumar un texto a un número.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Al guardar el valor, el intérprete le asigna un tipo. Internamente, un número se guarda como dígitos binarios y un texto como una secuencia de caracteres. Cada tipo tiene sus propias reglas de memoria.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando escribís <code>precio = 3.50</code>, Python guarda un <b>número decimal</b>. Cuando escribís <code>nombre = "Ana"</code>, guarda un <b>texto</b>. Si intentás <code>precio + nombre</code>, te da un error: no se puede sumar un número con una palabra.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:16%">Tipo</th><th style="width:26%">Cómo se escribe</th><th>Ejemplo</th><th>Para qué</th></tr>
+    <tr><td><b>Número entero</b></td><td><code>int</code></td><td><code>edad = 12</code></td><td>Contar: personas, platos, intentos</td></tr>
+    <tr><td><b>Número decimal</b></td><td><code>float</code></td><td><code>precio = 3.50</code></td><td>Medir: plata, kilos, temperaturas</td></tr>
+    <tr><td><b>Texto</b></td><td><code>str</code></td><td><code>nombre = "Ana"</code></td><td>Palabras, nombres, mensajes</td></tr>
+    <tr><td><b>Verdadero / Falso</b></td><td><code>bool</code></td><td><code>tiene_llave = True</code></td><td>Estados: sí/no, encendido/apagado</td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Truco para comprobar el tipo</span><br>
+    Escribí <code>print(type(precio))</code> y Python te responde <code>&lt;class 'float'&gt;</code>. Es como mirar la etiqueta de la caja por dentro.
+  </div>
+</section>
+
+<!-- ==================== CAP 5 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 5</span>Operaciones</h2>
+  <p class="promesa">Una vez que tenés datos, los manipulás: sumás, comparás y juntás.</p>
+
+  <div class="bloque">
+    <h3>Operadores aritméticos y de comparación</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los <b>operadores</b> son los símbolos que le decís al programa qué hacer con los valores: <code>+</code> suma, <code>-</code> resta, <code>*</code> multiplica, <code>/</code> divide. Y los de <b>comparación</b> devuelven siempre un verdadero o un falso: <code>&gt;</code>, <code>&lt;</code>, <code>==</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>calculadora de la cocina</b>. Tenés 3 huevos y usás 2: quedan 1 (resta). Si el precio es 10 y pagás 20, te devuelven 10 de vuelto. Y si preguntás "¿los huevos son mayores que 5?", la respuesta es <b>falso</b> — no es un número, es un juicio.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Calcula, transforma y <b>compara</b> valores para que el programa tome decisiones.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El intérprete toma los valores de las variables, aplica la operación matemática y guarda el resultado en una nueva cajita (o la sobrescribe).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Leé de izquierda a derecha: primero recoge los valores, después opera, después guarda. En <code>total = precio * cantidad</code>, busca el valor de <code>precio</code>, busca <code>cantidad</code>, multiplica y escribe el resultado en <code>total</code>.</div>
+  </div>
+
+  <pre><span class="k">print</span>(<span class="k">7</span> + <span class="k">3</span>)        <span class="c"># -> 10        suma</span>
+<span class="k">print</span>(<span class="k">10</span> - <span class="k">4</span>)       <span class="c"># -> 6         resta</span>
+<span class="k">print</span>(<span class="k">6</span> * <span class="k">2</span>)        <span class="c"># -> 12        multiplicación</span>
+<span class="k">print</span>(<span class="k">9</span> / <span class="k">2</span>)        <span class="c"># -> 4.5       división</span>
+<span class="k">print</span>(<span class="k">9</span> // <span class="k">2</span>)      <span class="c"># -> 4         división entera (sin decimales)</span>
+<span class="k">print</span>(<span class="k">7</span> == <span class="k">7</span>)      <span class="c"># -> True      ¿es igual?</span>
+<span class="k">print</span>(<span class="k">7</span> &gt; <span class="k">10</span>)      <span class="c"># -> False     ¿es mayor?</span>
+<span class="k">print</span>(<span class="s">"hola"</span> + <span class="s">" "</span> + <span class="s">"mundo"</span>)  <span class="c"># -> "hola mundo"</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Ojo con == y =</span><br>
+    <code>=</code> <b>guarda</b> un valor. <code>==</code> <b>pregunta</b> si son iguales y te responde True o False. Es el error de principiante número uno del mundo.
+  </div>
+</section>
+
+<!-- ==================== CAP 6 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 6</span>Entrada y salida</h2>
+  <p class="promesa">Hasta ahora el programa hablaba solo. Ahora empieza a escucharte.</p>
+
+  <div class="bloque">
+    <h3>print() e input()</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><code>print()</code> es la <b>salida</b>: lo que el programa muestra. <code>input()</code> es la <b>entrada</b>: el programa se frena y espera a que vos escribas algo. Junto, eso es una conversación.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>portero automático</b>. Pregunta "¿Cuál es tu nombre?" y se queda esperando (como una persona mirando). Vos tipeás "Ana" y apretás Enter. Recién ahí el programa sigue, con "Ana" guardado en una variable.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Hace que el programa <b>reciba datos del mundo real</b> y <b>responda</b> en pantalla.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span><code>input()</code> pausa la ejecución, abre una espera del sistema y captura lo que escribís. Lo devuelve como <b>texto</b> siempre, aunque escribas números. Por eso muchas veces hay que convertirlo con <code>int()</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. El programa llega a <code>input()</code> y <b>se detiene</b>. 2. Escribís y apretás Enter. 3. Lo escrito se guarda en la variable. 4. El programa continúa con la siguiente línea.</div>
+  </div>
+
+  <pre><span class="n">nombre</span> = <span class="k">input</span>(<span class="s">"¿Cómo te llamás? "</span>)
+<span class="n">edad</span>   = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"¿Cuántos años tenés? "</span>))  <span class="c"># se pasa a número</span>
+
+<span class="k">print</span>(<span class="s">"Hola,"</span>, <span class="n">nombre</span>)
+<span class="k">print</span>(<span class="s">"El año que viene vas a tener"</span>, <span class="n">edad</span> + <span class="k">1</span>)</pre>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Por qué int()</span><br>
+    <code>input()</code> devuelve siempre <b>texto</b>. Si escribís <code>12</code>, el programa guarda <code>"12"</code> (una palabra), no <code>12</code> (un número). Con <code>"12" + 1</code> explota. Con <code>int("12") + 1</code> te da 13. <b>Convertí siempre que vayas a calcular.</b>
+  </div>
+</section>
+
+<!-- ==================== CAP 7 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 7</span>Condicionales</h2>
+  <p class="promesa">Hasta acá el programa iba en línea recta. Ahora aprende a decidir.</p>
+
+  <div class="bloque">
+    <h3>if / elif / else</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>condicional</b> es una bifurcación: el programa pregunta algo (<em>¿es verdad esto?</em>) y elige uno de dos caminos. Si la respuesta es <code>True</code>, hace el bloque de arriba; si es <code>False</code>, salta al bloque de <code>else</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Un <b>semáforo</b>: si está en verde, avanzás; si está en rojo, te quedás. No hay un tercer camino. O mirá el <b>paraguas</b>: si llueve, lo llevás; si no llueve, lo dejás en casa. La condición es "¿llueve?".</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite que el programa <b>reaccione</b> a los datos en vez de hacer siempre lo mismo.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El intérprete evalúa la expresión entre paréntesis y obtiene <code>True</code> o <code>False</code>. Después entra al bloque cuya condición cumplió. Los dos bloques <b>nunca se ejecutan a la vez</b>: siempre uno solo.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Lee <code>if</code> → evalúa → si es verdadero, ejecuta las líneas indentadas (las que están sangradas) y <b>salta al final</b>. Si es falsa, ignora ese bloque y prueba el <code>elif</code> siguiente; si ninguno cumple, ejecuta el <code>else</code>.</div>
+  </div>
+
+  <pre><span class="n">edad</span> = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"¿Cuántos años tenés? "</span>))
+
+<span class="k">if</span> <span class="n">edad</span> &gt;= <span class="k">18</span>:
+    <span class="k">print</span>(<span class="s">"Podés votar y manejar."</span>)
+<span class="k">elif</span> <span class="n">edad</span> &gt;= <span class="k">16</span>:
+    <span class="k">print</span>(<span class="s">"Ya casi sos mayor."</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Todavía sos menor."</span>)
+
+<span class="k">print</span>(<span class="s">"Esto se imprime siempre, pase lo que pase."</span>)</pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Los dos puntos y la sangría</span><br>
+    <code>if</code> termina en <b>dos puntos</b>, y las líneas de adentro van <b>sangradas 4 espacios</b>. Esa sangría <b>no es decorativa</b>: le dice al programa qué líneas pertenecen al condicional. Quitar la sangría cambia el significado del programa.
+  </div>
+</section>
+
+<!-- ==================== CAP 8 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 8</span>Bucles</h2>
+  <p class="promesa">Repetir 100 veces la misma línea es de máquinas. Dejá que la máquina lo haga.</p>
+
+  <div class="bloque">
+    <h3>for y while</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>bucle</b> hace repetir un bloque de código. <code>for</code> repite <b>unas cuantas veces, contadas</b>. <code>while</code> repite <b>mientras algo sea verdadero</b>, sin saber de antemano cuántas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>Lavar 5 platos</b>: sabés cuántos hay → es un <b>for</b>. <b>Correr hasta que llueva</b>: no sabés cuándo va a llover, pero mientras no llueva seguís → es un <b>while</b>. También podés pensarlo como el <b>disco rayado</b> que repite la misma canción: el contenido se repite, pero la pista sigue avanzando.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Hace en una línea lo que a mano llevaría cincuenta.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El intérprete mantiene un <b>contador</b> interno. En cada vuelta ejecuta el bloque, actualiza el contador y vuelve a evaluar. Cuando la condición se cumple (o el contador se acaba), <b>sale del bucle</b> y sigue con lo que venga después.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En <code>for i in range(3)</code>: vuelta 1 con <code>i=0</code>, vuelta 2 con <code>i=1</code>, vuelta 3 con <code>i=2</code>. Al terminar, <code>i</code> deja de avanzar y el programa continúa en la línea siguiente al bucle.</div>
+  </div>
+
+  <pre><span class="c"># for: repite una cantidad conocida</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="k">range</span>(<span class="k">3</span>):
+    <span class="k">print</span>(<span class="s">"Lavando el plato"</span>, <span class="n">i</span> + <span class="k">1</span>)
+<span class="c"># -> Lavando el plato 1</span>
+<span class="c"># -> Lavando el plato 2</span>
+<span class="c"># -> Lavando el plato 3</span>
+
+<span class="c"># while: repite mientras la condición siga verdadera</span>
+<span class="n">vidas</span> = <span class="k">3</span>
+<span class="k">while</span> <span class="n">vidas</span> &gt; <span class="k">0</span>:
+    <span class="k">print</span>(<span class="s">"¡Aún podés seguir!"</span>)
+    <span class="n">vidas</span> = <span class="n">vidas</span> - <span class="k">1</span>
+<span class="k">print</span>(<span class="s">"Se acabaron las vidas."</span>)</pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El bucle infinito</span><br>
+    Si en un <code>while</code> la condición <b>nunca se vuelve falsa</b>, el programa se queda repitiendo para siempre y hay que cerrarlo a la fuerza. Es el error clásico del principiante. Siempre asegurate de que algo dentro del bucle <b>cambie el valor</b> que se está evaluando.
+  </div>
+</section>
+
+<!-- ==================== CAP 9 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 9</span>Funciones</h2>
+  <p class="promesa">Escribir lo mismo cinco veces es trabajo perdido. Escribilo una vez y llámalo.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es una función?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>función</b> es un bloque con nombre que guarda un trabajo hecho. Vos la definís una vez, y después podés ejecutarla tantas veces como quieras escribiendo solo su nombre. Puede recibir <b>datos de entrada</b> (parámetros) y <b>devolver un resultado</b> (<code>return</code>).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en un <b>microondas con botones</b>: no escribís las instrucciones cada vez que calentás algo. Apretás "Pochas 2 min" y la máquina ejecuta su rutina guardada. También es como <b>una receta empaquetada</b>: "hacer puré" es un paso que en realidad escribe diez. Cuando la receta dice "agregar puré", no repite esos diez pasos: llama a la función.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Agrupa código repetido <b>bajo un nombre</b> para reusarlo y para que el programa se lea como oraciones.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Al definirla, el intérprete <b>no la ejecuta</b>: solo la guarda en memoria con su nombre. Recién cuando la llamás, salta a esa línea, ejecuta todo el bloque y vuelve al punto exacto donde estaba.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Llegás a <code>saludar("Ana")</code>. 2. El programa guarda el lugar donde estaba. 3. Salta a la función y reemplaza <code>nombre</code> por <code>"Ana"</code>. 4. Ejecuta las líneas de adentro. 5. Llega a <code>return</code> o al final y <b>vuelve</b> al punto guardado, con el resultado en la mano.</div>
+  </div>
+
+  <pre><span class="k">def</span> <span class="s">saludar</span>(<span class="n">nombre</span>):                 <span class="c"># 1. definición</span>
+    <span class="k">print</span>(<span class="s">"Hola,"</span>, <span class="n">nombre</span>)
+
+<span class="k">def</span> <span class="s">doble</span>(<span class="n">numero</span>):                  <span class="c"># devuelve un valor</span>
+    <span class="k">return</span> <span class="n">numero</span> * <span class="k">2</span>
+
+<span class="n">resultado</span> = <span class="s">doble</span>(<span class="k">5</span>)                <span class="c"># 2. llamada: resultado = 10</span>
+<span class="s">saludar</span>(<span class="s">"Ana"</span>)                     <span class="c"># -> Hola, Ana</span>
+<span class="s">saludar</span>(<span class="s">"Luis"</span>)                    <span class="c"># -> Hola, Luis  (se reusa)</span></pre>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">def vs. llamar</span><br>
+    <code>def doble(...)</code> solo <b>guarda</b> la función. <code>doble(5)</code> <b>la ejecuta</b>. Es la diferencia entre tener una receta en el cajón y ponerla a cocinar.
+  </div>
+</section>
+
+<!-- ==================== CAP 10 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 10</span>Listas</h2>
+  <p class="promesa">Una caja por persona no escala. Una lista guarda todo ordenado en un solo lugar.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es una lista?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>lista</b> es una variable que guarda <b>muchos valores ordenados</b>, uno detrás del otro. Cada posición tiene un <b>número de orden</b> (el índice), y podés agregar, quitar o cambiar elementos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>cajón con cajitas numeradas</b>: la cajita 0 tiene "pan", la 1 "leche", la 2 "huevos". También es como una <b>fila de personas</b>: para encontrar a la tercera, contás desde el principio. Ojo: en programación <b>se empieza a contar en 0</b>, así que la primera persona es la 0.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Agrupa datos relacionados para <b>recorrerlos, buscarlos y modificarlos</b> con un bucle.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El programa reserva un bloque contiguo en memoria y guarda ahí todos los valores, más la cuenta de cuántos hay. Los índices son simplemente la posición dentro de ese bloque.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En <code>frutas[1] = "pera"</code>, el programa salta a la posición 1 de la lista y escribe "pera" ahí. En <code>for f in frutas</code>, recorre la lista de principio a fin, dejando en <code>f</code> cada elemento en cada vuelta.</div>
+  </div>
+
+  <pre><span class="n">frutas</span> = [<span class="s">"manzana"</span>, <span class="s">"banana"</span>, <span class="s">"cereza"</span>]
+
+<span class="k">print</span>(<span class="n">frutas</span>[<span class="k">0</span>])      <span class="c"># -> manzana   (el 0 es el primero)</span>
+<span class="k">print</span>(<span class="n">frutas</span>[<span class="k">2</span>])      <span class="c"># -> cereza    (el 2 es el tercero)</span>
+
+<span class="n">frutas</span>.<span class="s">append</span>(<span class="s">"pera"</span>)   <span class="c"># agrega al final</span>
+<span class="k">print</span>(<span class="k">len</span>(<span class="n">frutas</span>))       <span class="c"># -> 4  (cuántos elementos hay)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="k">in</span> <span class="n">frutas</span>:
+    <span class="k">print</span>(<span class="s">"Me gusta"</span>, <span class="n">f</span>)</pre>
+</section>
+
+<!-- ==================== CAP 11 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 11</span>Errores y depuración</h2>
+  <p class="promesa">El error no es el final del camino: es la computadora explicándote exactamente dónde te equivocaste.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es un bug?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>bug</b> es cualquier cosa que hace que el programa no haga lo que esperabas. Hay dos familias: los <b>errores de sintaxis</b> (escribiste mal la oración y el programa ni arranca) y los <b>errores lógicos</b> (corre perfecto, pero da un resultado equivocado).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como una <b>receta con una falta</b>. Si dice "azúcar" y vos no tenés, te das cuenta al toque (error de sintaxis: no se puede cocinar). Pero si dice "2 cucharadas de sal" cuando debía ser "2 de azúcar", el pastel sale — y te das cuenta al probarlo (error lógico: el más peligroso).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te dice <b>dónde</b> y <b>por qué</b> falló, para que lo arregles.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El intérprete valida cada línea a medida que la lee. Si detecta algo que no puede traducir, detiene la ejecución, muestra el tipo de error, la línea exacta y una descripción.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Leé <b>el primer error</b>, no el último. 2. Mirá el número de línea. 3. Andá a esa línea en el editor. 4. Arreglá una cosa. 5. Volvé a correr. Repetí: casi siempre hay que corregir de a uno.</div>
+  </div>
+
+  <div class="grupo">
+  <table>
+    <tr><th style="width:34%">Error</th><th style="width:32%">Qué significa</th><th>Cómo se arregla</th></tr>
+    <tr><td><b>SyntaxError</b></td><td>Falta una coma, un paréntesis o los dos puntos</td><td>Revisá la línea indicada y los dos puntos <code>:</code></td></tr>
+    <tr><td><b>NameError</b></td><td>No existe esa variable</td><td>Revisá el nombre: ¿está mal escrita o no la creaste?</td></tr>
+    <tr><td><b>TypeError</b></td><td>Mezclaste tipos (número con texto)</td><td>Convertí con <code>int()</code> o <code>str()</code></td></tr>
+    <tr><td><b>IndexError</b></td><td>Pediste una posición que no existe en la lista</td><td>Usá <code>len(lista) - 1</code> como máximo</td></tr>
+    <tr><td><b>IndentationError</b></td><td>La sangría está mal</td><td>Alineá las líneas del bloque con espacios iguales</td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Técnica del print()</span><br>
+    Cuando el resultado sale mal pero no sabés por qué, <b>imprimí el valor a mitad de camino</b>: <code>print(precio, cantidad)</code>. Ver el valor real despeja el 80 % de las dudas. Los programadores profesionales lo hacen todos los días.
+  </div>
+  </div>
+</section>
+
+<!-- ==================== CAP 12 ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 12</span>Los mejores cursos para seguir desde 0</h2>
+  <p class="promesa">Este PDF es la base. Para avanzar, estos son los recursos mejor evaluados del mundo — y todos gratis o casi gratis.</p>
+
+  <p>Elegí los cursos que <b>están hechos específicamente para empezar de cero</b>, que son gratuitos, que tienen práctica real (no solo videos) y que tienen años de comunidad detrás. No hace falta hacerlos todos: elegí <b>uno principal</b> y usá los demás como apoyo.</p>
+
+  <div class="recurso">
+    <h4>The Odin Project</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">DE 0 A EMPLEO</span><span class="pill nivel">INGLÉS</span></div>
+    <p><b>Qué es:</b> un plan de estudios completo de desarrollo web (HTML, CSS, JavaScript, bases de datos) organizado en dos rutas, hecho y mantenido por una comunidad open source.</p>
+    <p class="porque"><b>Por qué es de los mejores:</b> no te lleva de la mano con copiar y pegar: te <b>obliga a resolver proyectos tú solo</b>, que es como se aprende de verdad. Tiene comunidad en Discord para cuando te trabás. <b>theodinproject.com</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>freeCodeCamp</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">DE 0</span><span class="pill nivel">CERTIFICADOS GRATIS</span></div>
+    <p><b>Qué es:</b> una organización sin fines de lucro con decenas de cursos y certificaciones gratis: diseño web, JavaScript, Python, bases de datos y más, todo en el navegador.</p>
+    <p class="porque"><b>Por qué es de los mejores:</b> es el punto de partida más cómodo si nunca tocaste código: <b>escribís el código desde el minuto uno</b>, sin instalar nada, y avanzás a tu ritmo con ejercicios corregidos automáticamente. <b>freecodecamp.org</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>CS50 — Introducción a la Informática (Harvard)</h4>
+    <div class="pills"><span class="pill gratis">GRATIS (OpenCourseWare)</span><span class="pill nivel">INICIAL–INTERMEDIO</span><span class="pill nivel">CON SUBTÍTULOS EN ESPAÑOL</span></div>
+    <p><b>Qué es:</b> el curso introductorio de Harvard, uno de los más vistos del mundo. Arranca en Scratch y sigue con C, algoritmos, memoria, Python, SQL y web. 11 semanas.</p>
+    <p class="porque"><b>Por qué es de los mejores:</b> no enseña "un lenguaje", enseña <b>a pensar como programador</b> y a entender qué hace la computadora por dentro. Eso es exactamente lo que después necesitás para sistemas, redes y seguridad. <b>cs50.harvard.edu/x</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>MOOC.fi — Universidad de Helsinki</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">DE 0</span><span class="pill nivel">PYTHON Y JAVA</span></div>
+    <p><b>Qué es:</b> los cursos abiertos de la Universidad de Helsinki (Finlandia), entre ellos el <em>Python Programming MOOC</em>, considerado uno de los mejores cursos universitarios de Python del mundo.</p>
+    <p class="porque"><b>Por qué es de los mejores:</b> es <b>universidad de verdad, gratis</b>, con cientos de ejercicios corregidos automáticamente. Si querés rigor y base sólida, este es el camino. <b>mooc.fi</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>Codecademy</h4>
+    <div class="pills"><span class="pill mixto">GRATIS + PLAN PRO DE PAGO</span><span class="pill nivel">DE 0</span><span class="pill nivel">INTERACTIVO</span></div>
+    <p><b>Qué es:</b> plataforma de cursos interactivos donde escribís código y ves el resultado al lado, en el navegador.</p>
+    <p class="porque"><b>Por qué sirve:</b> es la puerta de entrada más fácil para probar si esto te gusta, porque <b>no tenés que instalar nada</b>. Lo mejor está en el plan gratuito; el Pro es opcional. <b>codecademy.com</b></p>
+  </div>
+
+  <h3 class="sub">¿Cuál elegí, si son todos buenos?</h3>
+  <table>
+    <tr><th style="width:30%">Tu situación</th><th>Empezá por acá</th></tr>
+    <tr><td>"Nunca toqué código, quiero ver si me gusta"</td><td><b>freeCodeCamp</b> o <b>Codecademy</b> — en el navegador, sin instalar nada</td></tr>
+    <tr><td>"Quiero aprender en serio y con profundidad"</td><td><b>CS50x</b> — la base universitaria que después lo explica todo</td></tr>
+    <tr><td>"Quiero construir cosas y tener proyectos"</td><td><b>The Odin Project</b> — camino guiado hacia desarrollo web</td></tr>
+    <tr><td>"Quiero rigor académico y ejercicios"</td><td><b>MOOC.fi</b> — cursos de la Universidad de Helsinki</td></tr>
+    <tr><td>"Ya sé lo básico, ¿qué sigue?"</td><td><b>CS50 Python</b> o directo a <b>Sistemas</b> (ver la Ruta de aprendizaje)</td></tr>
+  </table>
+
+  <div class="cierre">
+    <h3>Cerrá el círculo</h3>
+    <p>Este documento te dio la <b>lógica</b>: variables, condicionales, bucles, funciones. Esas cinco piezas son el 90 % de cualquier lenguaje. En JavaScript, en Python o en C, cambian los signos pero no el pensamiento.</p>
+    <p><b>Siguiente paso concreto:</b> elegí UNO de los cursos de arriba, hacé el primer ejercicio hoy, y volvé mañana. Un programa se aprende escribiendo — <b>ya tenés las ideas; ahora falta el pulso.</b></p>
+    <p style="margin-bottom:0">Sigue en la serie: <b>00 · Ruta de aprendizaje</b> (el mapa completo de Programación → Sistemas → Redes → Seguridad → Hacking).</p>
+  </div>
+</section>
+
+</body>
+</html>

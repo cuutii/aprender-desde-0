@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ciberseguridad desde 0</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+  }
+
+  /* ---------- Paleta ---------- */
+  :root {
+    --azul: #1b4f8a;
+    --azul-vivo: #1d4ed8;
+    --azul-humo: #eaf1fa;
+    --naranja: #c2410c;
+    --naranja-humo: #fff3ec;
+    --verde: #15803d;
+    --verde-humo: #edf9f0;
+    --morado: #6d28d9;
+    --morado-humo: #f4f0ff;
+    --gris: #475569;
+    --borde: #d9e1ec;
+  }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 9px 0; }
+
+  /* ---------- Portada ---------- */
+  .portada {
+    page-break-after: always; padding: 26mm 0 0 0; text-align: left;
+  }
+  .portada .serie {
+    display: inline-block; background: var(--naranja); color: #fff;
+    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  }
+  .portada h1 {
+    font-size: 46pt; letter-spacing: -.02em; margin: 26px 0 0 0; color: var(--azul);
+  }
+  .portada h1 span { color: var(--naranja); display: block; }
+  .portada .regla { height: 5px; background: var(--azul); width: 100%; margin: 26px 0 22px 0; }
+  .portada .sub {
+    font-size: 15pt; color: #33445a; max-width: 95%; line-height: 1.55; margin: 0 0 26px 0;
+  }
+  .portada .caja-que {
+    background: var(--azul-humo); border-left: 6px solid var(--azul);
+    padding: 16px 20px; border-radius: 0 6px 6px 0; font-size: 11pt;
+  }
+  .portada .caja-que strong { color: var(--azul); }
+  .portada .meta {
+    margin-top: 30px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde);
+    padding-top: 12px;
+  }
+
+  /* ---------- Bloques de concepto ---------- */
+  .bloque {
+    background: #fff; border: 1px solid var(--borde); border-left: 5px solid var(--azul);
+    border-radius: 0 7px 7px 0; padding: 13px 17px 6px 17px; margin: 16px 0;
+    page-break-inside: avoid;
+  }
+  .bloque > h3 { font-size: 13.5pt; margin-bottom: 8px; }
+  .fila { margin: 0 0 6px 0; }
+  .lbl {
+    display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: #fff; padding: 2px 8px; border-radius: 3px;
+    margin-right: 7px; vertical-align: 1.5px;
+  }
+  .lbl.teoria    { background: var(--azul); }
+  .lbl.ejemplo   { background: var(--naranja); }
+  .lbl.quehace   { background: var(--verde); }
+  .lbl.como      { background: var(--morado); }
+  .lbl.ejecuta   { background: var(--gris); }
+  .fila b.lead { color: #0f172a; }
+  .fila p { display: inline; }
+
+  /* ---------- Código ---------- */
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-radius: 4px;
+    padding: 1px 5px; color: #9a3412;
+  }
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt; line-height: 1.5;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-left: 4px solid var(--azul);
+    border-radius: 0 5px 5px 0; padding: 10px 14px; margin: 8px 0 12px 0;
+    color: #0f172a; white-space: pre-wrap; page-break-inside: avoid;
+  }
+  pre .c { color: #64748b; }
+  pre .k { color: var(--azul-vivo); font-weight: 700; }
+  pre .s { color: var(--verde); }
+  pre .n { color: var(--naranja); }
+
+  /* ---------- Capítulos ---------- */
+  .cap { page-break-before: always; }
+  .cap h2 {
+    font-size: 24pt; margin: 0 0 4px 0; letter-spacing: -.01em;
+    border-bottom: 3px solid var(--azul); padding-bottom: 10px;
+  }
+  .cap h2 .num {
+    display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--naranja); margin-bottom: 6px;
+  }
+  .cap .promesa {
+    font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0;
+    border-left: 3px solid var(--naranja); padding-left: 12px;
+  }
+  h3.sub { font-size: 14pt; margin: 15px 0 7px 0; color: var(--azul); }
+
+  /* ---------- Llamadas ---------- */
+  .nota {
+    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .aviso {
+    background: var(--verde-humo); border: 1px solid #bbf7d0; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+
+  /* ---------- Tablas ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  .grupo { page-break-inside: avoid; }
+  th {
+    background: var(--azul); color: #fff; text-align: left; padding: 8px 10px;
+    font-weight: 600; font-size: 9.5pt; letter-spacing: .04em;
+  }
+  td { border-bottom: 1px solid var(--borde); padding: 6px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  td b { color: var(--azul); }
+
+  /* ---------- Recursos ---------- */
+  .recurso {
+    border: 1px solid var(--borde); border-radius: 7px; padding: 12px 16px;
+    margin: 12px 0; page-break-inside: avoid; background: #fff;
+  }
+  .recurso h4 { font-size: 12.5pt; margin-bottom: 4px; }
+  .pills { margin: 4px 0 7px 0; }
+  .pill {
+    display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-right: 5px; letter-spacing: .04em;
+  }
+  .pill.gratis   { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+  .pill.mixto    { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+  .pill.nivel    { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+  .recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+  .recurso .porque { color: #475569; font-size: 10pt; }
+  .recurso .porque b { color: var(--naranja); }
+
+  /* ---------- Índice ---------- */
+  .indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+  .indice li {
+    padding: 7px 0; border-bottom: 1px dotted var(--borde); font-size: 11.5pt;
+    display: flex; justify-content: space-between;
+  }
+  .indice li span.t { color: var(--azul); font-weight: 600; }
+  .indice li span.d { color: #64748b; font-size: 10pt; }
+
+  .cierre {
+    background: var(--azul); color: #eaf1fa; padding: 18px 22px; border-radius: 8px;
+    margin-top: 22px; page-break-inside: avoid;
+  }
+  .cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+  .cierre p { color: #dbe7f7; font-size: 10.8pt; }
+  .cierre b { color: #ffd8b0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Seguridad</div>
+  <h1>Ciberseguridad <span>desde 0</span></h1>
+  <div class="regla"></div>
+  <p class="sub">De los primeros pasos en redes hasta analizar malware, blindar un perímetro y capturar tráfico — las 14 clases del curso, reordenadas y resumidas en una sola guía.</p>
+
+  <div class="caja-que">
+    <strong>Para quién es:</strong> para quien quiere entender de qué se trata la ciberseguridad sin saber todavía redes ni programación. Arranca en cero y va subiendo de a poco, clase por clase.<br><br>
+    <strong>Cómo está escrito:</strong> cada idea nueva usa el mismo molde — <b>Teoría</b> (qué es), <b>Ejemplo</b> (una analogía cotidiana), <b>Qué hace</b>, <b>Cómo lo hace</b> y <b>Cómo se ejecuta</b> (el paso a paso real). Al final de cada capítulo, la <b>práctica del curso</b> que corresponde.
+  </div>
+
+  <p class="meta">Material de estudio personal · Redes · Seguridad · Hacking ético<br>Mejorado a partir del curso de Coderhouse (14 clases + 4 complementarias + TP final). Todo lo que aparece acá se practica solo con sistemas propios o autorizados.</p>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer este material</h2>
+  <p class="promesa">Si entendés estas cinco palabras, ya podés leer el documento entero.</p>
+
+  <p>Este guía usa siempre el mismo molde para cada concepto. Así no importa si leés un capítulo entero o solo una ficha: el formato es el mismo y tu cerebro sabe dónde mirar.</p>
+
+  <table>
+    <tr><th style="width:22%">Etiqueta</th><th>Qué encontrarás</th></tr>
+    <tr><td><span class="lbl teoria">Teoría</span></td><td>La idea en una o dos oraciones. <b>Qué es</b> la cosa, explicada con palabras de todos los días.</td></tr>
+    <tr><td><span class="lbl ejemplo">Ejemplo</span></td><td>Una comparación con algo que ya conocés: una receta, una caja de zapatos, un semáforo. <b>La analogía</b> es lo que hace que algo abstracto se vuelva visible.</td></tr>
+    <tr><td><span class="lbl quehace">Qué hace</span></td><td>Su <b>trabajo</b>, en una frase. Para qué sirve en la vida real.</td></tr>
+    <tr><td><span class="lbl como">Cómo lo hace</span></td><td>El <b>mecanismo</b> por dentro: qué capa, qué protocolo, qué herramienta lo hace posible.</td></tr>
+    <tr><td><span class="lbl ejecuta">Cómo se ejecuta</span></td><td>El <b>paso a paso</b> concreto: el comando, el clic, la ventana que mirás.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    La ciberseguridad no se entiende mirando: <b>se entiende practicando en un laboratorio propio</b>. Todo lo de esta guía se hace con tu máquina virtual, tus redes y tus servidores de práctica. <b>Contra sistemas ajenos sin autorización escrita es ilegal — sin excepciones.</b>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Qué necesitás antes de arrancar</span><br>
+    Una computadora con <b>VirtualBox</b> instalado y <b>Kali Linux</b> corriendo como máquina virtual (credenciales por defecto <code>kali:kali</code>). Con eso solo ya podés hacer el 90 % de las prácticas. Wireshark se instala en la Clase 13, para la 14.
+  </div>
+</section>
+
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · Las redes que te conectan</span><span class="d">Capas OSI, IP y protocolos (Clase 0)</span></li>
+    <li><span class="t">2 · Qué es y para qué sirve la ciberseguridad</span><span class="d">La triada y la historia (Clase 1)</span></li>
+    <li><span class="t">3 · Amenazas, ataques y malware</span><span class="d">Quién te ataca y con qué (Clase 2)</span></li>
+    <li><span class="t">4 · Vulnerabilidades, riesgos y puertos</span><span class="d">La ventana abierta y la escalera (Clase 3)</span></li>
+    <li><span class="t">5 · Analizá tu primer malware</span><span class="d">Estático vs. dinámico, sin morir en el intento (Clase 4)</span></li>
+    <li><span class="t">6 · Hacking ético</span><span class="d">Las fases y las reglas del juego (Clase 5)</span></li>
+    <li><span class="t">7 · Escaneo de vulnerabilidades y exploits</span><span class="d">Nmap, CVE y Exploit Database (Clase 6)</span></li>
+    <li><span class="t">8 · DevSecOps</span><span class="d">Seguridad desde el día 0 (Clase 7)</span></li>
+    <li><span class="t">9 · Reconocimiento y fuerza bruta</span><span class="d">El workshop: Hydra contra un FTP (Clase 8)</span></li>
+    <li><span class="t">10 · Criptografía y esteganografía</span><span class="d">Cifrar, hashear y ocultar (Clase 9)</span></li>
+    <li><span class="t">11 · Phishing</span><span class="d">Cómo te engañan y cómo no caer (Clase 10)</span></li>
+    <li><span class="t">12 · Protección de endpoints</span><span class="d">EPP, EDR y el firewall humano (Clase 11)</span></li>
+    <li><span class="t">13 · El perímetro</span><span class="d">Firewalls, IDS e IPS (Clase 12)</span></li>
+    <li><span class="t">14 · VPN</span><span class="d">Túneles cifrados y sus tipos (Clase 13)</span></li>
+    <li><span class="t">15 · Wireshark</span><span class="d">Ver el tráfico por dentro (Clase 14)</span></li>
+    <li><span class="t">16 · Prácticas y proyecto final</span><span class="d">Paso a paso de cada TP</span></li>
+    <li><span class="t">17 · Ruta de estudio y herramientas</span><span class="d">En qué orden seguirla</span></li>
+  </ul>
+
+  <h3 class="sub">Glosario mínimo (para volver si te atascás)</h3>
+  <table>
+    <tr><th style="width:28%">Palabra</th><th>Significado simple</th></tr>
+    <tr><td><b>Triada CIA</b></td><td>Confidencialidad (solo el que debe ve), integridad (que nadie lo cambie), disponibilidad (que funcione cuando lo necesités).</td></tr>
+    <tr><td><b>Amenaza</b></td><td>Alguien o algo que quiere hacerte daño (un atacante, un grupo, un estado).</td></tr>
+    <tr><td><b>Vulnerabilidad</b></td><td>Un fallo o debilidad que el atacante puede aprovechar. Es accidental, nunca deliberada.</td></tr>
+    <tr><td><b>Exploit</b></td><td>El código o la secuencia que materializa la vulnerabilidad. "La escalera".</td></tr>
+    <tr><td><b>Malware</b></td><td>Software malicioso: virus, gusanos, troyanos, ransomware…</td></tr>
+    <tr><td><b>CVE</b></td><td>El número de catálogo de una vulnerabilidad conocida (como un DNI).</td></tr>
+    <tr><td><b>Phishing</b></td><td>Robarte datos haciéndote pasar por alguien de confianza. Ingeniería social.</td></tr>
+    <tr><td><b>Firewall / IDS / IPS</b></td><td>Filtra tráfico / avisa del ataque / bloquea el ataque.</td></tr>
+    <tr><td><b>Hash</b></td><td>La huella dactilar de un archivo: un valor único e irrevertible.</td></tr>
+    <tr><td><b>VPN</b></td><td>Un túnel cifrado por el que viaja tu tráfico como si estuvieras en otra red.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== CAP 1 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 0</span>Las redes que te conectan</h2>
+  <p class="promesa">Antes de defender una casa conviene saber cómo son las paredes. Así de simple.</p>
+
+  <div class="bloque">
+    <h3>El modelo OSI y por qué importa</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>modelo OSI</b> (creado por la ISO) divide la comunicación de una computadora en <b>7 capas</b>, de la más física (cable) a la más abstracta (la aplicación). Cada capa hace un trabajo y se comunica solo con sus vecinas. Es la manera ordenada de hablar de redes… y de entender dónde entra cada ataque.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>correo postal</b>: escribís una carta (capa de aplicación), la metés en un sobre (presentación), la pasas al correo (transporte), tiene dirección y ruta (red), va en un camión con patente (enlace), el camión rueda por la ruta (física)… Si algo falla, sabés en qué eslabón pasó.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Da un <b>lenguaje común</b>: permite decir "ese ataque golpea la capa 3" y que todos sepan de qué hablamos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada capa le agrega a los datos un <b>encabezado</b> (encapsulación). Al llegar, el receptor lo quita capa por capa hasta leer el mensaje original (desencapsulación). Cada capa tiene su unidad de datos: <b>dato → segmento → paquete → trama → bits</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando abrís una web: el navegador (capa 7) manda la petición, TCP (capa 4) la parte en segmentos, IP (capa 3) le pone direcciones, la tarjeta de red (capa 2) la arma en tramas y el cable (capa 1) manda los bits. En tu máquina lo podés ver con <code>tracert</code>.</div>
+  </div>
+
+  <div class="grupo">
+  <table>
+    <tr><th style="width:8%">Capa</th><th style="width:24%">Nombre</th><th style="width:16%">Unidad (PDU)</th><th>Ejemplo real</th></tr>
+    <tr><td><b>7</b></td><td>Aplicación</td><td>Dato</td><td>Navegador, correo, DNS</td></tr>
+    <tr><td><b>6</b></td><td>Presentación</td><td>Dato</td><td>Cifrado, compresión, imágenes</td></tr>
+    <tr><td><b>5</b></td><td>Sesión</td><td>Dato</td><td>Abrir y mantener la conversación</td></tr>
+    <tr><td><b>4</b></td><td>Transporte</td><td>Segmento</td><td>TCP (confiable) y UDP (rápido)</td></tr>
+    <tr><td><b>3</b></td><td>Red</td><td>Paquete</td><td>IP, enrutamiento, ARP</td></tr>
+    <tr><td><b>2</b></td><td>Enlace</td><td>Trama</td><td>MAC, switches, Wi-Fi</td></tr>
+    <tr><td><b>1</b></td><td>Física</td><td>Bits</td><td>Cable, fibra, radio</td></tr>
+  </table>
+  </div>
+
+  <div class="bloque">
+    <h3>Dirección IP: pública, privada y rangos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>IP</b> es el número que identifica a un dispositivo en capa 3. <b>Pública</b> = única en Internet, la asigna tu proveedor (ISP). <b>Privada</b> = la de tu casa o empresa, fija dentro de tu red, <b>no se ve desde Internet</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La IP pública es tu <b>domicilio en el mapa del mundo</b>. Las privadas son los <b>interiorismos de tu casa</b>: el repartidor solo ve el portón (el router); adentro, cada cuarto tiene su número pero no existe afuera.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite <b>encontrar</b> y <b>dirigir</b> el tráfico hasta el dispositivo correcto.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Tu router traduce las privadas a la pública (NAT) cuando el tráfico sale, y revierte al volver. Por eso mil dispositivos de tu casa comparten una sola IP pública.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Windows: <code>Win+R</code> → <code>cmd</code> → <code>ipconfig</code> (buscá "Dirección IPv4"). En Linux: <code>Ctrl+Alt+T</code> → <code>ifconfig</code>. En macOS: <code>ifconfig | grep "inet " | grep -v 127.0.0.1</code>.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:18%">Clase</th><th>Rango privado</th><th>Uso típico</th></tr>
+    <tr><td><b>A</b></td><td><code>10.0.0.0 – 10.255.255.255</code></td><td>Empresas grandes</td></tr>
+    <tr><td><b>B</b></td><td><code>172.16.0.0 – 172.31.255.255</code></td><td>Redes medianas</td></tr>
+    <tr><td><b>C</b></td><td><code>192.168.0.0 – 192.168.255.255</code></td><td>Redes hogareñas (la tuya)</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">La llave del curso</span><br>
+    <b>Cada ciberamenaza apunta a una capa específica.</b> El phishing ataca a la persona (capa de aplicación), el sniffing mira la capa 2, el envenenamiento de ARP trabaja sobre IP y MAC. Entender las capas es entender <b>dónde</b> se defiende cada cosa.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Reconocimiento de red (10 min)</span><br>
+    Descubrí tu vecindario: <code>arp -a</code> muestra la tabla ARP (quién es quién en tu red local), <code>tracert google.com</code> muestra los saltos hasta Google, y <code>nslookup google.com</code> traduce el nombre a IP. Mirá la dirección MAC destino al salir de tu red: es la de tu router.
+  </div>
+</section>
+
+<!-- ==================== CAP 2 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 1</span>Qué es y para qué sirve la ciberseguridad</h2>
+  <p class="promesa">No es "hackear": es proteger tres cosas que todas las organizaciones necesitan. Punto.</p>
+
+  <div class="bloque">
+    <h3>La triada de seguridad</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>ciberseguridad</b> es el conjunto de prácticas para proteger sistemas, redes y datos. Su marco central es la <b>triada CIA</b>: <b>confidencialidad</b>, <b>integridad</b> y <b>disponibilidad</b>. Toda decisión de seguridad se evalúa contra esas tres patas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en una <b>cámara de seguridad con llave</b>: solo la gente autorizada tiene la llave (confidencialidad), nadie puede borrar las grabaciones (integridad) y la cámara tiene que estar prendida y con batería (disponibilidad). Si falla una, el sistema entero falla.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Protege <b>información</b> (no solo equipos): datos de clientes, claves, planes, reputation.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando controles en tres frentes: <b>personas</b> (capacitación, contraseñas), <b>procesos</b> (permisos, respaldos, auditorías) y <b>tecnología</b> (cifrado, firewalls, antivirus).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ante cada dato, preguntá: ¿quién lo puede ver? ¿Puede alguien modificarlo sin que nadie se dé cuenta? ¿Está disponible cuando hace falta? Si la respuesta a alguna es "no sé", hay trabajo pendiente.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:20%">Pata</th><th style="width:38%">Qué garantiza</th><th>Control típico</th></tr>
+    <tr><td><b>Confidencialidad</b></td><td>Solo ve lo que está autorizado</td><td>Cifrado, contraseñas, mínimo privilegio</td></tr>
+    <tr><td><b>Integridad</b></td><td>Nadie lo altera sin permiso</td><td>Firmas, hashes, registros de auditoría</td></tr>
+    <tr><td><b>Disponibilidad</b></td><td>Está funcionando cuando se necesita</td><td>Respaldos, UPS, redundancia</td></tr>
+  </table>
+
+  <div class="grupo">
+  <h3 class="sub">Una línea del tiempo (para no perderse)</h3>
+  <table>
+    <tr><th style="width:14%">Año</th><th>Qué pasó</th></tr>
+    <tr><td><b>1969</b></td><td>Nace Internet (ARPANET).</td></tr>
+    <tr><td><b>1971</b></td><td><b>Creeper</b>: el primer virus. <b>Reaper</b>: el primer programa de ciberseguridad, creado para atraparlo.</td></tr>
+    <tr><td><b>1988</b></td><td>El primer worm nocivo se propaga por la red.</td></tr>
+    <tr><td><b>1999</b></td><td>Virus <b>Melissa</b>: el correo se vuelve el vector estrella.</td></tr>
+    <tr><td><b>2003</b></td><td>El gobierno de EE.UU. reconoce la ciberseguridad como prioridad nacional.</td></tr>
+    <tr><td><b>2020+</b></td><td>Era de la conectividad: todo conectado, todo objetivo.</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">Las amenazas de siempre</h3>
+  <table>
+    <tr><th style="width:22%">Amenaza</th><th>En una frase</th></tr>
+    <tr><td><b>Zero day</b></td><td>Un fallo que los atacantes ya explotan pero los fabricantes todavía no corrigieron.</td></tr>
+    <tr><td><b>Ransomware</b></td><td>Cifra tus archivos y paga rescate para devolvértelos.</td></tr>
+    <tr><td><b>Inyección SQL</b></td><td>Le metés código a un formulario para que la base de datos haga lo que no debe.</td></tr>
+    <tr><td><b>DoS / DDoS</b></td><td>Colapsan tu servidor con tráfico basura desde mil computadoras.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato que duele</span><br>
+    Un ciberataque detectado cada <b>39 segundos</b> (U. de Maryland). Más del <b>80 %</b> de los eventos involucran phishing. La media mundial de detección de una brecha es de <b>186 días</b>. Y la frase clásica del curso: <b>"Solo hay dos tipos de empresas: las hackeadas y las que lo serán."</b>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Google Dorks (20 min)</span><br>
+    Google también busca <b>dentro</b> de archivos expuestos. Probá en el buscador: <code>inurl:/wp-content/uploads/ ext:txt "username" OR "password"</code> — y después <code>intitle:"webcamXP 5"</code> o <code>"Index of" inurl:phpmyadmin</code>. Verás lo que un atacante ve con solo buscar. <b>Observá, no toques nada de lo que encuentres.</b>
+  </div>
+</section>
+
+<!-- ==================== CAP 3 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 2</span>Amenazas, ataques y malware</h2>
+  <p class="promesa">Hay tres cosas que te atacan: la tecnología, el proceso y —sobre todo— la persona.</p>
+
+  <div class="bloque">
+    <h3>Cómo piensa un cibercriminal</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La ciberseguridad abarca <b>personas, procesos y tecnología</b>. El atacante sigue un método: <b>análisis → codificación → instalación → explotación</b>. Primero estudia el blanco, después arma o consigue la herramienta, la instala y recién entonces explota.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>ladrón de casas</b>: primero mira qué horarios tiene la familia, después prepara las ganzúas, entra por la ventana que dejó abierta y recién ahí se lleva lo que quiere. Nadie "roba por casualidad".</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Gana <b>acceso</b>, se <b>queda</b> y <b>extrae</b>: datos, plata, control.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Explotando la <b>superficie de ataque</b>: todo lo que puede ser atacado — hardware, software, SO, firmware… y <b>RRHH</b>, la capa más blanda.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Hay ataques <b>pasivos</b> (vigilar, espiar el tráfico, OSINT — no tocan nada) y <b>activos</b> (penetrar, persistir, sabotear, exfiltrar). Los pasivos se usan para preparar los activos.</div>
+  </div>
+
+  <div class="grupo">
+  <h3 class="sub">La familia malware</h3>
+  <table>
+    <tr><th style="width:20%">Tipo</th><th>Qué hace exactamente</th></tr>
+    <tr><td><b>Virus</b></td><td>Se pega a un archivo y se ejecuta con él. Necesita que abras algo.</td></tr>
+    <tr><td><b>Gusano</b></td><td>Se propaga solo, sin que nadie lo abra. Como WannaCry.</td></tr>
+    <tr><td><b>Troyano</b></td><td>Se hace pasar por algo útil ("este programa es el lector de PDF"). Abre la puerta trasera.</td></tr>
+    <tr><td><b>Spyware / Keylogger</b></td><td>Te espija: captura lo que tipeás y lo que mirás.</td></tr>
+    <tr><td><b>Ransomware</b></td><td>Cifra tus archivos y pide rescate.</td></tr>
+    <tr><td><b>Cryptojacking</b></td><td>Usa tu PC para minar cripto (normalmente Monero) a tus expensas.</td></tr>
+    <tr><td><b>Rootkit</b></td><td>Se esconde dentro del sistema y oculta otros malware.</td></tr>
+    <tr><td><b>Adware / Rogueware</b></td><td>Publicidad invasiva / falsos antivirus que te venden miedo.</td></tr>
+  </table>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Casos de estudio</span><br>
+    <b>I love you (2000):</b> escrito en Visual Basic, se mandó solo por correo y afectó +50 millones de equipos. <b>WannaCry:</b> actuó como gusano, aprovechó un fallo de Windows sin parchear y costó cientos de millones. Las dos explotaron <b>algo que ya existía</b>: la confianza y la desactualización.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · VirusTotal y el juego Hacked</span><br>
+    1) Entrá a <code>virustotal.com</code> y pegá la URL de la muestra de WannaCry que pasó el profesor: 61 motores antivirus la analizan en segundos. 2) Jugá <code>hackend.incibe.es</code> (misiones 1 y 2): un juego legal donde resolvés incidentes de seguridad reales.
+  </div>
+</section>
+
+<!-- ==================== CAP 4 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 3</span>Vulnerabilidades, riesgos y puertos</h2>
+  <p class="promesa">Una vulnerabilidad es una ventana abierta. Un exploit es la escalera.</p>
+
+  <div class="bloque">
+    <h3>Vulnerabilidad vs. amenaza vs. exploit</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>vulnerabilidad</b> es un fallo accidental (de diseño, configuración o implementación). Una <b>amenaza</b> es la acción que la aprovecha. El <b>exploit</b> es el software o la secuencia que la materializa. Definición del curso, imposible de olvidar: <b>"Las vulnerabilidades nunca son deliberadas."</b></div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La <b>ventana abierta</b> es la vulnerabilidad (nadie la dejó a propósito). La <b>escalera</b> es el exploit, el instrumento con el que el ladrón entra. Y el ladrón que la usa es la amenaza. Podés quitar la escalera, pero si la ventana sigue abierta…</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>El exploit convierte un fallo en un <b>hecho</b>: acceso, roto, caído.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Hay exploits <b>remotos</b> (desde afuera) y <b>locales</b> (desde la máquina); <b>conocidos</b> (ya hay parche) y <b>de día cero</b> (el fabricante aún no sabe).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El catálogo oficial es el <b>CVE</b> (la base NVD) y los exploits listos para usar están en <b>Exploit Database</b>. Ahí se busca "¿existe exploit para esto?".</div>
+  </div>
+
+  <h3 class="sub">El análisis de riesgos en 6 fases</h3>
+  <table>
+    <tr><th style="width:8%">#</th><th style="width:30%">Fase</th><th>Pregunta clave</th></tr>
+    <tr><td>1</td><td><b>Alcance</b></td><td>¿Qué estamos protegiendo?</td></tr>
+    <tr><td>2</td><td><b>Activos</b></td><td>¿Qué vale la pena proteger (y cuánto)?</td></tr>
+    <tr><td>3</td><td><b>Amenazas</b></td><td>¿Quién podría atacar y cómo?</td></tr>
+    <tr><td>4</td><td><b>Características</b></td><td>¿Qué vulnerabilidades tiene?</td></tr>
+    <tr><td>5</td><td><b>Probabilidad</b></td><td>¿Qué tan probable es que pase?</td></tr>
+    <tr><td>6</td><td><b>Tratamiento</b></td><td><b>Evitar, mitigar, transferir o aceptar</b> el riesgo.</td></tr>
+  </table>
+
+  <div class="grupo">
+  <h3 class="sub">Puertos: las puertas de tu máquina</h3>
+  <table>
+    <tr><th style="width:14%">Puerto</th><th style="width:18%">Servicio</th><th style="width:14%">Puerto</th><th>Servicio</th></tr>
+    <tr><td><b>20/21</b></td><td>FTP (archivos)</td><td><b>80</b></td><td>HTTP (web sin cifrar)</td></tr>
+    <tr><td><b>22</b></td><td>SSH (acceso remoto seguro)</td><td><b>110</b></td><td>POP3 (correo)</td></tr>
+    <tr><td><b>25</b></td><td>SMTP (envío de correo)</td><td><b>143</b></td><td>IMAP (correo)</td></tr>
+    <tr><td><b>53</b></td><td>DNS (nombres → IP)</td><td><b>443</b></td><td>HTTPS (web cifrada)</td></tr>
+  </table>
+  <p style="font-size:10.5pt">Los puertos van del <b>0 al 65535</b>: 0–1023 son los <b>conocidos</b> (los de arriba), 1024–49151 los <b>registrados</b> y el resto <b>dinámicos</b>. Cada puerto puede estar <b>abierto</b> (alguien escucha), <b>cerrado</b> (nadie atiende) o <b>filtrado</b> (un firewall lo bloquea).</p>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Escaneo con Nmap (20 min, en grupo)</span><br>
+    Instalá Nmap (<code>nmap.org/download.html</code> en Windows, <code>sudo apt install nmap</code> en Kali) y escaneá una red de práctica. Mirá: ¿qué puertos aparecen desprotegidos? ¿Cuáles tendrían más probabilidad de ataque? ¿Se repiten los mismos tipos de ataque por puerto? <b>Ejemplo:</b> <code>nmap 45.33.49.119</code> → <code>22/ssh</code>, <code>25/smtp</code>, <code>80/http</code>, <code>443/https</code>.
+  </div>
+</section>
+
+<!-- ==================== CAP 5 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 4</span>Analizá tu primer malware</h2>
+  <p class="promesa">La regla es una sola: mirá el monstruo detrás del vidrio. Nunca lo sueltes en tu máquina.</p>
+
+  <div class="bloque">
+    <h3>Análisis estático vs. dinámico</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>estático</b> analiza el código <b>sin ejecutarlo</b>: hash, cadenas de texto, estructura del PE, librerías, desensamblado. El <b>dinámico</b> lo ejecuta en un <b>entorno controlado</b> (sandbox o VM aislada) y observa qué <b>hace</b>: procesos, conexiones, archivos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>desarmar un reloj sin encenderlo</b> (estático) versus <b>encenderlo bajo una campana de vidrio</b> y ver para qué tiembla (dinámico). Los dos se complementan: el estático te dice qué <em>podría</em> hacer; el dinámico te dice qué <em>hace</em>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Responder: <b>¿qué es esto, qué toca y a quién le avisa?</b></div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El dinámico sigue un método: crear una <b>línea base</b> de la VM (snapshot), correr la muestra, capturar tráfico y procesos, y <b>comparar</b> contra la línea base. Todo lo que cambió es sospechoso.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. VM aislada (sin red o en red interna). 2. Snapshot. 3. Ejecutar la muestra con <b>Any.run</b> o tu sandbox. 4. Tomar capturas. 5. Comparar. 6. Escribir el informe.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:16%">Tipo</th><th style="width:34%">Herramientas del curso</th><th>Para qué</th></tr>
+    <tr><td><b>Estático</b></td><td>hash (MD5/SHA), búsqueda de cadenas, Ghidra, x64dbg, Radare2</td><td>Ver el código sin correrlo</td></tr>
+    <tr><td><b>Dinámico</b></td><td>Any.run, Process Hacker, ProcMon, Autoruns, Wireshark, Fiddler</td><td>Ver el comportamiento real</td></tr>
+    <tr><td><b>Sandbox</b></td><td>Cuckoo Sandbox, VirusTotal (61 motores)</td><td>Ejecutar aislado y automatizar</td></tr>
+    <tr><td><b>Repositorios</b></td><td>Hybrid Analysis, MalShare, theZoo</td><td>Conseguir muestras de práctica</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Laboratorio: cómo aislar bien</span><br>
+    VirtualBox → VM de Windows → red en modo <b>host-only</b> o desactivada, sin carpetas compartidas, sin USB, sin arrastrar archivos desde la host. La muestra vive <b>adentro</b>. El snapshot inicial es tu botón de "deshacer".
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · 1ª entrega del Proyecto Final</span><br>
+    Informe de <b>análisis dinámico</b> (máx. 3 páginas, formato <code>.doc</code "Idea+Apellido"): nombre de la muestra, fecha, OS, MD5, screenshots de comportamiento, diagrama de procesos, conexiones HTTP/DNS, y conclusiones (tipo de malware, en máx. 4 párrafos de 2 oraciones). Muestra de ejemplo del curso: <b>Hive Loader.exe</b> (ransomware Hive) — hipótesis: correo → .zip → cifrado → movimiento lateral → persistencia.
+  </div>
+</section>
+
+<!-- ==================== CAP 6 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 5</span>Hacking ético</h2>
+  <p class="promesa">La única diferencia entre un hacker ético y un criminal es un papel: la autorización escrita.</p>
+
+  <div class="bloque">
+    <h3>Qué es el hacking ético</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>probar la seguridad de un sistema con autorización escrita previa</b>, para encontrar fallas antes que los atacantes. Se diferencia del simple escaneo: el pentest implica tiempo, automatización, alcance definido y un informe final.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>seguro contra incendios</b>: nadie prende fuego a tu casa sin permiso, pero el bombero que la revisa <b>con autorización</b> te dice dónde está el matafuegos vencido. El hacker ético hace exactamente eso: busca las salidas de emergencia rotas.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Encontrar las fallas <b>antes</b> que el atacante, con un informe accionable.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Recorriendo las fases: <b>reconocimiento → escaneo → obtener acceso → mantener acceso → (limpiar huellas: NO en el ético) → reporte</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Se define el <b>alcance</b> por escrito (qué IPs, qué dominios, qué está prohibido), se acuerdan reglas de compromiso, y recién ahí se empieza a trabajar.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:22%">Modalidad</th><th style="width:30%">Qué sabe el tester</th><th>Ejemplo de uso</th></tr>
+    <tr><td><b>Caja negra</b></td><td>Nada: solo la URL</td><td>Simula a un atacante externo real</td></tr>
+    <tr><td><b>Caja gris</b></td><td>Información limitada</td><td>El escenario más común</td></tr>
+    <tr><td><b>Caja blanca</b></td><td>Acceso total o código fuente</td><td>Auditoría profunda del código</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:26%">Tipo</th><th>Qué hace</th></tr>
+    <tr><td><b>White hat</b></td><td>El hacker ético. Trabaja con permiso.</td></tr>
+    <tr><td><b>Black hat</b></td><td>El criminal. Sin permiso, con ánimo de lucro o daño.</td></tr>
+    <tr><td><b>Grey hat</b></td><td>Encuentra fallos sin pedir permiso… pero no siempre para dañar.</td></tr>
+    <tr><td><b>Script kiddie</b></td><td>Copia herramientas sin entenderlas. Sin ética ni técnica.</td></tr>
+    <tr><td><b>Red team vs. Blue team</b></td><td>Los que atacan (simulando al enemigo) vs. los que defienden y detectan.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">La línea que no se cruza</span><br>
+    <b>Sin autorización escrita, es un delito</b> (en Argentina: Ley 25.326 de datos personales y el Código Penal en delitos informáticos). Toda técnica de esta guía se practica en <b>labs propios o autorizados</b>: tus VMs, Hack The Box, TryHackMe, DockerLabs. Los colores del sombrero no son un disfraz: son una decisión.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Instalar Kali Linux (20 min)</span><br>
+    Descargá el <code>.ova</code> de <code>kali.org/get-kali/</code>, importalo en VirtualBox (con Extension Pack), arrancá con <code>kali:kali</code>, cambiá idioma/teclado (<code>Settings Manager → Keyboard</code>, <code>sudo dpkg-reconfigure locales</code>) y actualizá repositorios. Ahí vas a hacer todo el resto del curso.
+  </div>
+</section>
+
+<!-- ==================== CAP 7 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 6</span>Escaneo de vulnerabilidades y exploits</h2>
+  <p class="promesa">Un escáner no explota: solo toca el timbre y anota quién abrió. Barato, rápido y siempre útil.</p>
+
+  <div class="bloque">
+    <h3>Escaneo de vulnerabilidades</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>identificar debilidades</b> en sistemas y aplicaciones. Es más barato y rápido que un pentest completo. Su ciclo: <b>detección → clasificación → remediación</b>, y no termina nunca: es un proceso continuo.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>revisión del gasista</b>: no prende fuego a nada, solo revisa conexiones y te dice "acá hay una fuga". Un pentest en cambio es simular el incendio. Los dos sirven, el primero es la revisión de rutina.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Devolver una <b>lista priorizada por riesgo</b>, no un muro de alertas.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>1. Descubrimiento de activos → 2. Priorización → 3. Escaneo → 4. Análisis y remediación → 5. Ciberseguridad continua. Tipos: externo, interno, autenticado, no autenticado, completo o limitado.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ejemplo: entrás a <code>snyk.io/website-scanner</code>, pegás la URL de tu web y te devuelve las vulnerabilidades detectadas con su severidad.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">CVE, NVD y Exploit Database</span><br>
+    El <b>CVE</b> es el número de catálogo de una vulnerabilidad (ej. CVE-2017-0144). La <b>NVD</b> (base nacional de vulnerabilities de EE.UU.) es donde vive el catálogo con su puntaje <b>CVSS</b>. <b>Exploit Database</b> (<code>exploit-db.com</code>) tiene los exploits listos para usar. Caso célebre: <b>EternalBlue</b>, un exploit de la NSA robado por Shadow Brokers y filtrado en 2017 — con él, WannaCry infectó 10.000 máquinas por hora en 150 países.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Buscar vulnerabilidades y exploits</span><br>
+    1) Escaneá una web de práctica con <code>snyk.io/website-scanner</code> (15 min). 2) En <code>exploit-db.com</code>, buscad exploits para vulnerabilidades web y anotálos en un documento compartido (20 min): qué vulnerabilidad, qué afecta y cómo se mitiga.
+  </div>
+</section>
+
+<!-- ==================== CAP 8 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 7</span>DevSecOps: seguridad desde el día 0</h2>
+  <p class="promesa">Si la seguridad queda para el final, siempre queda afuera.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es DevSecOps?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>DevSecOps</b> = Development + Security + Operations. Integra seguridad en cada etapa del ciclo de desarrollo y operación, de forma <b>automatizada y continua</b>. Su lema es <b>Security Left</b>: la seguridad se piensa desde el minuto 0, no cuando ya está todo construido.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>laboratorio en la cocina</b>: si el control de calidad revisa el pastel recién salido del horno, ya es tarde. El DevSecOps pone la balanza <b>mientras cocinás</b>: cada ingrediente se pesa a medida que entra.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Detectar y corregir fallos <b>antes</b> de que lleguen a producción, en el pipeline.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Automatizando escaneos en la integración continua (Jenkins + OWASP ZAP), gestionando identidades con <b>IAM</b>, y auditando contenedores con <b>Docker Bench for Security</b> (+200 comprobaciones de la CIS).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Configurás ZAP en Jenkins (<code>Manage Jenkins → Configure System → ZAP HOST localhost, Port 5555</code>), creás un proyecto Freestyle apuntando a una web de prueba, y el pipeline genera el informe HTML/XML en cada build.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:22%">Sigla</th><th>Qué es</th></tr>
+    <tr><td><b>CVE</b></td><td>La lista (el catálogo con número de cada vulnerabilidad).</td></tr>
+    <tr><td><b>CVSS</b></td><td>El puntaje de gravedad (0 a 10) de esa vulnerabilidad.</td></tr>
+    <tr><td><b>NVD</b></td><td>La base de datos donde vive todo, con el puntaje ya calculado.</td></tr>
+    <tr><td><b>IAM</b></td><td>Gestión de identidad y accesos: quién entra y qué puede hacer.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Buenas prácticas con Docker</span><br>
+    Imágenes limpias (Docker Content Trust), actualizar siempre, <b>usuario no root</b>, cuotas de recursos, registros seguros (Docker Trusted Registry) y auditoría con <code>auditd</code>. Y acordate: <b>"Si se deja la seguridad hasta el final… one-day patches."</b>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Jenkins + OWASP ZAP</span><br>
+    <pre style="margin:6px 0"><span class="k">docker pull</span> jenkins/jenkins
+<span class="k">docker run</span> -p <span class="n">8080</span>:<span class="n">8080</span> -p <span class="n">50000</span>:<span class="n">50000</span> jenkins/jenkins:lts
+<span class="c"># clave en initialAdminPassword → localhost:8080 → plugin ZAP → Freestyle Project</span>
+<span class="c"># objetivo de prueba: http://testphp.vulnweb.com  → informe HTML/XML</span></pre>
+    Alternativa: instalar ZAP dentro del contenedor y correrlo en modo rápido: <code>zap.sh -cmd -quickurl http://testphp.vulnweb.com -quickout informe.html</code>.
+  </div>
+</section>
+
+<!-- ==================== CAP 9 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 8</span>Reconocimiento y fuerza bruta</h2>
+  <p class="promesa">El 80 % del ataque es observar. Recién después se toca la puerta.</p>
+
+  <div class="bloque">
+    <h3>Information Gathering</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es la <b>primera fase del pentest</b>: recopilar toda la información disponible sobre el objetivo. Hay <b>reconocimiento activo</b> (tocás el objetivo: escaneos, peticiones) y <b>pasivo</b> (no lo tocás: OSINT, Google Dorks, redes sociales, WHOIS).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Como el <b>ladrón que estudia la casa antes</b>: mira horarios, ventanas, si hay perro, quién vive solo. No entra, pero sale sabiendo más que el dueño. La información es la llave antes que la ganzúa.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Recolectar <b>datos de red</b> (dominios, hosts, IP, puertos, servicios, SSL) y <b>del sistema</b> (usuarios, hostname, SO, banners).</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con herramientas como <b>Whois</b>, y después ataca la debilidad humana y técnica: <b>fuerza bruta</b> con diccionarios generados para el objetivo.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Stalkeo del objetivo. 2. Descubrir el servicio (FTP). 3. Generar diccionario. 4. Crackear. 5. Entrar.</div>
+  </div>
+
+  <pre><span class="c"># 1. Generar un diccionario a medida (crunch)</span>
+crunch <span class="n">1</span> <span class="n">2</span> <span class="s">0123456789</span> -o wordlist.txt
+
+<span class="c"># 2. Fuerza bruta contra FTP (hydra): -L lista de usuarios, -V verbose</span>
+hydra -t <span class="n">3</span> -V -ensr -L /usr/share/wordlists/metasploit/unix_users.txt <span class="n">192.168.0.50</span> ftp
+
+<span class="c"># 3. Conectar (modo pasivo en LAN)</span>
+ftp -p <span class="n">192.168.0.50</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Herramientas del workshop</span><br>
+    <b>Hydra</b> (<code>github.com/vanhauser-thc/thc-hydra</code>): cracking multi-servicio; sintaxis <code>hydra [opciones] [servicio]://[IP]</code>. <b>Crunch</b> (<code>sudo apt-get install crunch</code>): genera wordlists. <b>Whois</b>: dueño del dominio. Wordlists ya instaladas: <code>/usr/share/wordlists/metasploit/unix_users.txt</code>.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Reto "Hora de hackear" (60 min, grupos de 4)</span><br>
+    Comprometer un servidor FTP de la hacklab para obtener el diseño de un prototipo. <b>Reglas:</b> prohibido DoS/DDoS, la evidencia va en un <code>.txt</code> con tu nick, no se publica el método. El paso a paso completo está en el <b>Capítulo 16</b> (Prácticas).
+  </div>
+</section>
+
+<!-- ==================== CAP 10 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 9</span>Criptografía y esteganografía</h2>
+  <p class="promesa">Cifrar es poner el mensaje en un idioma que nadie entiende. Ocultarlo es fingir que no existe.</p>
+
+  <div class="bloque">
+    <h3>Cifrar, codificar y ocultar</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>criptografía</b> cifra y descifra mensajes con <b>clave</b>. Hay <b>hash</b> (función sin clave, unidireccional), <b>clave simétrica</b> (la misma clave cifra y descifra) y <b>clave asimétrica</b> (pública cifra, privada descifra). La <b>esteganografía</b> es otra cosa: <b>ocultar</b> un mensaje dentro de un archivo para que <b>ni se note que existe</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Cifrar es escribir una carta en un idioma que nadie habla (el cartero la ve pero no entiende). Codificar es cambiar A por 65 (se entiende con una tabla). La esteganografía es <b>esconder la carta dentro de una foto de familia</b>: nadie busca lo que no sabe que está ahí.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Criptografía: <b>confidencialidad</b> e <b>integridad</b>. Esteganografía: <b>ocultamiento</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El hash convierte cualquier archivo en una huella única e irreversible (MD5, SHA256). El simétrico usa AES/Rijndael (128/192/256 bits). El asimétrico usa un par de claves matemáticamente enlazadas (RSA).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali: <code>sudo apt install ccrypt</code> para cifrar (<code>ccrypt -e archivo</code>, <code>-d</code> descifra, extensión <code>.cpt</code>); <code>echo nombre -n | md5sum</code> para tu propio hash.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:22%">Tipo</th><th style="width:30%">Clave</th><th>Para qué</th></tr>
+    <tr><td><b>Hash</b></td><td>Ninguna</td><td>Integridad, contraseñas, firmas. No se revierte.</td></tr>
+    <tr><td><b>Simétrico</b></td><td>Una compartida</td><td>Cifrar archivos rápido (AES, Ccrypt).</td></tr>
+    <tr><td><b>Asimétrico</b></td><td>Pública + privada</td><td>Mensajería, firmas, HTTPS (RSA).</td></tr>
+    <tr><td><b>Esteganografía</b></td><td>Ocultamiento</td><td>Esconder un mensaje en una imagen.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">WhatsApp y las propiedades del hash</span><br>
+    WhatsApp usa cifrado <b>extremo a extremo</b> (tu mensaje se cifra en tu teléfono y solo se descifra en el de quien lo recibe). El hash, en cambio, tiene cinco propiedades: es <b>determinista</b>, <b>imprevisible</b>, <b>no reversible</b>, <b>resistente a colisiones</b> (dos archivos distintos no pueden dar el mismo hash) y tiene <b>efecto de difusión</b> (un bit cambiado cambia todo el hash).
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · TP "El espía oculto" (20 min)</span><br>
+    1) Descifrá el hash <code>0c51bf55a8dcf0529ebfb47b1dce32d7</code> en <code>crackstation.net</code> (10 min). 2) Cifrá/descifrá con Ccrypt y RSA online (<code>devglan.com/online-tools/rsa-encryption-decryption</code>). 3) Desafío entregable: descubrí el mensaje secreto y el nombre del espía escondidos en una imagen (con análisis hexadecimal) usando <b>OpenStego</b> (ocultar) y <b>VSL</b> (detectar: Input → Analysers LSB-RS → Report). Entrega: documento "Idea+Apellido".
+  </div>
+</section>
+
+<!-- ==================== CAP 11 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 10</span>Phishing</h2>
+  <p class="promesa">El ataque más efectivo del mundo no usa código: usa a una persona apurada.</p>
+
+  <div class="bloque">
+    <h3>Qué es el phishing</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>ingeniería social</b>: el atacante estudia un escenario creíble (tu banco, tu jefe, un concurso) y te pide datos o que abras algo. Su mecánica es siempre la misma: <b>correo de una entidad de confianza → solicitud de datos → vos los introducís</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>vendedor ambulante que se hace pasar por el encargado del edificio</b>: tiene el uniforme correcto, habla con seguridad, y mientras vos mirás el teléfono, entra. La confianza es la vulnerabilidad; el uniforme, el exploit.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Robarte <b>contraseñas, datos bancarios o acceso</b> hacéndote creer que estás donde debés.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Personalizando el mensaje: nombre propio, logo, firma, urgencia. Mientras más creíble, menor es la resistencia.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Detectalo así: <b>pasá el cursor sobre el enlace</b> (la URL real aparece en la esquina inferior izquierda del navegador), revisá el remitente letra por letra y desconfiá de toda urgencia.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:24%">Tipo</th><th style="width:36%">A quién apunta</th><th>Canal</th></tr>
+    <tr><td><b>Spear phishing</b></td><td>A un grupo o persona concreta (personalizado)</td><td>Correo</td></tr>
+    <tr><td><b>Whaling</b></td><td>A los "grandes": directivos, CEOs</td><td>Correo</td></tr>
+    <tr><td><b>Smishing</b></td><td>A cualquiera</td><td>SMS</td></tr>
+    <tr><td><b>Vishing</b></td><td>A cualquiera</td><td>Llamada telefónica</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Señales de alarma</span><br>
+    Remitente desconocido o que no coincide · sentido de urgencia ("tu cuenta se bloquea en 24 h") · adjunto inesperado · "demasiado bueno para ser verdad". Y dos frases del curso que hay que tatuar: <b>"Jamás el banco pedirá por correo cambiar la contraseña de home banking."</b> y <b>"HTTPS ya no es garantía de seguridad."</b> — los atacantes también tienen certificados.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Phishing Quiz + Escape Room</span><br>
+    1) <code>phishingquiz.withgoogle.com</code>: detectá cuándo te están engañando (15 min). 2) Escape Room "Atrapando al Hacker" de INCIBE (20 min): 3 fases de 5 preguntas, 15 minutos, penalización por errores — compartí el screenshot final.
+  </div>
+</section>
+
+<!-- ==================== CAP 12 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 11</span>Protección de endpoints</h2>
+  <p class="promesa">Un endpoint es cada equipo que tenés. Y el malware entra por ahí.</p>
+
+  <div class="bloque">
+    <h3>EPP vs. EDR</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>endpoint</b> es cualquier dispositivo conectado: PC, notebook, servidor, impresora, celular, tablet, IoT. La <b>EPP</b> (Endpoint Protection Platform) <b>previene</b>: malware conocido y avanzado (sin archivos, ransomware, día cero). La <b>EDR</b> (Endpoint Detection and Response) <b>detecta y responde</b>: anomalías en tiempo real, forense y remediación. Lo ideal es usar <b>las dos</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La EPP es el <b>cerrojo y el vigilante en la puerta</b> (no deja entrar). La EDR es la <b>alarma y las cámaras con analista</b> (detecta al que ya entró y te dice cómo salió). Un cerrojo sin cámaras no te cuenta qué pasó adentro.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>EPP: <b>bloquear</b> lo conocido y lo sospechoso. EDR: <b>ver</b> lo que pasó, cuándo y cómo, y ayudar a contenerlo.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>EPP detecta con firmas, análisis estático de machine learning, sandboxing, listas negras/blancas y análisis de comportamiento. EDR con 3 componentes: <b>recopilación de datos → motor de detección → motor de análisis</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Se instalan como agente en cada endpoint y se administran desde una consola central. Marcas del curso: CrowdStrike Falcon, Palo Alto Cortex XDR, Kaspersky EDR, Trend Micro Apex One (EPP+EDR), F-Secure RDR.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El antivirus solo no alcanza</span><br>
+    +100 millones de malware nuevos por año. El <b>94 %</b> del malware se entrega por correo (Verizon DBIR). 1 de cada 3 brechas empieza con ingeniería social. Por eso el curso lo dice claro: <b>"Los usuarios deben ser el firewall humano."</b> La contraseña sólida: mínimo 8–12 caracteres con números, símbolos, mayúsculas y minúsculas.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · RanSim (40 min, en equipo)</span><br>
+    <b>RanSim</b> es un simulador de ransomware <b>inofensivo</b>: no daña tu sistema, solo prueba si tus defensas lo detectarían. Instalalo en Windows, corré la simulación y compará los resultados con tu equipo. Si lo bloquea, bien; si no, sabés qué falta.
+  </div>
+</section>
+
+<!-- ==================== CAP 13 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 12</span>El perímetro</h2>
+  <p class="promesa">El firewall examina cada paquete que entra o sale. Cada uno.</p>
+
+  <div class="bloque">
+    <h3>Seguridad perimetral</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Son las <b>barreras artificiales</b> alrededor de la red: primera línea de defensa. Objetivos: soportar ataques externos, <b>detectar/identificar/alertar</b>, <b>segmentar</b> la red y <b>filtrar o bloquear</b> tráfico ilegítimo. Elementos: firewalls, IDS, IPS, UTM, honeypots y controles de acceso (autenticación + autorización).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>portón, el timbre y el vigilante</b> de un edificio: el portón deja pasar a los que tienen permiso (firewall), el vigilante anota a los raros (IDS) y el que viene con palanca lo echa antes de que entre (IPS).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Controlar <b>quién entra, quién sale y con qué</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando <b>reglas de filtrado</b> sobre el tráfico, por dirección IP, puerto y protocolo. Un firewall bien configurado es aburrido: solo deja pasar lo acordado.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Windows: <code>SECPOL.MSC</code> → políticas de seguridad de firewall. Linux: <code>iptables</code> o <code>nftables</code>. En la práctica del curso: configurá el firewall de tu SO y probá qué bloquea.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:34%">Tipo de firewall</th><th style="width:14%">Capa OSI</th><th>Qué mira</th></tr>
+    <tr><td>Filtrado de paquetes (estático)</td><td><b>3</b></td><td>Cabeceras IP/puerto</td></tr>
+    <tr><td>Puerta de enlace de circuito</td><td><b>4</b></td><td>La sesión que se abre</td></tr>
+    <tr><td>Inspección con estado</td><td>3–4</td><td>El historial de la conversación</td></tr>
+    <tr><td>Proxy (con inspección profunda DPI)</td><td><b>7</b></td><td>El contenido real del tráfico</td></tr>
+    <tr><td><b>NGFW</b> (firewall de nueva generación)</td><td>3–7</td><td>Firewall + IPS + aplicación</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:16%">Herramienta</th><th style="width:30%">Qué hace</th><th>Diferencia clave</th></tr>
+    <tr><td><b>IDS</b></td><td>Detecta y alerta</td><td><b>Avisa</b>, no bloquea (ej. Snort, Suricata)</td></tr>
+    <tr><td><b>IPS</b></td><td>Previene en tiempo real</td><td><b>Corta</b> el ataque (ej. Ossec)</td></tr>
+    <tr><td><b>WAF</b></td><td>Protege webs</td><td>Filtra HTTP (ModSecurity, Cloudflare)</td></tr>
+    <tr><td><b>UTM</b></td><td>Todo-en-uno</td><td>Firewall + antivirus + más en un equipo</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato de clase</span><br>
+    ¿De qué ataque protege un firewall? → <b>DoS</b> (no phishing, ni dumpster diving, ni shoulder surfing). Y un caso real: en 2020 una agencia federal de EE.UU. fue comprometida por un <b>firewall mal configurado</b>. La herramienta es buena; la configuración manda.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Firewall + Desafío entregable</span><br>
+    1) Configurá el firewall de tu Windows o Linux (40 min, breakout): abrí/cerrá puertos y comprobá con un escaneo desde otra VM. 2) Desafío: escribí un <code>.doc</code> ("Idea+Apellido") con <b>mejores prácticas para asegurar el perímetro</b> de una empresa — red estrecha para controlar el flujo, controles de acceso y reglas, NGFW, IDS/IPS, WAF y UTM.
+  </div>
+</section>
+
+<!-- ==================== CAP 14 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 13</span>VPN</h2>
+  <p class="promesa">Un túnel cifrado por el que tu tráfico viaja como si estuviera en tu casa. Donde sea.</p>
+
+  <div class="bloque">
+    <h3>Qué es una VPN</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>VPN</b> (Red Privada Virtual) conecta tus dispositivos a una red privada <b>usando Internet como medio</b>, con un túnel cifrado. Desde afuera, parecés estar dentro de esa red.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>túnel secreto entre dos casas</b>: por encima hay una vereda pública (Internet), pero vos transitás por abajo, tapado y cifrado. Nadie de afuera ve por dónde vas ni qué llevás.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Dificultar la interceptación, dar seguridad en redes públicas, ocultar tu IP/país y acceder a contenido geobloqueado.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Estableciendo un <b>túnel cifrado</b> entre tu equipo (cliente) y un servidor VPN; todo el tráfico pasa por ahí y llega cifrado a destino.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali: instalás los paquetes de red y configurás la conexión:</div>
+  </div>
+
+  <pre><span class="k">sudo apt install</span> network-manager-openvpn-gnome network-manager-pptp \
+     network-manager-strongswan network-manager-vpnc
+<span class="k">sudo</span> /etc/init.d/network-manager restart   <span class="c"># reiniciás el gestor y listo</span></pre>
+
+  <table>
+    <tr><th style="width:18%">Protocolo</th><th>Característica</th></tr>
+    <tr><td><b>PPTP</b></td><td>Máxima compatibilidad… y viejo. <b>No recomendado.</b></td></tr>
+    <tr><td><b>L2TP</b></td><td>Estándar, más seguro que PPTP (suele ir con IPsec).</td></tr>
+    <tr><td><b>IPSec</b></td><td>Protege toda la capa IP. Potente, implementación compleja.</td></tr>
+    <tr><td><b>SSL</b></td><td>Sitio-a-sitio o sitio-a-cliente, desde el navegador.</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:26%">Tipo de VPN</th><th>Conexión</th></tr>
+    <tr><td><b>Acceso remoto</b></td><td>Usuario → red privada de la empresa</td></tr>
+    <tr><td><b>Personal</b></td><td>Usuario → servidor de terceros (la app que instalás)</td></tr>
+    <tr><td><b>Móvil</b></td><td>Conexión persistente al cambiar de red (Wi-Fi → datos)</td></tr>
+    <tr><td><b>Sitio a sitio</b></td><td>Red → red (intranet con sucursales, extranet con partners)</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Privacidad sin confusiones</span><br>
+    <b>Tor</b> (The Onion Router) enruta tu tráfico por 3 capas anónimas y accede a la darknet: <b>no es una VPN</b>, es otra cosa. Para buscar sin rastro usá <b>DuckDuckGo</b>, y <b>Google Takeout</b> te devuelve todos los datos que Google tiene de vos. VPNs gratuitas de confianza: Opera, Proton VPN, HIDE.me.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Configurar y validar una VPN (40 min)</span><br>
+    Siguiendo el documento "Requisitos previos — Instalación de una VPN" del curso: instalá los paquetes, configurá la conexión en Kali y <b>validá</b> que el tráfico salga por el túnel (mirá tu IP pública antes y después). <b>Pregunta trampa del curso:</b> "Todas las VPN transmiten texto claro de forma segura a través de Internet" → <b>Falso</b>: transmiten <b>cifrado</b>.
+  </div>
+</section>
+
+<!-- ==================== CAP 15 ==================== -->
+<section class="cap">
+  <h2><span class="num">Clase 14</span>Wireshark: ver el tráfico</h2>
+  <p class="promesa">Si la red habla, Wireshark la escucha. Herramienta de seguridad nº1 según sectools.org.</p>
+
+  <div class="bloque">
+    <h3>Qué es y cómo se mira</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Wireshark es un <b>analizador de protocolos</b>: captura, presenta y analiza el tráfico de red, convirtiendo datos binarios en información legible. Lo usan seguridad y operaciones para optimizar, resolver fallas y detectar ataques. 500.000 descargas por mes.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>traductor en tiempo real de lo que dicen las máquinas</b>: como poner micrófonos en las paredes de tu casa y escuchar "¿me pasás el archivo?" "¿cuál?" "el .zip". No atacas nada: solo escuchas la conversación.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Responder <b>qué pasó en la red</b>: quién habló con quién, qué envió, qué falló.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Capturando cada paquete con 3 paneles: <b>1)</b> lista de paquetes, <b>2)</b> detalle por capas, <b>3)</b> bytes en hex/ASCII. Para interpretar conviene saber TCP/IP (el Capítulo 1 te da la base).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Arrancá la captura en la interfaz (mirá el "aleta de tiburón azul"), filtrá lo que te interese, y exportá el <code>.pcap</code> para analizarlo después.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dos filtros, dos momentos</span><br>
+    <b>Capture Filter (BPF)</b>: decide qué se <b>guarda</b> (antes de capturar). <b>Display Filter</b>: decide qué se <b>muestra</b> (después, sobre lo ya capturado). Sintaxis BPF: <code>tipo dirección [proto]</code> — tipos <code>host</code>, <code>net</code>, <code>port</code>, <code>portrange</code>; direcciones <code>src</code>, <code>dst</code>, <code>src or dst</code>; protocolos <code>ip</code>, <code>arp</code>, <code>tcp</code>, <code>udp</code>.
+  </div>
+
+  <pre><span class="c"># Filtro de captura (BPF): solo el tráfico cifrado de tu máquina a la web</span>
+ether host <span class="n">XX:XX:XX:XX:XX:XX</span> and tcp port <span class="n">443</span>
+
+<span class="c"># Filtros de aplicación comunes</span>
+port <span class="n">80</span>            <span class="c"># solo tráfico web</span>
+icmp              <span class="c"># solo los ping</span>
+src <span class="n">192.168.0.1</span>    <span class="c"># solo lo que viene del router</span>
+tcp or udp        <span class="c"># ambos protocolos de transporte</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Técnicas de captura</span><br>
+    <b>Ring buffer</b>: captura en anillo (guarda los últimos N MB para no llenar el disco). <b>Detención automática</b>: corta la captura al llegar a un tamaño o tiempo. Y una trampa clásica: si "no ves nada", quizá el tráfico supera la capacidad de tu interfaz o del puerto SPAN del switch.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Actividad "EvilCorp" (40 min)</span><br>
+    Analizá el archivo <code>Muestra_Actividad.pcap</code> y encontrá las credenciales escondidas en el tráfico. Pistas: filtrá <code>ether host … and tcp port 443</code> tras un ping a <code>8.8.8.8</code> y a <code>www.wireshark.org</code>, guardá <code>minavegacion.pcap</code>, y usá el filtro <code>icmp</code> para <code>miping.pcap</code>. El usuario sale en claro: <b>james / 007BOND</b> — y hay un <code>pwdump.txt</code> con un hash para crackear en <code>crackstation.net</code>. Pasos completos en el <b>Capítulo 16</b>.
+  </div>
+</section>
+
+<!-- ==================== CAP 16 ==================== -->
+<section class="cap">
+  <h2><span class="num">Todo junto</span>Prácticas y proyecto final</h2>
+  <p class="promesa">El curso se aprueba haciendo. Acá está el mapa de cada TP y cómo se resuelve.</p>
+
+  <div class="grupo">
+  <h3 class="sub">Mapa de prácticas por clase</h3>
+  <table>
+    <tr><th style="width:12%">Clase</th><th style="width:34%">Práctica</th><th>Qué practica</th></tr>
+    <tr><td>0</td><td>Reconocimiento de red</td><td><code>ipconfig</code>, <code>arp -a</code>, <code>tracert</code>, <code>nslookup</code></td></tr>
+    <tr><td>1</td><td>Google Dorks</td><td>OSINT: buscar lo que no debería verse</td></tr>
+    <tr><td>2</td><td>VirusTotal + juego Hacked</td><td>Analizar malware sin ejecutarlo</td></tr>
+    <tr><td>3</td><td>Escaneo con Nmap</td><td>Puertos, estados y qué se expone</td></tr>
+    <tr><td>4</td><td>Análisis dinámico en Any.run</td><td>Comportamiento real del malware (1ª entrega PF)</td></tr>
+    <tr><td>5</td><td>Instalar Kali Linux</td><td>Tu laboratorio para todo el curso</td></tr>
+    <tr><td>6</td><td>Snyk + Exploit Database</td><td>Encontrar y clasificar vulnerabilidades</td></tr>
+    <tr><td>7</td><td>Jenkins + OWASP ZAP</td><td>Escaneo automatizado en el pipeline</td></tr>
+    <tr><td>8</td><td>Reto FTP (hacklab)</td><td>Recon + fuerza bruta con Hydra</td></tr>
+    <tr><td>9</td><td>Hash + esteganografía</td><td>Crackstation, Ccrypt, OpenStego, VSL</td></tr>
+    <tr><td>10</td><td>Phishing Quiz + Escape Room</td><td>Detección de engaños</td></tr>
+    <tr><td>11</td><td>RanSim</td><td>Simulación de ransomware</td></tr>
+    <tr><td>12</td><td>Firewall del SO</td><td>Reglas de filtrado (desafío entregable)</td></tr>
+    <tr><td>13</td><td>VPN en Kali</td><td>Túnel cifrado y validación</td></tr>
+    <tr><td>14</td><td>EvilCorp (.pcap)</td><td>Wireshark: encontrar credenciales</td></tr>
+  </table>
+  </div>
+
+  <div class="bloque">
+    <h3>Proyecto Final: "Protegiendo una organización"</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Escenario: una empresa sufrió <b>ransomware</b> y te contrata como especialista. El proyecto se construye con los desafíos de cada clase: <b>1ª entrega en la Clase 4</b> (informe de análisis dinámico) y <b>entrega final en la Clase 14</b> (presentación PPT "PF+Apellido"). Se sube hasta 7 días después de cada clase.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El informe (máx. 3 páginas) incluye: muestra, fecha, OS, MD5; info estática; capturas de comportamiento; diagrama de procesos; eventos; peticiones HTTP; conexiones; peticiones DNS; amenazas. Las conclusiones: comportamiento, nombre general, investigación y tipo de malware (máx. 4 párrafos de 2 oraciones).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>La entrega final suma: acciones correctas/incorrectas del área de soporte (justificadas), resumen de la hipótesis y una <b>propuesta de mejora con 4 puntos</b>: implementar solución · revisión de perímetro con ≥3 buenas prácticas · implementar programa/s · ejecutar ese programa/s.</div>
+  </div>
+
+  <h3 class="sub">Reto Clase 8 — paso a paso (hacklab GF0S)</h3>
+  <table>
+    <tr><th style="width:8%">#</th><th>Paso</th><th style="width:34%">Herramienta</th></tr>
+    <tr><td>1</td><td>Stalkear el perfil del admin ("Alejandro Quero")</td><td>OSINT / Google Dorks</td></tr>
+    <tr><td>2</td><td>Capturar acceso al FTP con el usuario <code>aquero</code></td><td>netkit-ftp</td></tr>
+    <tr><td>3</td><td>Leer la política de contraseñas en el mail: <b>7 dígitos numéricos</b></td><td>lectura del buzón</td></tr>
+    <tr><td>4</td><td>Generar el diccionario de 7 dígitos</td><td><code>crunch 7 7 0123456789 -o pass.txt</code></td></tr>
+    <tr><td>5</td><td>Crackear la contraseña</td><td><code>hydra -L users.txt -P pass.txt ftp://IP</code> → <code>0019808</code></td></tr>
+    <tr><td>6</td><td>Entrar y dejar la evidencia <code>.txt</code> con tu nick</td><td><code>ftp -p</code></td></tr>
+    <tr><td>7</td><td>Inspeccionar el directorio "privado" vía web y bajar <code>PrototipoPrivado6.zip</code></td><td>navegador</td></tr>
+  </table>
+
+  <h3 class="sub">Otras prácticas clave, en orden</h3>
+  <table>
+    <tr><th style="width:24%">Práctica</th><th>Pasos</th></tr>
+    <tr><td><b>Esteganografía (Clase 9)</b></td><td>OpenStego: Message File + Cover File + Output + AES256 + contraseña. Detectar con VSL: Input → Analysers LSB-RS → Report ("Estimated message size").</td></tr>
+    <tr><td><b>EvilCorp (Clase 14)</b></td><td>Cargar el <code>.pcap</code> → filtrar <code>ether host … and tcp port 443</code> tras ping a 8.8.8.8 → guardar <code>minavegacion.pcap</code> → filtrar <code>icmp</code> → <code>miping.pcap</code> → buscar credenciales (<code>james / 007BOND</code>) → crackear el hash en Crackstation.</td></tr>
+    <tr><td><b>Jenkins + ZAP (Clase 7)</b></td><td><code>docker run -p 8080:8080 … jenkins/jenkins:lts</code> → clave en <code>initialAdminPassword</code> → plugin ZAP (localhost:5555) → Freestyle Project → objetivo <code>testphp.vulnweb.com</code> → informe HTML/XML.</td></tr>
+    <tr><td><b>Kali Linux (Clase 4)</b></td><td>VirtualBox + Extension Pack → importar <code>.ova</code> → <code>kali:kali</code> → teclado/idioma español → actualizar repos.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== CAP 17 ==================== -->
+<section class="cap">
+  <h2><span class="num">Para seguir</span>Ruta de estudio y herramientas</h2>
+  <p class="promesa">Ya tenés el material entero. Lo que falta es el orden y el hábito.</p>
+
+  <div class="grupo">
+  <h3 class="sub">Ruta sugerida en 6 semanas</h3>
+  <table>
+    <tr><th style="width:16%">Semana</th><th style="width:34%">Capítulos</th><th>Hito</th></tr>
+    <tr><td><b>1</b></td><td>1 a 3 — redes, triada, amenazas</td><td>Kali instalado y VM aislada andando</td></tr>
+    <tr><td><b>2</b></td><td>4 y 5 — vulnerabilidades y análisis de malware</td><td>1ª entrega del PF (informe de 3 páginas)</td></tr>
+    <tr><td><b>3</b></td><td>6 y 7 — hacking ético y escaneo</td><td>Nmap y Snyk dominados</td></tr>
+    <tr><td><b>4</b></td><td>8 y 9 — DevSecOps y fuerza bruta</td><td>Reto FTP resuelto + Jenkins+ZAP</td></tr>
+    <tr><td><b>5</b></td><td>10 y 11 — criptografía y phishing</td><td>TP esteganografía entregado</td></tr>
+    <tr><td><b>6</b></td><td>12 a 15 — endpoints, perímetro, VPN, Wireshark</td><td>EvilCorp resuelto + entrega final PF</td></tr>
+  </table>
+  </div>
+
+  <div class="recurso">
+    <h4>Kali Linux + VirtualBox</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">LABORATORIO PROPIO</span></div>
+    <p><b>Qué es:</b> tu estación de trabajo: Debian con +600 herramientas de seguridad preinstaladas, corriendo aislada en una VM.</p>
+    <p class="porque"><b>Por qué primero:</b> sin un laboratorio propio y aislado, no se practica nada de esto. <b>kali.org/get-kali</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>Hack The Box y TryHackMe</h4>
+    <div class="pills"><span class="pill gratis">GRATIS (con tiers de pago)</span><span class="pill nivel">DE 0 A INTERMEDIO</span></div>
+    <p><b>Qué es:</b> máquinas y labs de práctica <b>legales</b> para pentearlas cuando quieras, con guía para principiantes.</p>
+    <p class="porque"><b>Por qué sirve:</b> es la continuación natural del curso: lo que viste acá se practica ahí contra máquinas diseñadas para que las rompas. <b>tryhackme.com</b> arranca más suave.</p>
+  </div>
+
+  <div class="recurso">
+    <h4>Wireshark, Nmap y Hydra</h4>
+    <div class="pills"><span class="pill gratis">GRATIS / OPEN SOURCE</span><span class="pill nivel">IMPRESCINDIBLES</span></div>
+    <p><b>Qué son:</b> las tres herramientas que más vas a usar: ver el tráfico, escanear redes y testear credenciales.</p>
+    <p class="porque"><b>Por qué las tres:</b> cubren las tres fases del trabajo real — <b>ver, medir y probar</b>. Documentación oficial: <b>wireshark.org</b>, <b>nmap.org</b>.</p>
+  </div>
+
+  <div class="recurso">
+    <h4>VirusTotal y Any.run</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">ANÁLISIS DE MALWARE</span></div>
+    <p><b>Qué son:</b> análisis de archivos y ejecución de muestras en la nube, sin tocar tu máquina.</p>
+    <p class="porque"><b>Por qué los dos:</b> VirusTotal te dice qué dicen 61 motores; Any.run te muestra el comportamiento en vivo. <b>virustotal.com · any.run</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>Exploit Database y MITRE ATT&CK</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">REFERENCIA</span></div>
+    <p><b>Qué son:</b> el catálogo de exploits usables (con CVE) y el mapa de tácticas y técnicas que usan los atacantes reales.</p>
+    <p class="porque"><b>Por qué importan:</b> cuando analizás malware o reportás un hallazgo, estas dos bases son el <b>estándar de la industria</b>. <b>exploit-db.com · attack.mitre.org</b></p>
+  </div>
+
+  <div class="cierre">
+    <h3>Cerrá el círculo</h3>
+    <p>Recorriste las 14 clases completas: desde qué es una capa OSI hasta capturar un ataque en Wireshark. Ya sabés <b>qué protegen</b>, <b>con qué se ataca</b> y <b>cómo se defiende</b> — que exactamente lo que busca un analista de seguridad el primer día del trabajo.</p>
+    <p><b>Siguiente paso concreto:</b> instalá VirtualBox + Kali esta semana, hacé la práctica de la Clase 0 y volvé mañana. La ciberseguridad se aprende practicando — <b>en tu laboratorio, siempre con autorización.</b></p>
+    <p style="margin-bottom:0">Sigue en la serie: <b>00 · Ruta de aprendizaje</b> (el mapa completo) y <b>01 · Programación desde 0</b> (la base técnica que sostiene todo esto).</p>
+  </div>
+</section>
+
+</body>
+</html>

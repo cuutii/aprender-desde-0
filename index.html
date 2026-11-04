@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aprender desde 0 — Cursos</title>
+<style>
+  :root {
+    --azul: #1b4f8a;
+    --azul-vivo: #1d4ed8;
+    --azul-humo: #eaf1fa;
+    --naranja: #c2410c;
+    --naranja-humo: #fff3ec;
+    --verde: #15803d;
+    --gris: #475569;
+    --borde: #d9e1ec;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+    background: #f7f9fc;
+  }
+  h1, h2, h3 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+
+  .envoltura { max-width: 980px; margin: 0 auto; padding: 34px 20px 50px; }
+
+  /* ---------- Portada ---------- */
+  .serie {
+    display: inline-block; background: var(--naranja); color: #fff;
+    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  }
+  h1 { font-size: 40pt; letter-spacing: -.02em; margin: 22px 0 0 0; }
+  h1 span { color: var(--naranja); display: block; }
+  .regla { height: 5px; background: var(--azul); width: 100%; margin: 22px 0 18px 0; }
+  .sub { font-size: 14pt; color: #33445a; line-height: 1.55; margin: 0 0 8px 0; }
+  .meta { font-size: 10pt; color: #64748b; margin: 0 0 26px 0; }
+
+  /* ---------- Tarjetas ---------- */
+  .grilla {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px; margin-top: 10px;
+  }
+  .curso {
+    display: block; text-decoration: none; background: #fff;
+    border: 1px solid var(--borde); border-left: 5px solid var(--azul);
+    border-radius: 0 8px 8px 0; padding: 16px 18px;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .curso:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(27,79,138,.14); border-left-color: var(--naranja); }
+  .num {
+    display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #fff; background: var(--azul);
+    padding: 2px 9px; border-radius: 3px; margin-bottom: 8px;
+  }
+  .curso h3 { font-size: 15pt; margin-bottom: 6px; color: var(--azul); }
+  .curso p { font-size: 10.5pt; color: #475569; margin: 0 0 8px 0; }
+  .tags { font-size: 9pt; color: var(--naranja); font-weight: 700; letter-spacing: .04em; }
+
+  /* ---------- Nota final ---------- */
+  .nota {
+    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
+    padding: 12px 16px; margin-top: 26px; font-size: 10.5pt;
+  }
+  .nota b { color: var(--naranja); }
+  footer { font-size: 9.5pt; color: #94a3b8; text-align: center; margin-top: 30px; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 30pt; }
+    .sub { font-size: 12.5pt; }
+  }
+</style>
+</head>
+<body>
+<div class="envoltura">
+
+  <div class="serie">Serie · Aprender desde 0</div>
+  <h1>Cursos <span>desde 0</span></h1>
+  <div class="regla"></div>
+  <p class="sub">Una ruta completa para aprender a programar y después defenderse en ciberguridad — de la primera variable al análisis de malware, en cuatro guías que se leen de punta a punta.</p>
+  <p class="meta">Material de estudio personal · Español · Imprimible en A4 · Cada curso se abre como página web</p>
+
+  <div class="grilla">
+    <a class="curso" href="00-ruta-aprendizaje.html">
+      <span class="num">00 · El mapa</span>
+      <h3>Ruta de aprendizaje</h3>
+      <p>El plan completo en 5 etapas: programación, sistemas, redes, seguridad y hacking — con el orden, los tiempos y el porqué de cada paso.</p>
+      <div class="tags">5 ETAPAS · PLAN GENERAL</div>
+    </a>
+
+    <a class="curso" href="01-programacion-desde-0.html">
+      <span class="num">01 · Base</span>
+      <h3>Programación desde 0</h3>
+      <p>Los fundamentos sin saber nada: qué es un programa, variables, tipos de datos, operaciones, entradas, condicionales y bucles. 12 capítulos.</p>
+      <div class="tags">12 CAPÍTULOS · DESDE CERO</div>
+    </a>
+
+    <a class="curso" href="02-programacion-teclab.html">
+      <span class="num">02 · Programación</span>
+      <h3>Programación aplicada</h3>
+      <p>De la lógica a una app real: algoritmos, Java y POO, calidad con JUnit, web con HTTP y MVC, Android, y bases de datos completas (SQL, PL/SQL, NoSQL).</p>
+      <div class="tags">20 CAPÍTULOS · JAVA · WEB · ANDROID · BD</div>
+    </a>
+
+    <a class="curso" href="03-ciberseguridad-desde-0.html">
+      <span class="num">03 · Seguridad</span>
+      <h3>Ciberseguridad desde 0</h3>
+      <p>Las 14 clases del curso ordenadas: redes y OSI, triada CIA, malware, hacking ético, escaneo, criptografía, phishing, firewalls, VPN y Wireshark, con todas las prácticas paso a paso.</p>
+      <div class="tags">17 CAPÍTULOS · 14 CLASES · PRÁCTICAS</div>
+    </a>
+  </div>
+
+  <div class="nota">
+    <b>Recomendación:</b> si estás empezando de verdad, arrancá por la <b>00 · Ruta</b> para ver el mapa, seguí con la <b>01</b> y recién después elegí entre la <b>02</b> (construir) y la <b>03</b> (defender). Todas las prácticas están pensadas para hacerse en tu propia computadora.
+  </div>
+
+  <footer>Serie "Aprender desde 0" · material de estudio personal · todos los cursos se pueden imprimir en A4 desde el navegador</footer>
+
+</div>
+</body>
+</html>

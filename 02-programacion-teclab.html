@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Programación aplicada</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+  }
+
+  /* ---------- Paleta ---------- */
+  :root {
+    --azul: #1b4f8a;
+    --azul-vivo: #1d4ed8;
+    --azul-humo: #eaf1fa;
+    --naranja: #c2410c;
+    --naranja-humo: #fff3ec;
+    --verde: #15803d;
+    --verde-humo: #edf9f0;
+    --morado: #6d28d9;
+    --morado-humo: #f4f0ff;
+    --gris: #475569;
+    --borde: #d9e1ec;
+  }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 9px 0; }
+
+  /* ---------- Portada ---------- */
+  .portada {
+    page-break-after: always; padding: 26mm 0 0 0; text-align: left;
+  }
+  .portada .serie {
+    display: inline-block; background: var(--naranja); color: #fff;
+    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  }
+  .portada h1 {
+    font-size: 46pt; letter-spacing: -.02em; margin: 26px 0 0 0; color: var(--azul);
+  }
+  .portada h1 span { color: var(--naranja); display: block; }
+  .portada .regla { height: 5px; background: var(--azul); width: 100%; margin: 26px 0 22px 0; }
+  .portada .sub {
+    font-size: 15pt; color: #33445a; max-width: 95%; line-height: 1.55; margin: 0 0 26px 0;
+  }
+  .portada .caja-que {
+    background: var(--azul-humo); border-left: 6px solid var(--azul);
+    padding: 16px 20px; border-radius: 0 6px 6px 0; font-size: 11pt;
+  }
+  .portada .caja-que strong { color: var(--azul); }
+  .portada .meta {
+    margin-top: 30px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde);
+    padding-top: 12px;
+  }
+
+  /* ---------- Bloques de concepto ---------- */
+  .bloque {
+    background: #fff; border: 1px solid var(--borde); border-left: 5px solid var(--azul);
+    border-radius: 0 7px 7px 0; padding: 13px 17px 6px 17px; margin: 16px 0;
+    page-break-inside: avoid;
+  }
+  .bloque > h3 { font-size: 13.5pt; margin-bottom: 8px; }
+  .fila { margin: 0 0 6px 0; }
+  .lbl {
+    display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: #fff; padding: 2px 8px; border-radius: 3px;
+    margin-right: 7px; vertical-align: 1.5px;
+  }
+  .lbl.teoria    { background: var(--azul); }
+  .lbl.ejemplo   { background: var(--naranja); }
+  .lbl.quehace   { background: var(--verde); }
+  .lbl.como      { background: var(--morado); }
+  .lbl.ejecuta   { background: var(--gris); }
+  .fila b.lead { color: #0f172a; }
+  .fila p { display: inline; }
+
+  /* ---------- Código ---------- */
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-radius: 4px;
+    padding: 1px 5px; color: #9a3412;
+  }
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt; line-height: 1.5;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-left: 4px solid var(--azul);
+    border-radius: 0 5px 5px 0; padding: 10px 14px; margin: 8px 0 12px 0;
+    color: #0f172a; white-space: pre-wrap; page-break-inside: avoid;
+  }
+  pre .c { color: #64748b; }
+  pre .k { color: var(--azul-vivo); font-weight: 700; }
+  pre .s { color: var(--verde); }
+  pre .n { color: var(--naranja); }
+
+  /* ---------- Capítulos ---------- */
+  .cap { page-break-before: always; }
+  .cap h2 {
+    font-size: 24pt; margin: 0 0 4px 0; letter-spacing: -.01em;
+    border-bottom: 3px solid var(--azul); padding-bottom: 10px;
+  }
+  .cap h2 .num {
+    display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--naranja); margin-bottom: 6px;
+  }
+  .cap .promesa {
+    font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0;
+    border-left: 3px solid var(--naranja); padding-left: 12px;
+  }
+  h3.sub { font-size: 14pt; margin: 15px 0 7px 0; color: var(--azul); }
+
+  /* ---------- Llamadas ---------- */
+  .nota {
+    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .aviso {
+    background: var(--verde-humo); border: 1px solid #bbf7d0; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+
+  /* ---------- Tablas ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  .grupo { page-break-inside: avoid; }
+  th {
+    background: var(--azul); color: #fff; text-align: left; padding: 8px 10px;
+    font-weight: 600; font-size: 9.5pt; letter-spacing: .04em;
+  }
+  td { border-bottom: 1px solid var(--borde); padding: 6px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  td b { color: var(--azul); }
+
+  /* ---------- Recursos ---------- */
+  .recurso {
+    border: 1px solid var(--borde); border-radius: 7px; padding: 12px 16px;
+    margin: 12px 0; page-break-inside: avoid; background: #fff;
+  }
+  .recurso h4 { font-size: 12.5pt; margin-bottom: 4px; }
+  .pills { margin: 4px 0 7px 0; }
+  .pill {
+    display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-right: 5px; letter-spacing: .04em;
+  }
+  .pill.gratis   { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+  .pill.mixto    { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+  .pill.nivel    { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+  .recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+  .recurso .porque { color: #475569; font-size: 10pt; }
+  .recurso .porque b { color: var(--naranja); }
+
+  /* ---------- Índice ---------- */
+  .indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+  .indice li {
+    padding: 7px 0; border-bottom: 1px dotted var(--borde); font-size: 11.5pt;
+    display: flex; justify-content: space-between;
+  }
+  .indice li span.t { color: var(--azul); font-weight: 600; }
+  .indice li span.d { color: #64748b; font-size: 10pt; }
+
+  .cierre {
+    background: var(--azul); color: #eaf1fa; padding: 18px 22px; border-radius: 8px;
+    margin-top: 22px; page-break-inside: avoid;
+  }
+  .cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+  .cierre p { color: #dbe7f7; font-size: 10.8pt; }
+  .cierre b { color: #ffd8b0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Programación parte 2</div>
+  <h1>Programación <span>aplicada</span></h1>
+  <div class="regla"></div>
+  <p class="sub">De la lógica y los algoritmos a Java, la web, Android y las bases de datos — las cuatro materias de programación, ordenadas módulo por módulo, con sus prácticas reales.</p>
+
+  <div class="caja-que">
+    <strong>Para quién es:</strong> para quien ya pasó el "Programación desde 0" y ahora quiere construir cosas de verdad: una web, una app de Android y una base de datos que la sostenga.<br><br>
+    <strong>Cómo está escrito:</strong> cada idea nueva usa el mismo molde — <b>Teoría</b> (qué es), <b>Ejemplo</b> (una analogía cotidiana), <b>Qué hace</b>, <b>Cómo lo hace</b> y <b>Cómo se ejecuta</b> (el código real). Al final de cada capítulo, la <b>práctica del curso</b> que corresponde.
+  </div>
+
+  <p class="meta">Material de estudio personal · Lógica · Java · Web · Android · Bases de datos<br>Mejorado a partir del programa de TECLAB: módulos, actividades prácticas (AP/API) y el proyecto Android real del 6to bimestre.</p>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer este material</h2>
+  <p class="promesa">Si entendés estas cinco palabras, ya podés leer el documento entero.</p>
+
+  <p>Este guía usa siempre el mismo molde para cada concepto. Así no importa si leés un capítulo entero o solo una ficha: el formato es el mismo y tu cerebro sabe dónde mirar.</p>
+
+  <table>
+    <tr><th style="width:22%">Etiqueta</th><th>Qué encontrarás</th></tr>
+    <tr><td><span class="lbl teoria">Teoría</span></td><td>La idea en una o dos oraciones. <b>Qué es</b> la cosa, explicada con palabras de todos los días.</td></tr>
+    <tr><td><span class="lbl ejemplo">Ejemplo</span></td><td>Una comparación con algo que ya conocés: una receta, una caja de zapatos, un semáforo. <b>La analogía</b> es lo que hace que algo abstracto se vuelva visible.</td></tr>
+    <tr><td><span class="lbl quehace">Qué hace</span></td><td>Su <b>trabajo</b>, en una frase. Para qué sirve en la vida real.</td></tr>
+    <tr><td><span class="lbl como">Cómo lo hace</span></td><td>El <b>mecanismo</b> por dentro: qué estructura, qué patrón, qué línea de código lo hace posible.</td></tr>
+    <tr><td><span class="lbl ejecuta">Cómo se ejecuta</span></td><td>El <b>paso a paso</b> concreto: el fragmento de código y su salida.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    No leas esto como una novela. <b>Leé un concepto, y después probalo.</b> Los fragmentos de acá están pensados para copiarse en el editor y correrse. <b>Un error que aparece es información, no un fracaso.</b>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Qué necesitás antes de arrancar</span><br>
+    Un editor (<b>VS Code</b>) y los lenguajes del curso: <b>Java</b> con <b>Eclipse</b> o <b>NetBeans</b> (con sugerencia de código y cierre de etiquetas), <b>C++</b> para los ejercicios de lógica, <b>PostgreSQL</b> con <b>pgAdmin</b> para las bases de datos, y <b>Android Studio</b> para el módulo mobile. Todos gratis.
+  </div>
+</section>
+
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · Lógica: proposiciones y operadores</span><span class="d">Verdadero o falso, y qué se puede preguntar</span></li>
+    <li><span class="t">2 · Tablas de verdad y leyes de Morgan</span><span class="d">Resolver expresiones lógicas paso a paso</span></li>
+    <li><span class="t">3 · Algoritmos</span><span class="d">Finito, definido, ordenado — o no es algoritmo</span></li>
+    <li><span class="t">4 · Pseudocódigo y diagramas de flujo</span><span class="d">Pensar antes de escribir código</span></li>
+    <li><span class="t">5 · Condicionales</span><span class="d">if, if-else y switch</span></li>
+    <li><span class="t">6 · Bucles</span><span class="d">while, do-while y for</span></li>
+    <li><span class="t">7 · Funciones, recursividad y estructuras de datos</span><span class="d">Listas, arreglos y matrices</span></li>
+    <li><span class="t">8 · Ordenamiento y complejidad</span><span class="d">Burbuja, selección, inserción, árbol</span></li>
+    <li><span class="t">9 · POO: del molde al objeto</span><span class="d">Clases, herencia, polimorfismo</span></li>
+    <li><span class="t">10 · Java en profundidad</span><span class="d">JVM, constructores, visibilidad, excepciones</span></li>
+    <li><span class="t">11 · Calidad de código</span><span class="d">Logging, colecciones, JUnit y TDD</span></li>
+    <li><span class="t">12 · Web desde cero</span><span class="d">HTTP, HTML, CSS y MVC</span></li>
+    <li><span class="t">13 · Persistencia y seguridad</span><span class="d">JDBC, SQL y autenticación</span></li>
+    <li><span class="t">14 · Android I</span><span class="d">Manifest, activities, intents, ciclo de vida</span></li>
+    <li><span class="t">15 · Android II</span><span class="d">Persistencia, servicios, Retrofit, MVP y Firebase</span></li>
+    <li><span class="t">16 · Bases de datos I</span><span class="d">Modelos, entidad-relación y normalización</span></li>
+    <li><span class="t">17 · Bases de datos II</span><span class="d">SQL completo: DDL, DML, joins</span></li>
+    <li><span class="t">18 · Bases de datos III</span><span class="d">PL/SQL, triggers y NoSQL</span></li>
+    <li><span class="t">19 · El proyecto real</span><span class="d">La app de ciudades, código y todo</span></li>
+    <li><span class="t">20 · Ruta de estudio y cómo seguir</span><span class="d">El orden para no perderse</span></li>
+  </ul>
+
+  <h3 class="sub">Glosario mínimo (para volver si te atascás)</h3>
+  <table>
+    <tr><th style="width:28%">Palabra</th><th>Significado simple</th></tr>
+    <tr><td><b>Algoritmo</b></td><td>Conjunto finito, definido y ordenado de instrucciones que producen un resultado.</td></tr>
+    <tr><td><b>Pseudocódigo</b></td><td>El algoritmo escrito en lenguaje humano, antes del código.</td></tr>
+    <tr><td><b>Compilar</b></td><td>Traducir todo el programa a un ejecutable antes de correrlo.</td></tr>
+    <tr><td><b>Interpretar</b></td><td>Traducir línea por línea mientras se ejecuta.</td></tr>
+    <tr><td><b>Clase / Objeto</b></td><td>El molde / la cosa hecha con ese molde.</td></tr>
+    <tr><td><b>HTTP</b></td><td>El idioma en que el navegador y el servidor se hablan.</td></tr>
+    <tr><td><b>SQL</b></td><td>El lenguaje para hablar con bases de datos relacionales.</td></tr>
+    <tr><td><b>Normalización</b></td><td>Ordenar las tablas para que los datos no se repitan ni se contradigan.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== CAP 1 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 1 · Lógica</span>Proposiciones y operadores</h2>
+  <p class="promesa">Todo programa, por grande que sea, se apoya en una pregunta: ¿es verdad o es falso?</p>
+
+  <div class="bloque">
+    <h3>¿Qué es una proposición?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>proposición</b> es un enunciado al que se le puede asignar un valor de verdad: <b>verdadero (1)</b> o <b>falso (0)</b>. Las preguntas ("¿Tenés hambre?") y los imperativos ("¡No quiero hacerlo!") <b>no</b> son proposiciones: no se les puede asignar un valor. "El cielo está nublado", en cambio, sí: es verdadero o falso.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>interruptor</b>: o está prendido o está apagado. No hay un "medio prendido". La lógica binaria es exactamente eso: el mundo reducido a dos estados, como los bits de la computadora.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite <b>razonar y programar decisiones</b> con certeza matemática.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>operadores lógicos</b>: OR (disyunción, <code>+</code>), AND (conjunción, <code>·</code>) y NOT (negación). El resultado de una operación es siempre otra proposición.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>a OR b</code> con <code>b = 1</code> da <b>1</b> sin importar el valor de <code>a</code>. <code>NOT A</code> invierte: 0 → 1, 1 → 0.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:16%">Operador</th><th style="width:14%">Símbolo</th><th style="width:34%">En palabras</th><th>Ejemplo</th></tr>
+    <tr><td><b>AND</b> (conjunción)</td><td><code>·</code></td><td>Los dos deben ser verdaderos</td><td>Tiene llave <b>y</b> tiene permiso → entra</td></tr>
+    <tr><td><b>OR</b> (disyunción)</td><td><code>+</code></td><td>Basta con que uno sea verdadero</td><td>Tiene llave <b>o</b> es el encargado → entra</td></tr>
+    <tr><td><b>NOT</b> (negación)</td><td><code>´</code></td><td>Invierte el valor</td><td>NO está bloqueado → puede entrar</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El "juicio"</span><br>
+    Un <b>juicio</b> es el acto mental por el que pensamos un enunciado. En programación lo simplificamos: el programa no "juzga", evalúa la expresión y recibe 0 o 1. De ahí sale el <code>if</code> del Capítulo 5.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (AE1)</span><br>
+    Evaluá: <code>s = (A + B)</code> con A=0, B=0 → <b>0</b>. <code>s = (A´ · B)</code> con A=1, B=1 → <b>0</b> (porque A´ = 0). Y reconocé si estas secuencias son algoritmos: ¿son finitas, definidas y ordenadas?
+  </div>
+</section>
+
+<!-- ==================== CAP 2 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 1 · Lógica</span>Tablas de verdad y leyes de Morgan</h2>
+  <p class="promesa">La tabla de verdad es el mapa: muestra todos los caminos posibles antes de que el programa los recorra.</p>
+
+  <div class="bloque">
+    <h3>Tabla de verdad</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es la <b>enumeración de todas las combinaciones posibles</b> de valores de verdad de las variables de una función lógica. Con n variables hay <b>2ⁿ filas</b>: 2 variables = 4 filas, 3 variables = 8 filas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>menú de opciones de una máquina de café</b>: con 2 botones (leche sí/no, azúcar sí/no) hay 4 combinaciones. La tabla las lista todas para que no se te escape ninguna.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Probar una expresión <b>sin ejecutar el programa</b>: si la tabla da bien, el código da bien.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Resolviendo por dentro hacia afuera: primero las operaciones entre paréntesis, después las siguientes, hasta llegar a un único valor por fila.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para <code>(P ∧ Q) ∨ R</code> con P, Q, R: 8 filas. En cada una se reemplaza el valor, se resuelve <code>P ∧ Q</code> y después se aplica <code>∨ R</code>.</div>
+  </div>
+
+  <pre><span class="c"># Tabla de verdad de (P AND Q) OR R — 8 combinaciones</span>
+<span class="k">P  Q  R  |  (P·Q)+R</span>
+<span class="n">0  0  0  |    0</span>
+<span class="n">0  0  1  |    1</span>
+<span class="n">0  1  0  |    0</span>
+<span class="n">0  1  1  |    1</span>
+<span class="n">1  0  0  |    0</span>
+<span class="n">1  0  1  |    1</span>
+<span class="n">1  1  0  |    1</span>
+<span class="n">1  1  1  |    1</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Leyes de Morgan (de memoria)</span><br>
+    <code>NOT(A AND B) = NOT A OR NOT B</code><br>
+    <code>NOT(A OR B) = NOT A AND NOT B</code><br>
+    Traducción: la negación de un conjunto compuesto <b>invierte los operadores</b>. Es lo mismo que "no es que tenga llave o permiso" = "no tiene llave <b>y</b> no tiene permiso". Y cuidado: el operador <code>-</code> (resta) <b>no existe</b> en funciones lógicas — una expresión así está mal confeccionada.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (Actividad 1)</span><br>
+    Armá la tabla de verdad de <code>(P ∧ Q) ∨ R</code> tomando: P = <code>stock ≥ 100</code>, Q = <code>costo &lt; 1500</code>, R = <code>stock &lt; 50</code>. Son las condiciones del ejercicio de precio de venta del Capítulo 4: cada fila es un escenario posible del negocio.
+  </div>
+</section>
+
+<!-- ==================== CAP 3 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 1 · Lógica</span>Algoritmos</h2>
+  <p class="promesa">Un algoritmo no es código: es el pensamiento ordenado que después se convierte en código.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es un algoritmo?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es un <b>conjunto definido de instrucciones</b>, con una <b>orden</b> y una <b>cantidad determinada</b> (finita) de pasos, que producen un resultado. Tres características obligatorias: <b>finito</b> (no infinito), <b>definido</b> (cada paso define una acción o condición) y <b>ordenado</b> (secuencia establecida).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>receta de la abuela</b>: "primero los huevos, después la harina". Si un paso dice "cociná hasta que esté" sin decir cuánto ni cómo, no está definido. Si dice "agregá harina mientras quiera", no es finito. La receta de la abuela funcionaba porque era finita, definida y ordenada.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Resolver un <b>problema concreto</b>: buscar, encaminar u ordenar.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Tipos por objetivo: <b>búsqueda</b> (encontrar un ítem), <b>encaminamiento</b> (calcular una trayectoria) y <b>ordenamiento</b> (ordenar según un criterio, Capítulo 8).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Pasos de solución de problemas: 1. detectar el problema → 2. recabar datos → 3. plantear hipótesis → 4. elegir alternativa → 5. implementar y verificar. Y si cada paso tiene un solo predecesor y un solo sucesor, el algoritmo es <b>secuencial/lineal</b>.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:20%">Característica</th><th style="width:36%">Qué exige</th><th>Si falla…</th></tr>
+    <tr><td><b>Finito</b></td><td>Termina en un número limitado de pasos</td><td>Bucle infinito / receta sin fin</td></tr>
+    <tr><td><b>Definido</b></td><td>Cada paso es inequívoco, sin ambigüedad</td><td>"Cociná lo que haga falta"</td></tr>
+    <tr><td><b>Ordenado</b></td><td>Los pasos tienen una secuencia establecida</td><td>Pasos mezclados → no se puede ejecutar</td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (AE1 / Examen)</span><br>
+    Detectá cuál de estas secuencias <b>no</b> es un algoritmo (pistas: ¿están desordenados? ¿hay pasos indefinidos?) y verificá las características de un algoritmo dado. Pregunta típica: "¿el algoritmo es finito? ¿definido? ¿ordenado?" — justificando cada una.
+  </div>
+</section>
+
+<!-- ==================== CAP 4 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 2</span>Pseudocódigo y diagramas de flujo</h2>
+  <p class="promesa">Antes de programar se dibuja o se escribe. El código viene después.</p>
+
+  <div class="bloque">
+    <h3>Dos maneras de pensar el algoritmo</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>diagrama de flujo</b> representa los pasos <b>gráficamente</b>; el <b>pseudocódigo</b> los representa en <b>lenguaje natural</b> estructurado. Uno se deriva del otro y viceversa. Ambos son previos al código real.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El diagrama es el <b>plano de una casa</b> (se ve de un vistazo); el pseudocódigo es la <b>lista de obras</b> escrita en palabras. Después, el código es la casa construida.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ordenar la idea <b>sin pelearse con la sintaxis</b> de un lenguaje.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El diagrama usa símbolos estándar: <b>óvalo</b> (inicio/fin), <b>rombo</b> (decisión), <b>rectángulo</b> (proceso) y <b>flechas</b> (flujo). Siempre arranca en óvalo; del rombo salen las ramas y se conecta a óvalo si termina o a rectángulo si continúa.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Leé el diagrama siguiendo las flechas desde el óvalo de inicio hasta el de fin. Cada rombo es un "si… entonces… si no…" que elige rama.</div>
+  </div>
+
+  <h3 class="sub">Variables y tipos (el vocabulario mínimo)</h3>
+  <table>
+    <tr><th style="width:22%">Tipo</th><th style="width:24%">Ejemplo</th><th>Para qué</th></tr>
+    <tr><td><b>Entero (int)</b></td><td><code>stock = 100</code></td><td>Cantidades sin decimales</td></tr>
+    <tr><td><b>Decimal (float/double)</b></td><td><code>costo = 1499.99</code></td><td>Precios, medidas</td></tr>
+    <tr><td><b>Texto (String)</b></td><td><code>nombre = "Teclab"</code></td><td>Cadenas de caracteres</td></tr>
+    <tr><td><b>Booleano</b></td><td><code>esPromo = true</code></td><td>Verdadero/falso, sí/no</td></tr>
+    <tr><td><b>Constante</b></td><td><code>PI = 3.1416</code></td><td>Valores que no cambian nunca</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Las 6 etapas del ciclo de vida</span><br>
+    <b>Análisis → Diseño → Programación → Pruebas → Despliegue → Mantenimiento</b>, con la planificación continua e incluyendo acciones correctivas. "Programar" es solo una de las seis etapas — por eso un buen pseudocódigo (análisis) ahorra el doble de tiempo después.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (Actividad 1)</span><br>
+    Escribí el pseudocódigo del precio de venta: el producto gana 20 % + IVA 21 %, <b>o</b> 15 % si <code>stock ≥ 100 y costo &lt; 1500 o stock &lt; 50</code>. Después rediseñá el diagrama de flujo de esa misma actividad agregando: "producto promocional → solo IVA 21 %, sin ganancia".
+  </div>
+
+  <pre><span class="c"># Actividad 1 — pseudocódigo de referencia</span>
+Escribir <span class="s">"ingrese el precio del producto"</span>; Leer costo
+Escribir <span class="s">"ingresar el stock del producto"</span>;  Leer stock
+<span class="k">si</span> stock &gt;= <span class="n">100</span> <span class="k">y</span> costo &lt; <span class="n">1500</span> <span class="k">o</span> stock &lt; <span class="n">50</span> <span class="k">Entonces</span>
+    ganancia = costo * <span class="n">0.15</span>
+<span class="k">SiNo</span>
+    ganancia = costo * <span class="n">0.20</span>
+<span class="k">FinSi</span>
+precio_ganancia = costo + ganancia
+precio_total    = precio_ganancia * <span class="n">1.21</span>
+precio_redondeado = redon(precio_total)
+Escribir <span class="s">"el precio de venta del producto es"</span>, precio_redondeado</pre>
+</section>
+
+<!-- ==================== CAP 5 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 3</span>Condicionales</h2>
+  <p class="promesa">El programa deja de ir en línea recta: empieza a decidir.</p>
+
+  <div class="bloque">
+    <h3>if, if-else y switch</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los <b>condicionales</b> evalúan la veracidad de una sentencia con valores booleanos. <code>if</code> ejecuta un bloque si se cumple; <code>if-else</code> elige entre dos caminos; el <b>condicional múltiple</b> (<code>switch</code>) evalúa una variable y ejecuta el camino según su valor — una alternativa a sucesivos <code>if</code> cuando hay muchos casos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>menú del cajero automático</b>: si apretás "extraer", hace una cosa; si "transferir", otra. Y si hay cinco opciones, el <code>switch</code> es el menú completo en vez de cinco preguntas seguidas.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Elegir <b>un camino</b> según los datos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Evalúa la condición → obtiene true/false → entra al bloque que cumplió. Los dos bloques <b>nunca se ejecutan a la vez</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En pseudocódigo: <code>si condición Entonces … SiNo … FinSi</code>. En Java/C++: <code>if (condición) { … } else { … }</code> y <code>switch (valor) { case …: … }</code>.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:24%">Estructura</th><th style="width:38%">Cuándo usarla</th><th>Detalle</th></tr>
+    <tr><td><b>if</b></td><td>Cuando hay una sola condición</td><td>Si no se cumple, no pasa nada</td></tr>
+    <tr><td><b>if-else</b></td><td>Cuando hay dos caminos excluyentes</td><td>Siempre se ejecuta uno de los dos</td></tr>
+    <tr><td><b>switch</b></td><td>Cuando una variable tiene muchos valores posibles</td><td><code>case</code>, <code>break</code>, <code>default</code></td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (AE2)</span><br>
+    Identificá el diagrama de flujo correcto (arranca y termina en <b>óvalo</b>, las decisiones van en <b>rombo</b>) y definí: lenguaje de alto nivel, compilador, pseudocódigo y multiplataforma. Después resolvé el ejercicio con la condición "producto promocional" del Capítulo 4.
+  </div>
+</section>
+
+<!-- ==================== CAP 6 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 3</span>Bucles</h2>
+  <p class="promesa">Repetir 100 veces la misma línea es de máquinas. Dejá que la máquina lo haga.</p>
+
+  <div class="bloque">
+    <h3>while, do-while y for</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>bucle</b> repite un bloque según una condición. <code>while</code> evalúa la condición <b>al inicio</b> (puede no ejecutarse nunca). <code>do-while</code> la evalúa <b>al final</b>: se ejecuta <b>siempre al menos una vez</b>. <code>for</code> junta inicialización + condición + incremento en una línea. El <code>for-each</code> recorre listas/arreglos de forma más simple.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>while</b>: "seguí corriendo mientras no llueva" (podés no correr nunca si ya llueve). <b>do-while</b>: "tirá la pelota y fijate si rebota" — tirás siempre una vez. <b>for</b>: "lavad 5 platos" — sabés cuántos hay.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Hacer en 3 líneas lo que a mano llevaría 50.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El programa mantiene un <b>contador</b> o reevalúa la condición; cuando deja de cumplirse, sale del bucle y continúa.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Mirá la salida de los tres en el ejemplo: la diferencia entre <code>while</code> y <code>do-while</code> se ve en el segundo código.</div>
+  </div>
+
+  <pre><span class="k">int</span> i = <span class="n">0</span>;
+<span class="k">while</span> (i &lt; <span class="n">10</span>) { cout &lt;&lt; i &lt;&lt; endl; i++; }   <span class="c">// imprime 0 al 9 (10 veces)</span>
+
+<span class="k">int</span> i = <span class="n">11</span>;
+<span class="k">do</span> { cout &lt;&lt; i &lt;&lt; endl; i++; } <span class="k">while</span> (i &lt; <span class="n">10</span>); <span class="c">// imprime 11 UNA sola vez:</span>
+                                    <span class="c">// do-while corre siempre al menos 1 vez</span>
+
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt; <span class="n">10</span>; i++) { cout &lt;&lt; i &lt;&lt; endl; } <span class="c">// imprime 1 al 9</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Trampa clásica del for</span><br>
+    Un <code>for</code> que arranca en <code>i = 1</code> <b>saltea el índice 0</b> y no recorre todos los elementos de un arreglo. En arreglos se cuenta desde 0. Y el bucle infinito: si dentro del <code>while</code> nada cambia la condición, no termina nunca.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (AE3)</span><br>
+    Interpretá la salida de los tres bucles de arriba (pregunta de examen típica) y después escribí un bucle que imprima los elementos de un arreglo de 5 posiciones <b>completo</b>, desde el índice 0.
+  </div>
+</section>
+
+<!-- ==================== CAP 7 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 3</span>Funciones, recursividad y estructuras de datos</h2>
+  <p class="promesa">Escribir lo mismo cinco veces es trabajo perdido. Y guardar 500 cosas en 500 variables, también.</p>
+
+  <div class="bloque">
+    <h3>Funciones y recursividad</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>función</b> es un bloque reutilizable que recibe <b>parámetros</b> y puede devolver un <b>valor</b>. Las <b>funciones anónimas o lambda</b> son funciones sin nombre usadas como valores. La <b>recursividad</b> es un algoritmo que se llama a sí mismo — con más consumo de recursos que la versión iterativa.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La función es el <b>botón del microondas</b>: apretás una vez y ejecuta una rutina entera guardada. La recursividad es <b>dos espejos enfrentados</b>: la función se ve a sí misma una y otra vez… hasta que algo corta (el caso base). Ejemplo clásico: el <b>factorial</b>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Funciones: <b>reusar</b> y ordenar. Recursividad: resolver problemas que se parecen a sí mismos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>La función <code>void</code> ejecuta y no devuelve nada; la que declara un tipo devuelve con <code>return</code>. La recursiva se llama a sí misma hasta llegar a un caso que no se repite.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span></div>
+  </div>
+
+  <pre><span class="c">// void: hace el trabajo, no devuelve nada</span>
+<span class="k">void</span> operacion(<span class="k">int</span> a) { a++; cout &lt;&lt; a; }
+
+<span class="c">// con retorno: devuelve el entero (sin imprimir)</span>
+<span class="k">int</span> operacion(<span class="k">int</span> a) { a++; <span class="k">return</span> a; }
+
+<span class="c">// la función del curso: precio de venta reutilizable</span>
+<span class="k">int</span> calcularpreciodeventa(<span class="k">int</span> costo, <span class="k">int</span> stock) {
+    <span class="k">int</span> precio_final;
+    <span class="k">if</span> ((stock &gt;= <span class="n">100</span> <span class="k">and</span> costo &lt; <span class="n">1500</span>) <span class="k">or</span> stock &lt; <span class="n">50</span>)
+        precio_final = (costo * <span class="n">1.15</span>) * <span class="n">1.21</span>;
+    <span class="k">else</span>
+        precio_final = (costo * <span class="n">1.20</span>) * <span class="n">1.21</span>;
+    <span class="k">return</span> precio_final;
+}</pre>
+
+  <div class="grupo">
+  <h3 class="sub">Listas, arreglos y matrices</h3>
+  <table>
+    <tr><th style="width:20%">Estructura</th><th style="width:32%">Tamaño</th><th>Acceso</th></tr>
+    <tr><td><b>Lista</b></td><td>Variable (crece y achica)</td><td>Ordenada, de a un elemento</td></tr>
+    <tr><td><b>Arreglo</b></td><td>Fijo (se define al crearlo)</td><td>Por <b>índice</b>, que empieza en 0</td></tr>
+    <tr><td><b>Matriz</b></td><td>Fijo, bidimensional</td><td>Por fila y columna (una tabla)</td></tr>
+  </table>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (Actividad 3)</span><br>
+    Proyecto en C++ (VS Code): un método <code>main</code> y la función <code>calcularPrecioDeVenta(costo, stock)</code> del ejemplo. Después, <b>dos arreglos de 5 elementos</b> (precio y stock): recorrilos, invocá la función por posición y sumá los totales de compra y de venta.
+  </div>
+</section>
+
+<!-- ==================== CAP 8 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 4</span>Ordenamiento y complejidad</h2>
+  <p class="promesa">Ordenar es la primera tarea de toda computadora. Y hay varias formas de hacerlo.</p>
+
+  <div class="bloque">
+    <h3>Algoritmos de ordenamiento</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Ordenan los elementos de un arreglo según un <b>criterio</b>. Son "computacionalmente altos" cuando la demanda de procesamiento y memoria crece con la cantidad de elementos. La <b>complejidad</b> se expresa con notación <b>O()</b>: qué tan rápido crece el costo a medida que crecen los datos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>Burbuja:</b> como apilar cartas mezclando de a dos — los pesados "se hunden" y los livianos suben. <b>Selección:</b> buscar siempre el menor de la pila y ponerlo en su lugar. <b>Inserción:</b> tomar cada carta e ir metiéndola en su lugar dentro de la mano ya ordenada.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Poner los datos en orden para <b>buscar después</b> rápido (búsqueda binaria) y presentarlos bien.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Comparando elementos y moviéndolos — o construyendo una estructura ordenada de entrada (el <b>árbol</b>: inserta en orden y después recorre).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Criterio típico de examen: ¿qué algoritmo usar para ordenar palabras alfabéticamente? — cualquiera sirve, pero el de inserción es el más intuitivo para datos casi ordenados.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:18%">Algoritmo</th><th>Idea</th></tr>
+    <tr><td><b>Burbuja</b></td><td>Intercambia los desordenados vecinos, vuelta tras vuelta. Simple pero ineficiente.</td></tr>
+    <tr><td><b>Selección</b></td><td>Busca el menor y lo pone en la primera posición; repite para el resto.</td></tr>
+    <tr><td><b>Inserción</b></td><td>Copia el primero en un arreglo nuevo y va insertando cada siguiente en su lugar.</td></tr>
+    <tr><td><b>Árbol</b></td><td>Construye un árbol binario elemento por elemento y lo recorre en orden.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Complejidad y memoria</span><br>
+    Notación <code>O()</code>: O(n) lineal, O(n²) cuadrático (la burbuja), O(log n) logarítmico. Pregunta de examen: diferencia entre <b>memoria estática</b> (tamaño fijo, se reserva al compilar) y <b>memoria dinámica/persistente</b> (crece según se necesita) — los algoritmos que usan una u otra rinden distinto.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso</span><br>
+    Tomá un arreglo de 5 números desordenados y <b>ordenalo a mano con cada método</b> (burbuja, selección, inserción), anotando cada paso. Después buscalo en un buscador: ¿cuántos pasos usó cada uno? Ahí se entiende la O().
+  </div>
+</section>
+
+<!-- ==================== CAP 9 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 4 · POO</span>Del molde al objeto</h2>
+  <p class="promesa">La POO no es una sintaxis: es una manera de mirar el mundo y copiarlo al código.</p>
+
+  <div class="bloque">
+    <h3>Clases, objetos y conceptos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>clase</b> es el <b>molde</b>; un <b>objeto</b> es la cosa hecha con ese molde (la <b>instanciación</b>). Los <b>atributos</b> son sus propiedades, los <b>métodos</b> sus comportamientos, y los <b>mensajes</b> la comunicación entre objetos. Nace en el MIT a fines de los 50, con Lisp.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La clase <code>Persona</code> es el <b>molde de cédula</b>: define que toda persona tiene nombre, altura y año de nacimiento. Tus datos y los míos son dos <b>objetos</b> distintos hechos con el mismo molde — mismas variables, valores distintos.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Modelar el <b>mundo real</b> en software de forma ordenada y reutilizable.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con cuatro pilares: <b>encapsulamiento</b> (ocultar lo interno), <b>herencia</b> (la hija hereda atributos y métodos de la padre), <b>abstracción</b> (extraer lo esencial) y <b>polimorfismo</b> (el mismo mensaje, comportamientos distintos).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Creás la clase, la instanciás (<code>Producto lapiz = new Producto()</code>) y le mandás mensajes (llamás sus métodos).</div>
+  </div>
+
+  <table>
+    <tr><th style="width:24%">Concepto</th><th>En una frase</th></tr>
+    <tr><td><b>Clase / Objeto</b></td><td>El molde / la instancia concreta.</td></tr>
+    <tr><td><b>Atributos / Métodos</b></td><td>Propiedades / comportamientos.</td></tr>
+    <tr><td><b>Encapsulamiento</b></td><td>Lo interno se oculta (atributos <code>private</code>) y se accede por getters/setters.</td></tr>
+    <tr><td><b>Herencia</b></td><td>La hija reusa lo de la padre. <b>En Java solo hay una clase padre.</b></td></tr>
+    <tr><td><b>Polimorfismo</b></td><td>El mismo método, respuesta distinta según el objeto.</td></tr>
+    <tr><td><b>Abstracción</b></td><td>Quedarse con lo esencial, dejar afuera lo irrelevante.</td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (Actividad 4)</span><br>
+    Proyecto Java en Eclipse con <b>3 clases</b>: <code>Producto</code> (atributos privados nombre/precio/stock, constructor, 3 métodos para informar), <code>Inventario</code> (lista de productos, <code>agregarProducto()</code>, <code>informarPrecios()</code>) y <code>Aplicación</code> (la que tiene el <code>main</code> y prueba todo). Ampliación: atributo <code>esPromocional</code> — si es <code>true</code> no se suma ganancia.
+  </div>
+</section>
+
+<!-- ==================== CAP 10 ==================== -->
+<section class="cap">
+  <h2><span class="num">Módulo 4 + Web 2</span>Java en profundidad</h2>
+  <p class="promesa">"Escribí una vez, corré en cualquier lado" — la promesa de Java, y cómo la cumple.</p>
+
+  <div class="bloque">
+    <h3>JDK, JRE y JVM</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Java es de <b>alto nivel</b>, de propósito general y <b>fuertemente tipado</b>. Su plataforma se parte en tres: <b>JDK</b> (herramientas de desarrollo), <b>JRE</b> (entorno de ejecución) y <b>JVM</b> (la máquina virtual que ejecuta los archivos <code>.class</code>: el intérprete dentro del JRE).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El JDK es el <b>taller del carpintero</b>, el JRE la <b>carpintería en general</b> (donde se puede usar lo hecho) y la JVM el <b>operario</b> que realmente ejecuta. Por eso "corre en cualquier lado": cada sistema operativo tiene su propio operario (JVM) y el mismo archivo <code>.class</code> le sirve a todos.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar Java <b>sin recompilar</b> al cambiar de plataforma.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El compilador Java traduce a <code>.class</code> (bytecode) y la JVM lo interpreta. Multiplataforma = el mismo bytecode corre donde haya JVM.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>javac MiClase.java</code> compila → genera <code>MiClase.class</code> → <code>java MiClase</code> lo ejecuta en la JVM.</div>
+  </div>
+
+  <h3 class="sub">Constructores, visibilidad y excepciones</h3>
+  <table>
+    <tr><th style="width:26%">Tema</th><th>Detalle</th></tr>
+    <tr><td><b>Constructor</b></td><td>Crea el objeto y asocia los parámetros a los atributos. También puede haber clases sin constructor (se usan métodos <code>set</code>).</td></tr>
+    <tr><td><b>Visibilidad</b></td><td><b>pública</b> (accesible desde cualquier lado) · <b>privada</b> (solo la clase) · <b>protegida</b> (la clase, sus hijas y amigas del mismo package).</td></tr>
+    <tr><td><b>Packages</b></td><td>Organizan las clases en estructuras lógicas. Toda clase debe pertenecer a un package.</td></tr>
+    <tr><td><b>Interfaces</b></td><td>Contrato de métodos que una clase <b>debe</b> implementar. Las abstractas no se instancian.</td></tr>
+    <tr><td><b>final</b></td><td>Clase final: no se hereda. Método final: se hereda pero no se redefine. Variable final: constante.</td></tr>
+    <tr><td><b>Casteo</b></td><td>Convertir tipos: explícito <code>(int) x</code> o implícito.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Excepciones: el programa no tiene por qué morir</span><br>
+    Una <b>excepción</b> ocurre en tiempo de ejecución (ej. división por cero) y puede cortar el programa si no se maneja. <code>throw</code> la <b>lanza</b>; <code>try/catch/finally</code> la <b>captura</b>; el <code>finally</code> <b>siempre</b> se ejecuta (ideal para cerrar conexiones). Las <b>chequeadas</b> obliga el compilador a manejarlas; las <b>no chequeadas</b> (RuntimeException) no.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (API 2 — escuela Rocallosas)</span><br>
+    Cargá 10 alumnos con sus notas validando que cada una sea <b>&gt; 0 y ≤ 10</b>. Si no, <b>lanzá una excepción</b> con el mensaje <code>"El rango de notas es entre 1 y 10"</code>. Después re-cargá cambiando una nota por 11 y <b>capturá</b> la salida con <code>try/catch</code>. Enviá el código fuente.
+  </div>
+</section>
+
+<!-- ==================== CAP 11 ==================== -->
+<section class="cap">
+  <h2><span class="num">Web 3</span>Calidad de código</h2>
+  <p class="promesa">Código que no se prueba es código que no sabés si funciona.</p>
+
+  <div class="bloque">
+    <h3>Logging, colecciones y TDD</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>logging</b> genera mensajes durante la ejecución con severidades (SEVERE, WARNING, INFO, FINE) y handlers que dicen a dónde van (consola, archivo). Las <b>colecciones</b> de <code>java.util</code> guardan objetos. El <b>test unitario</b> (con <b>JUnit</b>) prueba componentes de forma aislada. Y <b>TDD</b> es un ciclo: <b>Red → Green → Refactor</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El log es la <b>cármara de seguridad del programa</b>: cuando algo falla, mirás las grabaciones en vez de adivinar. TDD es <b>escribir el examen antes que el curso</b>: primero el test que falla (Red), después el código que lo hace pasar (Green), después limpiar (Refactor).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Logging: <b>observar</b>. Colecciones: <b>guardar muchos</b>. Tests: <b>verificar</b>. TDD: <b>garantizar</b> desde el diseño.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>Iterator</b> para recorrer colecciones sin exponer su estructura, <b>fixtures</b> (datos preparados para el test) y <b>mocks</b> (objetos simulados con Mockito) para aislar lo que se prueba.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Escribís el test → falla (Red) → hacés que pase (Green) → mejorás el código sin romperlo (Refactor). Y ahí entra en juego el <b>Garbage Collector</b>: la JVM libera sola la memoria de los objetos que ya no se usan.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:30%">Colección (java.util)</th><th style="width:34%">Qué es</th><th>Cuándo</th></tr>
+    <tr><td><b>ArrayList</b></td><td>Lista redimensionable</td><td>La opción por defecto</td></tr>
+    <tr><td><b>LinkedList</b></td><td>Lista enlazada</td><td>Inserciones frecuentes en el medio</td></tr>
+    <tr><td><b>TreeSet</b></td><td>Conjunto ordenado, sin duplicados</td><td>Orden + unicidad</td></tr>
+    <tr><td><b>Stack</b></td><td>Pila (LIFO)</td><td>Último en entrar, primero en salir</td></tr>
+    <tr><td><b>PriorityQueue</b></td><td>Cola por prioridad</td><td>Atender lo urgente primero</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Fecha y hora también son utilería</span><br>
+    Java trae <code>Date</code>, <code>Calendar</code> y <code>SimpleDateFormat</code> en <code>java.util</code>. Y acordate de la lección del curso: las clases de utilidad son <b>código reutilizable ya escrito</b> — logs, colecciones y fechas no se reinventan.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso</span><br>
+    Escribí tests unitarios con <b>JUnit</b> para métodos propios, usá <b>colecciones</b> para almacenar los datos de prueba y registrá el resultado con el <b>logger</b>. Si el método falla, el test tiene que fallar primero.
+  </div>
+</section>
+
+<!-- ==================== CAP 12 ==================== -->
+<section class="cap">
+  <h2><span class="num">Web 1</span>Web desde cero</h2>
+  <p class="promesa">Una web no es magia: es un cliente pidiendo y un servidor respondiendo. En ese idioma, HTTP.</p>
+
+  <div class="bloque">
+    <h3>Cliente-servidor y HTTP</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Toda web es una aplicación <b>cliente-servidor</b> que usa <b>HTTP</b>: el cliente (tu navegador) <b>siempre inicia</b> la comunicación con una petición; el servidor responde. <b>HTTPS</b> es la misma cosa cifrada. Las páginas se escriben con <b>HTML</b> (estructura), <b>CSS</b> (estilo) y <b>JavaScript</b> (comportamiento).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>restaurante</b>: el comensal (cliente) pide, el mozo (HTTP) lleva el pedido, la cocina (servidor) responde con el plato. Si pedís algo que no está en la carta → <b>404</b>. Si el pedido salió bien → <b>200 OK</b>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>HTTP: <b>transportar</b> peticiones y respuestas. HTML/CSS: <b>maquetar</b> lo que se ve.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>verbos</b>: <code>GET</code> (traer), <code>POST</code> (crear), <code>PUT</code> (actualizar), <code>DELETE</code> (eliminar). Y <b>códigos de estado</b>: 200 OK, 404 no encontrado, 500 error del servidor.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Escribís <code>index.html</code> + <code>estilo.css</code>, lo abrís en el navegador (doble clic) y el navegador te responde. Sin servidor: para eso hay <code>localhost</code>.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:20%">Pieza</th><th style="width:30%">Tecnología</th><th>Trabajo</th></tr>
+    <tr><td><b>Estructura</b></td><td>HTML (etiquetas <code>&lt;head&gt;</code> y <code>&lt;body&gt;</code>)</td><td>Contenido y semántica</td></tr>
+    <tr><td><b>Estilo</b></td><td>CSS (externo <code>&lt;link&gt;</code>, interno <code>&lt;style&gt;</code>, en línea <code>style=</code>)</td><td>Colores, tipografía, efectos</td></tr>
+    <tr><td><b>Datos</b></td><td>XML (etiquetas definidas por vos)</td><td>Estructurar y transportar</td></tr>
+    <tr><td><b>Patrón</b></td><td><b>MVC</b>: Modelo (datos) · Vista (interfaz) · Controlador (lógica)</td><td>Separar responsabilidades</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Entorno de desarrollo</span><br>
+    Para Java el curso usa <b>NetBeans</b> (sugerencia de código, cierre de etiquetas, marcado de errores). Y las convenciones importan: nombres descriptivos, mayúsculas/minúsculas consistentes, variables primitivas conocidas (<code>int</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>String</code>).
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (API 1 — empresa Puls-ar)</span><br>
+    Creá <code>index.html</code> (header rojo con logo, título PULS-AR, párrafo 14px, lista Misión/Visión/Valor a 16px, footer con links a <code>contactos.html</code> y <code>registrarse.html</code>), más esas dos páginas con formularios: campos <code>required</code>, botón Enviar verde con letras blancas. Todo con los estilos en <code>estilo.css</code>.
+  </div>
+
+  <pre><span class="c">&lt;!-- Fragmento real de la entrega --&gt;</span>
+&lt;<span class="k">header</span> style=<span class="s">"background-color: red; color: white;"</span>&gt;
+  &lt;<span class="k">img</span> src=<span class="s">"logo.png"</span>&gt; Puls-ar
+&lt;/<span class="k">header</span>&gt;
+
+&lt;<span class="k">form</span>&gt;
+  &lt;<span class="k">label</span> for=<span class="s">"nombre"</span>&gt;Nombre y Apellido:*&lt;/<span class="k">label</span>&gt;
+  &lt;<span class="k">input</span> type=<span class="s">"text"</span> id=<span class="s">"nombre"</span> name=<span class="s">"nombre"</span> <span class="n">required</span>&gt;
+  &lt;<span class="k">input</span> type=<span class="s">"submit"</span> value=<span class="s">"Enviar"</span>
+         style=<span class="s">"background-color: green; color: white;"</span>&gt;
+&lt;/<span class="k">form</span>&gt;</pre>
+</section>
+
+<!-- ==================== CAP 13 ==================== -->
+<section class="cap">
+  <h2><span class="num">Web 4</span>Persistencia y seguridad</h2>
+  <p class="promesa">Una web sin base de datos es un folleto. Y una con usuarios sin permisos, un desastre.</p>
+
+  <div class="bloque">
+    <h3>JDBC: cómo Java habla con la base</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>base de datos</b> guarda y da acceso controlado a los datos. Las <b>relacionales</b> los organizan en tablas con SQL y claves (MySQL, PostgreSQL, SQLite3). Las <b>NoSQL</b> no usan tablas definidas (documentos, grafos, clave-valor; ej. MongoDB). <b>JDBC</b> es la API de Java para conectarse: Driver → DriverManager → Connection → Statement → ResultSet.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>JDBC es el <b>mozo entre vos y la cocina de datos</b>: le pedís (SQL), él lleva el pedido y te devuelve el plato (<code>ResultSet</code>). URL típica: <code>jdbc:mysql://localhost:3306/test</code>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Consultar, insertar, modificar y borrar datos <b>desde el programa</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con SQL: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>CREATE TABLE</code>, <code>DROP</code>. Restricciones: <code>NOT NULL</code>, <code>PRIMARY KEY</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Siempre cerrar en <code>finally</code>: <code>connection.close()</code> — una conexión abierta es una puerta abierta.</div>
+  </div>
+
+  <pre><span class="k">Class</span>.forName(<span class="s">"org.postgresql.Driver"</span>);
+connection = <span class="k">DriverManager</span>.getConnection(
+    <span class="s">"jdbc:postgresql://localhost/Notas_alumnos"</span>, <span class="s">"postgres"</span>, <span class="s">"postgres"</span>);
+
+<span class="k">String</span> SQL = <span class="s">"SELECT * FROM notas"</span>;
+<span class="k">Statement</span> stmt = connection.createStatement();
+<span class="k">ResultSet</span> rs = stmt.executeQuery(SQL);
+<span class="k">while</span> (rs.next()) {
+    System.out.println(<span class="s">"Nombre: "</span> + rs.getString(<span class="n">2</span>));
+    <span class="k">int</span> prom = (rs.getInt(<span class="n">3</span>) + rs.getInt(<span class="n">4</span>) + rs.getInt(<span class="n">5</span>)) / <span class="n">3</span>;
+    System.out.println(prom &gt;= <span class="n">6</span> ? <span class="s">"Aprobado"</span> : <span class="s">"Desaprobado"</span>);
+}
+<span class="c">// finally: connection.close();  → "Conexión cerrada"</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Autenticar ≠ autorizar</span><br>
+    <b>Autenticación:</b> verificar quién sos (login). <b>Autorización:</b> qué podés hacer (permisos). El framework del curso es <b>Apache Shiro</b>: <b>subject</b> (quien actúa), <b>principals</b> (identidad), <b>credentials</b> (contraseña) y <b>realm</b> (donde Shiro busca los datos). Modelo: users, roles, permissions. Para directorios centralizados: <b>LDAP / Active Directory</b>.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (API 4)</span><br>
+    Conexión JDBC real a <b>PostgreSQL</b>: inserción y consulta como en el código de arriba — crear la base <code>Notas_alumnos</code>, insertar una fila, consultar todo, calcular el promedio y cerrar la conexión. (Vas a usar lo del Capítulo 17, así que si la base te queda rara, volvé ahí.)
+  </div>
+</section>
+
+<!-- ==================== CAP 14 ==================== -->
+<section class="cap">
+  <h2><span class="num">Mobile 1</span>Android I</h2>
+  <p class="promesa">Cada pantalla de una app es una Activity. Y cada Activity tiene un ciclo de vida que respetar.</p>
+
+  <div class="bloque">
+    <h3>Estructura de un proyecto Android</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Android nace en 2008 con código abierto (licencia Apache); cada versión se nombra con postres (Android 12 "S"). El IDE oficial es <b>Android Studio</b> (basado en IntelliJ) y el <b>AVD</b> es un emulador para probar sin celular. Las apps del curso se escriben en <b>Java</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El proyecto es una <b>casa con planta</b>: el <code>AndroidManifest.xml</code> es la <b>puerta de entrada</b> (declara qué habitaciones hay y qué permisos se necesitan), <code>/res/layout</code> son los <b>planos de cada cuarto</code>, y <code>/java</code> es el <b>mobiliario</b> que hace que las cosas funcionen.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Organizar el código, las pantallas y los recursos de forma que el sistema los encuentre.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span></div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>R.id.x</code>, <code>R.layout.x</code>, <code>R.string.x</code>: la clase <b>R.java</b> generada da acceso a todos los recursos desde el código.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:34%">Ruta</th><th>Contenido</th></tr>
+    <tr><td><code>/app/src/main/java</code></td><td>El código Java</td></tr>
+    <tr><td><code>/res/layout</code></td><td>XML de las pantallas</td></tr>
+    <tr><td><code>/res/values</code></td><td>strings, colores, temas (¡sin hardcodear textos!)</td></tr>
+    <tr><td><code>AndroidManifest.xml</code></td><td>Paquete, componentes, permisos y hardware requerido</td></tr>
+    <tr><td><code>build.gradle</code></td><td>Configuración y dependencias</td></tr>
+  </table>
+
+  <h3 class="sub">Activities, intents y ciclo de vida</h3>
+  <table>
+    <tr><th style="width:26%">Concepto</th><th>Detalle</th></tr>
+    <tr><td><b>Activity</b></td><td>Cada pantalla de la app.</td></tr>
+    <tr><td><b>Intent</b></td><td>Objeto que vincula componentes en tiempo de ejecución. <b>Explícito:</b> <code>new Intent(this, ListActivity.class)</code>. <b>Implícito:</b> declarás la acción y el sistema busca quién la resuelve.</td></tr>
+    <tr><td><b>Broadcast</b></td><td>Mensaje que reciben los componentes con <code>BroadcastReceiver</code>/<code>onReceive()</code>.</td></tr>
+    <tr><td><b>Fragment</b></td><td>Parte de interfaz o comportamiento dentro de una Activity; se reutiliza entre pantallas.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El ciclo de vida (6 callbacks)</span><br>
+    <code>onCreate()</code> → <code>onStart()</code> → <code>onResume()</code> → <code>onPause()</code> → <code>onStop()</code> → <code>onDestroy()</code> (más <code>onRestart()</code> y <code>onSaveInstanceState()</code>). El <b>sistema</b> invoca cada uno al cambiar de estado: si guardás datos en <code>onPause()</code>, sobreviven al cambio de pantalla; si los dejás en variables normales, se pierden.
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso (API 2 + Actividad M1)</span><br>
+    1) Creá nuevas activities, listas desplegables y conectalas con intents mediante botones (<code>android:onClick</code> en el XML → método Java con <code>startActivity</code>). 2) <b>Weather App:</b> pantalla con "Bienvenido a la Aplicación del Clima", botón "Pronostico Actual" y botón "Listado de Ciudades" — todos los textos en <code>strings.xml</code>. Entrega en ZIP.
+  </div>
+</section>
+
+<!-- ==================== CAP 15 ==================== -->
+<section class="cap">
+  <h2><span class="num">Mobile 2</span>Android II</h2>
+  <p class="promesa">Una app seria guarda datos, corre en segundo plano y consume APIs. Acá se aprende cómo.</p>
+
+  <div class="bloque">
+    <h3>Persistencia local</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Shared Preferences</b> guarda pares clave-valor simples (<code>getString</code>/<code>putString</code>/<code>commit</code>). <b>SQLite</b> es la base de datos local (<code>SQLiteOpenHelper</code> crea y versiona). <b>Room</b> es la capa oficial sobre SQLite con anotaciones: <code>@Entity</code> (tabla), <code>@Dao</code> (acceso), <code>@Query</code>, <code>@Insert</code>, <code>@Update</code>, <code>@Delete</code>. Y el <b>Content Provider</b> expone datos de tu app a otras (o consume los de otras) con permisos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Shared Preferences es la <b>libreta de notas del bolsillo</b> (tus preferencias: tema oscuro, último usuario). SQLite es el <b>archivador</b> con carpetas y fichas. Room es el <b>archivador con un buen encargado</b> que no te deja equivocarte al buscar.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Que los datos <b>sobrevivan</b> a cerrar la app.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Guardando en el almacenamiento interno del dispositivo, con APIs que validan y versionan la estructura.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Preferencias: <code>getSharedPreferences()</code> → editar → <code>commit()</code>. Room: definir la entidad, el DAO y consultar con <code>@Query</code>.</div>
+  </div>
+
+  <div class="grupo">
+  <h3 class="sub">Segundo plano, red y arquitectura</h3>
+  <table>
+    <tr><th style="width:24%">Pieza</th><th>Qué hace</th></tr>
+    <tr><td><b>AsyncTask</b></td><td>Ejecuta en segundo plano: <code>onPreExecute</code> → <code>doInBackground</code> → <code>onProgressUpdate</code> → <code>onPostExecute</code>.</td></tr>
+    <tr><td><b>Service</b></td><td>Trabajo en segundo plano que <b>sobrevive</b> a la Activity. Tipos: foreground (con notificación visible), background, bound.</td></tr>
+    <tr><td><b>Thread vs Service</b></td><td>El thread muere con la Activity; el service sigue corriendo aunque la app pase a segundo plano.</td></tr>
+    <tr><td><b>Retrofit</b></td><td>Librería que transforma llamadas HTTP en interfaces Java: consumir APIs REST.</td></tr>
+    <tr><td><b>Gradle</b></td><td>Sistema de construcción: <code>compileSdk</code>, <code>minSdk</code>, <code>targetSdk</code>, <code>versionCode</code> y <code>dependencies</code>.</td></tr>
+    <tr><td><b>MVP</b></td><td>Patrón que separa Vista · Presentador · Modelo con 4 interfaces (Required/Provided × View/Presenter, y Model).</td></tr>
+    <tr><td><b>Firebase</b></td><td>Suite de Google: Analytics, FCM (notificaciones push), Auth (login con Google/Facebook/email), Realtime DB/Firestore, Storage.</td></tr>
+  </table>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Patrones de diseño (para el examen)</span><br>
+    <b>Creacionales:</b> singleton, factory, builder. <b>Estructurales:</b> adapter, facade, composite. <b>De comportamiento:</b> observer, strategy, iterator. Y las APIs de Android se parte en <b>básicas</b> (widgets, layouts, intents) y <b>avanzadas</b> (servicios, content providers, multimedia).
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso</span><br>
+    Persistí preferencias con <b>SharedPreferences</b>, consultá una API con <b>Retrofit</b> dentro de un servicio/AsyncTask, y después refactorizá la app con <b>MVP</b> y agregá funcionalidad con <b>Firebase</b> (Auth o notificaciones push).
+  </div>
+</section>
+
+<!-- ==================== CAP 16 ==================== -->
+<section class="cap">
+  <h2><span class="num">BD 1</span>Bases de datos I</h2>
+  <p class="promesa">Antes de escribir una tabla, hay que entender cómo se guarda un dato en un disco.</p>
+
+  <div class="bloque">
+    <h3>Almacenamiento e índices</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El disco está organizado en <b>pistas, sectores y bloques</b>; la base guarda datos en archivos sobre ese espacio. Los <b>archivos secuenciales</b> van registro tras registro (rápidos para recorrer todo); los <b>archivos hash</b> dan <b>acceso directo por clave</b>: la función hash convierte la clave en una posición. Las <b>colisiones</b> (dos claves, misma posición) se resuelven por <b>encadenamiento</b> o <b>direccionamiento abierto</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El archivo secuencial es una <b>fila de cajones sin numerar</b>: para encontrar algo, abrís todos. El hash es un <b>cajón numerado</b>: calculás el número y vas directo. Los <b>índices</b> son el <b>índice del libro</b>: en vez de hojear todo, mirás la página indicada.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Encontrar datos <b>rápido sin barrer la tabla entera</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con estructuras auxiliares: <b>primarios</b> (sobre la clave primaria), <b>secundarios</b> (otros atributos), <b>agrupados</b> (junto a los datos) y <b>multinivel</b> (árbol).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Árboles de índice: <b>AVL</b> (balanceado por altura), <b>B</b> (orden m, pocas alturas), <b>B+</b> (hojas encadenadas) — el <b>B+ es el índice predeterminado de los SGBD</b>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Modelos de datos y el Entidad-Relación</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>modelo de datos</b> describe datos, relaciones y restricciones de forma abstracta. El <b>SGBD</b> (DBMS) es el software que administra la base con arquitectura ANSI-SPARC en 3 niveles: <b>externo</b> (vistas), <b>conceptual</b> (modelo lógico global) e <b>interno</b> (almacenamiento físico). Se usa <b>DDL</b> para estructura y <b>DML</b> para manipulación.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El modelo <b>jerárquico</b> es un árbol genealógico (padre/hijo, uno a muchos). El <b>de red</b> le agrega vínculos cruzados. El <b>relacional</b> — el actual — son <b>planillas Excel con reglas</b>: columnas, filas y claves.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Organizar la realidad para que la base la guarde sin repetir ni contradecirse.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con el <b>diagrama Entidad-Relación</b>: entidades (los sustantivos), atributos (sus propiedades) y relaciones (los verbos). Las <b>12 reglas de Codd</b> definen qué SGBD es realmente relacional.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El rol del <b>DBA</b>: definir estructuras físicas, perfiles y seguridad (usuarios/roles/permisos), integridad, respaldo y recuperación, y monitorear rendimiento.</div>
+  </div>
+
+  <div class="grupo">
+  <h3 class="sub">Normalización: hasta la 3FN en la práctica</h3>
+  <table>
+    <tr><th style="width:16%">Forma</th><th style="width:44%">Qué exige</th><th>Problema que evita</th></tr>
+    <tr><td><b>1FN</b></td><td>Dominios simples, valores atómicos y monovalentes (sin grupos repetitivos)</td><td>Columnas con "lista de cosas"</td></tr>
+    <tr><td><b>2FN</b></td><td>Estar en 1FN y que los atributos no claves dependan <b>completamente</b> de la clave</td><td>Datos que dependen solo de una parte de la clave</td></tr>
+    <tr><td><b>3FN</b></td><td>Estar en 2FN y sin dependencias transitivas entre atributos no primarios</td><td>Repetir datos en varias filas</td></tr>
+    <tr><td><b>Boyce-Codd</b></td><td>Cada determinante es una llave candidata</td><td>Casos raros que la 3FN no cubre</td></tr>
+    <tr><td><b>4FN / 5FN</b></td><td>Sin dependencias multivaluadas / de reunión</td><td>Casos avanzados (existen 6)</td></tr>
+  </table>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · planilla de ventas → 3FN</span><br>
+    Tomá una planilla de ventas de librería en Excel y separala en relaciones: quitá columnas compuestas, eliminá grupos repetitivos, declará la PK <code>(pto_venta, nro_comprobante)</code>, una FK hacia <code>productos</code>, y separe <code>clientes</code> y <code>pagos</code> por dependencia transitiva. Después instalá <b>PostgreSQL 10 + pgAdmin</b> y creá las tablas con SQL real.
+  </div>
+
+  <pre><span class="c">-- Sistema universidad: las 3 tablas de la práctica</span>
+<span class="k">create table</span> alumnos (
+  id      <span class="k">serial</span> <span class="k">NOT NULL PRIMARY KEY</span>,
+  dni     <span class="k">varchar</span>(<span class="n">8</span>)  <span class="k">NOT NULL</span>,
+  nombre  <span class="k">varchar</span>(<span class="n">50</span>) <span class="k">NOT NULL</span>,
+  apellido <span class="k">varchar</span>(<span class="n">50</span>) <span class="k">NOT NULL</span>,
+  email   <span class="k">varchar</span>(<span class="n">50</span>) <span class="k">NOT NULL</span>
+);
+
+<span class="k">create table</span> alumnos_materias (
+  id_alumno  <span class="k">int</span>, id_materia <span class="k">int</span>,
+  <span class="k">PRIMARY KEY</span>(id_alumno, id_materia),
+  <span class="k">FOREIGN KEY</span> (id_alumno)  <span class="k">REFERENCES</span> alumnos(id),
+  <span class="k">FOREIGN KEY</span> (id_materia) <span class="k">REFERENCES</span> materias(id)
+);</pre>
+</section>
+
+<!-- ==================== CAP 17 ==================== -->
+<section class="cap">
+  <h2><span class="num">BD 2</span>SQL completo</h2>
+  <p class="promesa">SELECT es la sentencia más poderosa que vas a escribir. Y su orden de lectura es fijo.</p>
+
+  <div class="bloque">
+    <h3>DDL, DML y el SELECT</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>SQL</b> (Structured Query Language) es el estándar de las relacionales; nace en IBM en los 70. <b>DDL</b> crea estructura (<code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>); <b>DML</b> manipula datos (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>). La <b>clave primaria</b> identifica cada fila de forma única; la <b>foránea</b> referencia la PK de otra tabla.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>DDL es <b>armar la biblioteca</b> (estanterías, secciones). DML es <b>prestar, devolver y buscar libros</b>. Y una <b>vista</b> es una <b>puerta que da a un pasillo ya armado</b>: una consulta guardada con nombre, sin datos propios.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Preguntar y modificar los datos con precisión.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El <code>SELECT</code> se lee en este <b>orden fijo</b>:</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span></div>
+  </div>
+
+  <pre><span class="k">SELECT</span>   lista de columnas     <span class="c">-- proyección: QUÉ columnas</span>
+<span class="k">FROM</span>     tablas                <span class="c">-- de DÓNDE salen</span>
+<span class="k">WHERE</span>    condiciones           <span class="c">-- FILAS que cumplen</span>
+<span class="k">GROUP BY</span> columnas              <span class="c">-- agrupa filas iguales</span>
+<span class="k">HAVING</span>   condiciones           <span class="c">-- FILTRA GRUPOS (como WHERE, pero para grupos)</span>
+<span class="k">ORDER BY</span> columnas              <span class="c">-- ordena (ASC por defecto, DESC para descender)</span></pre>
+
+  <table>
+    <tr><th style="width:26%">Familia</th><th>Herramientas</th></tr>
+    <tr><td><b>Operadores lógicos</b></td><td><code>NOT</code>, <code>AND</code>, <code>OR</code> · comparación: <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>&lt;&gt;</code></td></tr>
+    <tr><td><b>Operaciones de conjunto</b></td><td><code>UNION</code> (y <code>UNION ALL</code>), <code>INTERSECT</code>, <code>EXCEPT</code> — mismas columnas en ambos lados</td></tr>
+    <tr><td><b>Joins</b></td><td><code>INNER JOIN</code> (solo coincidencias), <code>NATURAL</code> (columnas homónimas), <code>OUTER</code> (conserva todas). Con alias (<code>FROM persona p</code>) y <code>ON</code>.</td></tr>
+    <tr><td><b>Agregación</b></td><td><code>COUNT(*)</code>, <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code></td></tr>
+    <tr><td><b>Restricciones</b></td><td><code>NOT NULL</code>, <code>UNIQUE</code>, <code>PRIMARY KEY</code>, <code>REFERENCES</code>, <code>CHECK</code></td></tr>
+    <tr><td><b>Índices</b></td><td><code>CREATE INDEX … ON tabla(col)</code> · <code>DROP INDEX …</code> · evita barridos, ocupa disco y frena INSERT/UPDATE</td></tr>
+  </table>
+
+  <pre><span class="c">-- Contar inscriptos de una materia</span>
+<span class="k">SELECT</span> COUNT(*) <span class="k">AS</span> cantidad <span class="k">FROM</span> alumnos_materias <span class="k">WHERE</span> id_materia = <span class="n">1</span>;
+
+<span class="c">-- Listado por materia ordenado (JOIN + GROUP BY + ORDER BY)</span>
+<span class="k">SELECT</span> materias.nombre, <span class="k">COUNT</span>(*) <span class="k">AS</span> cantidad
+<span class="k">FROM</span> alumnos
+<span class="k">INNER JOIN</span> alumnos_materias <span class="k">ON</span> id_alumno = alumnos.id
+<span class="k">INNER JOIN</span> materias <span class="k">ON</span> id_materia = materias.id
+<span class="k">GROUP BY</span> materias.id
+<span class="k">ORDER BY</span> materias.nombre <span class="k">ASC</span>;
+
+<span class="c">-- Vista guardada + función reutilizable</span>
+<span class="k">CREATE OR REPLACE VIEW</span> alumnos_cantidad_materias <span class="k">AS</span> <span class="k">SELECT</span> … ;
+<span class="k">SELECT</span> * <span class="k">FROM</span> alumnos_cantidad_materias <span class="k">WHERE</span> cantidad &gt; <span class="n">1</span>;</pre>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · API 3 (biblioteca)</span><br>
+    Diagrama E/R · cargar préstamos (4 lectores con 5 libros, 3 con 3, 2 con 1; un libro sin prestar y un lector sin libros) · consultas de conteo con <code>GROUP BY</code>/<code>ORDER BY</code> · promedio de edad y extremos con <code>AVG</code>/<code>MIN</code>/<code>MAX</code> · vista <code>libros_prestados</code>. Y para el examen: filtrar con <code>WHERE</code>, quitar duplicados con <code>DISTINCT</code>, ordenar con <code>ORDER BY</code>.
+  </div>
+</section>
+
+<!-- ==================== CAP 18 ==================== -->
+<section class="cap">
+  <h2><span class="num">BD 3</span>PL/SQL, triggers y NoSQL</h2>
+  <p class="promesa">Cuando la lógica vive dentro de la base, el programa se vuelve más corto… y más rápido.</p>
+
+  <div class="bloque">
+    <h3>Lógica dentro de la base</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Tres herramientas meten lógica de aplicación en la propia BD: <b>procedimientos almacenados</b> (<code>CREATE PROCEDURE</code>, parámetros IN/OUT, se llaman con <code>EXECUTE</code>), <b>funciones</b> (<code>CREATE FUNCTION</code>, devuelven <b>un solo valor</b> y se usan como una columna) y <b>disparadores (triggers)</b>: se lanzan <b>solos</b> ante <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>, con <code>BEFORE</code> o <code>AFTER</code>, <code>FOR EACH ROW</code> y los valores <code>:NEW</code> y <code>:OLD</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>procedimiento</b> es un <b>empleado</b> a quien le delegás "registrar esta devolución". La <b>función</b> es una <b>calculadora</b> que siempre devuelve un número. El <b>trigger</b> es el <b>alarma</b>: nadie la llama, se activa sola cuando pasás por la puerta.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar reglas de negocio <b>sin tocar el programa</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>PL/SQL/SPL</b>: extensión de SQL con <code>IF…THEN…ELSE</code>, bucles <code>WHILE</code>/<code>FOR</code> (sobre <b>cursores</b>: DECLARE/OPEN/FETCH/CLOSE) y variables nombradas. Manejo de errores con <b>SQLCODE</b>: 0 = éxito, negativo = error grave, +100 = "no hay más filas".</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Creás el trigger, hacés un <code>UPDATE</code> y… el log se llena solo. Verificá con <code>SELECT</code> después de cada sentencia.</div>
+  </div>
+
+  <pre><span class="c">-- Log automático: cada UPDATE en alumnos deja rastro</span>
+<span class="k">CREATE OR REPLACE FUNCTION</span> alumnos_update_trigger_fnc() <span class="k">RETURNS</span> trigger
+<span class="k">LANGUAGE</span> plpgsql <span class="k">AS</span> $BODY$
+<span class="k">BEGIN</span>
+  <span class="k">INSERT INTO</span> alumnos_logs (id, dni, nombre, apellido, email, fecha)
+  <span class="k">VALUES</span>(NEW.id, NEW.dni, NEW.nombre, NEW.apellido, NEW.email, now());
+  <span class="k">RETURN</span> NEW;
+<span class="k">END</span>; $BODY$;
+
+<span class="k">CREATE TRIGGER</span> alumnos_update_trigger
+<span class="k">AFTER UPDATE ON</span> alumnos
+<span class="k">FOR EACH ROW EXECUTE PROCEDURE</span> alumnos_update_trigger_fnc();
+
+<span class="k">UPDATE</span> alumnos <span class="k">SET</span> dni = <span class="s">'1000000'</span> <span class="k">WHERE</span> id = <span class="n">1</span>;  <span class="c">-- dispara el log</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">SQL dinámico (y su peligro)</span><br>
+    La sentencia se construye como <b>cadena de texto</b> en tiempo de ejecución (<code>EXECUTE IMMEDIATE cadena</code>). Menos eficiente que el estático; sirve para DML y DDL pero no para <code>SELECT</code> directo (requiere cursores). <b>Regla de seguridad: nunca concatenar entrada del usuario sin validar → inyección de SQL.</b> (El ataque del Capítulo 3 nace exactamente ahí.)
+  </div>
+
+  <div class="grupo">
+  <h3 class="sub">SQL vs NoSQL</h3>
+  <table>
+    <tr><th style="width:16%">Tipo NoSQL</th><th style="width:30%">Qué es</th><th>Ejemplos</th></tr>
+    <tr><td><b>Clave-valor</b></td><td>Igual que tablas hash: recuperación rápida</td><td>Cassandra, BigTable, HBase</td></tr>
+    <tr><td><b>Documental</b></td><td>JSON/XML con clave única</td><td><b>MongoDB</b>, CouchDB</td></tr>
+    <tr><td><b>Grafo</b></td><td>Nodos y aristas: relaciones eficientes</td><td>Neo4j, Virtuoso</td></tr>
+    <tr><td><b>Orientada a objetos</b></td><td>Objetos como en POO</td><td>Zope, Db4o</td></tr>
+  </table>
+  </div>
+
+  <table>
+    <tr><th style="width:50%">SQL (relacional)</th><th>NoSQL</th></tr>
+    <tr><td>Integridad, atomicidad (rollback), estándares, perfiles conocidos</td><td>Escalabilidad horizontal, esquemas flexibles sin parar la BD</td></tr>
+    <tr><td>Escalabilidad inferior</td><td>Consistencia eventual, sin estandarización</td></tr>
+    <tr><td><b>Usalo cuando:</b> la consistencia y la integridad no pueden fallar</td><td><b>Usalo cuando:</b> estructuras variables, máquinas chicas, análisis masivo o captura de eventos</td></tr>
+  </table>
+
+  <pre><span class="c">-- MongoDB: no hay CREATE DATABASE; se crea al insertar</span>
+use peliculas;
+db.peliculas.save({titulo:<span class="s">'Batman el caballero oscuro'</span>});
+db.peliculas.find();
+show dbs;</pre>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · API 4 (biblioteca) + laboratorios</span><br>
+    1) Función <code>cantidad_inscriptos(integer)</code> que devuelve el COUNT. 2) Tabla <code>alumnos_logs</code> + trigger de UPDATE (como el código de arriba). 3) Procedimiento para registrar la devolución de un libro. 4) Función <code>libros_prestados</code>. Laboratorios guiados: <code>LABORATORIO 1..4.mp4</code> en la carpeta de la materia.
+  </div>
+</section>
+
+<!-- ==================== CAP 19 ==================== -->
+<section class="cap">
+  <h2><span class="num">Proyecto real</span>La app de ciudades</h2>
+  <p class="promesa">Todo junto, en el proyecto real del curso: dos pantallas, una lista a medida y un intent que las conecta.</p>
+
+  <div class="bloque">
+    <h3>Qué hace la app</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Proyecto <code>TerceraClase</code> (paquete <code>com.teclab.terceraclase</code>): pantalla principal con un botón que abre una segunda pantalla con una <b>lista de ciudades personalizada</b> — un adapter propio que muestra ícono + texto por fila.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>puerta y el pasillo</b>: apretás el botón (puerta) y caes en la lista de ciudades (pasillo), donde cada fila tiene su propia disposición gracias al <code>CustomAdapter</code>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Enlazar dos activities con un intent y mostrar una lista con diseño propio.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>3 clases Java + 3 layouts + manifest + gradle. El <code>onClick</code> del botón apunta al método <code>goToListActivity()</code> que lanza el intent.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Arrancás la app → <code>onCreate</code> infla <code>activity_main.xml</code> → tocás el botón → <code>startActivity(intent)</code> → <code>ListActivity</code> infla <code>activity_list.xml</code> → el adapter pinta cada fila con <code>item_list.xml</code>.</div>
+  </div>
+
+  <pre><span class="k">public class</span> <span class="s">MainActivity</span> <span class="k">extends</span> AppCompatActivity {
+    @Override
+    <span class="k">protected void</span> <span class="s">onCreate</span>(Bundle savedInstanceState) {
+        <span class="k">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+    <span class="c">// el botón del XML (android:onClick) llama a este método</span>
+    <span class="k">public void</span> <span class="s">goToListActivity</span>(View view) {
+        Intent myIntent = <span class="k">new</span> Intent(<span class="k">this</span>, ListActivity.<span class="k">class</span>);
+        startActivity(myIntent);   <span class="c">// abre la segunda pantalla</span>
+    }
+}</pre>
+
+  <pre><span class="k">void</span> <span class="s">setupListView</span>() {
+    listview = findViewById(R.id.listView);
+    names = <span class="k">new</span> ArrayList&lt;String&gt;();
+    names.add(<span class="s">"Londres"</span>); names.add(<span class="s">"Paris"</span>); names.add(<span class="s">"Buenos Aires"</span>);
+    names.add(<span class="s">"New York"</span>); names.add(<span class="s">"Miami"</span>);
+    <span class="c">// adapter propio: cada fila usa item_list.xml (ícono + texto)</span>
+    CustomAdapter adapter = <span class="k">new</span> CustomAdapter(<span class="k">this</span>, R.layout.item_list, names);
+    listview.setAdapter(adapter);
+}</pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Las piezas que lo sostienen</span><br>
+    <b>CustomAdapter</b> extiende <code>BaseAdapter</code> e implementa <code>getCount()</code>, <code>getItem()</code>, <code>getItemId()</code> y <code>getView()</code> — este último infla <code>item_list.xml</code> por cada fila. El <b>manifest</b> registra ambas activities (<code>MainActivity</code> con <code>intent-filter</code> MAIN/LAUNCHER y <code>ListActivity</code> como <code>exported="false"</code>). El <b>gradle</b> fija <code>minSdk 23</code>, <code>targetSdk 32</code> y las dependencias (appcompat, material, constraintlayout, junit).
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Cómo se conecta con todo lo anterior</span><br>
+    Esta app es la <b>suma del curso</b>: intents y ciclo de vida (Cap. 14), adapter = patrón de diseño (Cap. 15), <code>strings.xml</code> sin hardcodear (Cap. 12) y la misma lógica de listas del Cap. 7. Si la entendés entera, entendiste las 4 materias.
+  </div>
+</section>
+
+<!-- ==================== CAP 20 ==================== -->
+<section class="cap">
+  <h2><span class="num">Para seguir</span>Ruta de estudio y cómo seguir</h2>
+  <p class="promesa">Ya tenés las 4 materias. Lo que falta es el orden y las horas.</p>
+
+  <div class="grupo">
+  <h3 class="sub">Ruta sugerida en 8 semanas</h3>
+  <table>
+    <tr><th style="width:16%">Semana</th><th style="width:36%">Capítulos</th><th>Hito</th></tr>
+    <tr><td><b>1</b></td><td>1 y 2 — lógica y tablas de verdad</td><td>Tablas a mano, sin calculadora</td></tr>
+    <tr><td><b>2</b></td><td>3 y 4 — algoritmos, pseudocódigo, diagramas</td><td>Actividad 1 resuelta</td></tr>
+    <tr><td><b>3</b></td><td>5 y 6 — condicionales y bucles</td><td>AE3: los 3 bucles interpretados</td></tr>
+    <tr><td><b>4</b></td><td>7 y 8 — funciones, datos y ordenamiento</td><td>Actividad 3 (C++) funcionando</td></tr>
+    <tr><td><b>5</b></td><td>9 y 10 — POO y Java</td><td>Actividad 4 (3 clases en Eclipse)</td></tr>
+    <tr><td><b>6</b></td><td>11 y 12 — calidad y web</td><td>API 1 (Puls-ar) + tests JUnit</td></tr>
+    <tr><td><b>7</b></td><td>13 y 14 — JDBC y Android I</td><td>API 4 (PostgreSQL) + Weather App</td></tr>
+    <tr><td><b>8</b></td><td>15 a 19 — Android II, BD completas y proyecto</td><td>App de ciudades + API 4 biblioteca</td></tr>
+  </table>
+  </div>
+
+  <div class="recurso">
+    <h4>Android Studio + Emulador (AVD)</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">INTERMEDIO</span></div>
+    <p><b>Qué es:</b> el IDE oficial de Android con emulador para probar sin celular físico.</p>
+    <p class="porque"><b>Por qué importa:</b> es la forma real de trabajar en Android hoy. El proyecto del Capítulo 19 se abre directo ahí. <b>developer.android.com/studio</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>PostgreSQL + pgAdmin</h4>
+    <div class="pills"><span class="pill gratis">GRATIS / OPEN SOURCE</span><span class="pill nivel">DE 0 A BASE DE DATOS</span></div>
+    <p><b>Qué es:</b> la base de datos relacional más usada en el mundo, con su gestor gráfico.</p>
+    <p class="porque"><b>Por qué esta:</b> es la que usa el curso para todas las prácticas (universidad, biblioteca) y es la que más vas a encontrar en trabajos. <b>postgresql.org</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>Eclipse o NetBeans + VS Code</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">DESDE 0</span></div>
+    <p><b>Qué son:</b> editores para Java (Eclipse/NetBeans, con sugerencias y cierre de etiquetas) y para todo lo demás (VS Code).</p>
+    <p class="porque"><b>Por qué los dos:</b> el curso usa NetBeans para web y Eclipse para POO; VS Code te sirve para C++, HTML/CSS y todo lo que venga. <b>eclipse.org · netbeans.org · code.visualstudio.com</b></p>
+  </div>
+
+  <div class="recurso">
+    <h4>El proyecto: de acá a tu portafolio</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">PROYECTO PROPIO</span></div>
+    <p><b>Qué es:</b> subir la app de ciudades (o la Weather App) a GitHub con un README y una captura.</p>
+    <p class="porque"><b>Por qué ahora:</b> un portafolio con proyectos reales vale más que diez certificados. Ya tenés el código del Capítulo 19 como base — <b>copialo, mejoralo y publícalo.</b></p>
+  </div>
+
+  <div class="cierre">
+    <h3>Cerrá el círculo</h3>
+    <p>Recorriste las cuatro materias: <b>lógica</b> (pensar), <b>Java y POO</b> (estructurar), <b>web y Android</b> (construir) y <b>bases de datos</b> (guardar). Es exactamente el recorrido completo de un programador desde cero hasta una app funcional.</p>
+    <p><b>Siguiente paso concreto:</b> elegí el capítulo 7 o el 19, abrí el editor y corré el código de hoy mismo. Programar se aprende programando — <b>ya tenés las ideas; ahora falta el pulso.</b></p>
+    <p style="margin-bottom:0">Sigue en la serie: <b>01 · Programación desde 0</b> (si querés repasar las bases), <b>00 · Ruta de aprendizaje</b> (el mapa completo) y <b>03 · Ciberseguridad desde 0</b> (la etapa de seguridad).</p>
+  </div>
+</section>
+
+</body>
+</html>

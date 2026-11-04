@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ruta de aprendizaje desde 0</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+  }
+
+  :root {
+    --azul: #1b4f8a;
+    --azul-vivo: #1d4ed8;
+    --azul-humo: #eaf1fa;
+    --naranja: #c2410c;
+    --naranja-humo: #fff3ec;
+    --verde: #15803d;
+    --verde-humo: #edf9f0;
+    --morado: #6d28d9;
+    --morado-humo: #f4f0ff;
+    --gris: #475569;
+    --borde: #d9e1ec;
+  }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 9px 0; }
+
+  /* ---------- Portada ---------- */
+  .portada { page-break-after: always; padding: 24mm 0 0 0; }
+  .portada .serie {
+    display: inline-block; background: var(--azul); color: #fff;
+    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  }
+  .portada h1 { font-size: 42pt; letter-spacing: -.02em; margin: 24px 0 0 0; }
+  .portada h1 span { color: var(--naranja); display: block; }
+  .portada .regla { height: 5px; background: var(--naranja); width: 100%; margin: 24px 0 20px 0; }
+  .portada .sub { font-size: 14.5pt; color: #33445a; line-height: 1.55; margin: 0 0 24px 0; }
+  .portada .temas { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px 0; }
+  .portada .tema {
+    border: 2px solid var(--azul); color: var(--azul); font-weight: 700;
+    font-size: 11pt; padding: 6px 14px; border-radius: 20px;
+  }
+  .portada .tema:nth-child(even) { border-color: var(--naranja); color: var(--naranja); }
+  .portada .meta { margin-top: 26px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde); padding-top: 12px; }
+
+  /* ---------- Capítulos ---------- */
+  .cap { page-break-before: always; }
+  table, tr { page-break-inside: avoid; }
+  .grupo { page-break-inside: avoid; }
+  .cap h2 { font-size: 23pt; margin: 0 0 4px 0; border-bottom: 3px solid var(--azul); padding-bottom: 10px; }
+  .cap h2 .num { display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase; color: var(--naranja); margin-bottom: 6px; }
+  .cap .promesa { font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0; border-left: 3px solid var(--naranja); padding-left: 12px; }
+  h3.sub { font-size: 15pt; margin: 16px 0 7px 0; color: var(--azul); }
+  h4.mini { font-size: 12.5pt; margin: 16px 0 6px 0; color: var(--naranja); }
+
+  /* ---------- Bloques ---------- */
+  .bloque {
+    background: #fff; border: 1px solid var(--borde); border-left: 5px solid var(--azul);
+    border-radius: 0 7px 7px 0; padding: 13px 17px 6px 17px; margin: 16px 0;
+    page-break-inside: avoid;
+  }
+  .bloque h3 { font-size: 14pt; margin-bottom: 8px; }
+  .fila { margin: 0 0 6px 0; }
+  .lbl {
+    display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: #fff; padding: 2px 8px; border-radius: 3px;
+    margin-right: 7px; vertical-align: 1.5px;
+  }
+  .lbl.teoria  { background: var(--azul); }
+  .lbl.ejemplo { background: var(--naranja); }
+  .lbl.porque  { background: var(--verde); }
+  .lbl.orden   { background: var(--morado); }
+  .lbl.conecta { background: var(--gris); }
+  .fila p { display: inline; }
+
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 10pt;
+    background: #f3f6fb; border: 1px solid #e2e8f0; border-radius: 4px;
+    padding: 1px 5px; color: #9a3412;
+  }
+
+  .nota {
+    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .aviso {
+    background: var(--verde-humo); border: 1px solid #bbf7d0; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .peligro {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px;
+    padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt;
+  }
+  .peligro b.t { color: #b91c1c; text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+
+  /* ---------- Mapa ---------- */
+  .mapa { display: flex; flex-direction: column; gap: 0; margin: 8px 0; }
+  .mapa .paso {
+    display: flex; align-items: stretch; border: 1px solid var(--borde);
+    border-radius: 7px; overflow: hidden; page-break-inside: avoid; background: #fff;
+  }
+  .mapa .paso .nro {
+    flex: 0 0 62px; background: var(--azul); color: #fff; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 13pt;
+  }
+  .mapa .paso:nth-child(even) .nro { background: var(--naranja); }
+  .mapa .paso .txt { padding: 6px 14px; }
+  .mapa .paso .txt b { color: var(--azul); font-size: 11.5pt; display: block; margin-bottom: 1px; }
+  .mapa .paso .txt span { font-size: 9.7pt; color: #475569; line-height: 1.4; display: block; }
+  .flecha { text-align: center; color: var(--naranja); font-size: 11pt; line-height: 1; margin: 2px 0; }
+
+  /* ---------- Recursos ---------- */
+  .recurso {
+    border: 1px solid var(--borde); border-radius: 7px; padding: 12px 16px;
+    margin: 12px 0; page-break-inside: avoid; background: #fff;
+    border-left: 5px solid var(--azul);
+  }
+  .recurso h4 { font-size: 12.5pt; margin-bottom: 4px; }
+  .pills { margin: 4px 0 7px 0; }
+  .pill {
+    display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-right: 5px; letter-spacing: .04em;
+  }
+  .pill.gratis { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+  .pill.mixto  { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+  .pill.nivel  { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+  .pill.orden  { background: var(--morado-humo); color: var(--morado); border: 1px solid #ddd6fe; }
+  .recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+  .recurso .porque { color: #475569; font-size: 10pt; }
+  .recurso .porque b { color: var(--naranja); }
+  .recurso .url { font-family: Consolas, monospace; font-size: 9.3pt; color: var(--azul-vivo); }
+
+  /* ---------- Tablas ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; }
+  th { background: var(--azul); color: #fff; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 9.5pt; letter-spacing: .04em; }
+  td { border-bottom: 1px solid var(--borde); padding: 6px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  td b { color: var(--azul); }
+
+  /* ---------- Cronograma ---------- */
+  .fase {
+    border: 1px solid var(--borde); border-radius: 8px; margin: 14px 0;
+    page-break-inside: avoid; overflow: hidden;
+  }
+  .fase .cab {
+    background: var(--azul); color: #fff; padding: 8px 15px; display: flex;
+    justify-content: space-between; align-items: center;
+  }
+  .fase:nth-of-type(even) .cab { background: var(--naranja); }
+  .fase .cab b { font-size: 12.5pt; }
+  .fase .cab span { font-size: 9.5pt; background: rgba(255,255,255,.22); padding: 3px 9px; border-radius: 12px; font-weight: 600; }
+  .fase .cuerpo { padding: 12px 16px; }
+  .fase .cuerpo p { font-size: 10.4pt; margin-bottom: 6px; }
+  .fase .cuerpo ul { margin: 4px 0 8px 0; padding-left: 18px; font-size: 10.4pt; }
+  .fase .cuerpo li { margin-bottom: 3px; }
+  .fase .hito {
+    font-size: 10pt; background: var(--verde-humo); border: 1px solid #bbf7d0;
+    border-radius: 5px; padding: 7px 11px; margin-top: 6px; color: #14532d;
+  }
+  .fase .hito b { color: var(--verde); }
+
+  .cierre {
+    background: var(--azul); color: #eaf1fa; padding: 18px 22px; border-radius: 8px;
+    margin-top: 22px; page-break-inside: avoid;
+  }
+  .cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+  .cierre p { color: #dbe7f7; font-size: 10.8pt; }
+  .cierre b { color: #ffd8b0; }
+
+  .indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+  .indice li { padding: 7px 0; border-bottom: 1px dotted var(--borde); font-size: 11.5pt; display: flex; justify-content: space-between; }
+  .indice li span.t { color: var(--azul); font-weight: 600; }
+  .indice li span.d { color: #64748b; font-size: 10pt; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Documento 0 de 5</div>
+  <h1>Ruta de <span>aprendizaje</span></h1>
+  <div class="regla"></div>
+  <p class="sub">El mapa completo para pasar de <b>cero absoluto</b> a entender programación, sistemas, redes informáticas, seguridad y hacking — con los mejores cursos gratuitos del mundo, en el orden que tiene sentido.</p>
+
+  <div class="temas">
+    <div class="tema">1 · Programación</div>
+    <div class="tema">2 · Sistemas</div>
+    <div class="tema">3 · Redes informáticas</div>
+    <div class="tema">4 · Seguridad informática</div>
+    <div class="tema">5 · Hacking</div>
+  </div>
+
+  <p class="meta">Material de estudio personal · Orden recomendado · Recursos gratuitos o de bajo costo<br>Complementa el documento <b>01 · Programación desde 0</b></p>
+</section>
+
+<!-- ==================== ÍNDICE ==================== -->
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">Cómo leer esta ruta</span><span class="d">Reglas del juego</span></li>
+    <li><span class="t">El mapa completo</span><span class="d">Las 5 etapas en una imagen</span></li>
+    <li><span class="t">Por qué en este orden</span><span class="d">Y por qué NO empezar por hacking</span></li>
+    <li><span class="t">Etapa 1 · Programación</span><span class="d">freeCodeCamp · Odin · CS50x · MOOC.fi</span></li>
+    <li><span class="t">Etapa 2 · Sistemas</span><span class="d">Linux Journey · OSTEP · Nand2Tetris</span></li>
+    <li><span class="t">Etapa 3 · Redes informáticas</span><span class="d">Professor Messer · Cisco · NetworkChuck</span></li>
+    <li><span class="t">Etapa 4 · Seguridad informática</span><span class="d">Security+ · TryHackMe · CyberOps</span></li>
+    <li><span class="t">Etapa 5 · Hacking</span><span class="d">Bandit · TryHackMe · HTB · PortSwigger · PicoCTF</span></li>
+    <li><span class="t">Cronograma mes a mes</span><span class="d">Un plan realista de ~15 meses</span></li>
+    <li><span class="t">Hábitos que funcionan</span><span class="d">Cómo no abandonar</span></li>
+    <li><span class="t">Errores comunes al aprender</span><span class="d">Qué evitar desde el día uno</span></li>
+    <li><span class="t">Ética y ley</span><span class="d">La línea que nunca se cruza</span></li>
+  </ul>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer esta ruta</h2>
+  <p class="promesa">Esta no es una lista de cursos. Es un orden: cada etapa prepara la siguiente.</p>
+
+  <div class="bloque">
+    <h3>Las reglas del juego</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>Una ruta de aprendizaje es una <b>secuencia</b>: no empezás por el capítulo 7 de una materia. Cada tema de esta lista usa herramientas que se explicaron antes. Si respetás el orden, nunca te vas a sentir perdido.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>aprender a cocinar</b>: primero aprendés a cortar y a usar el fuego (programación). Después entendés la cocina y sus aparatos (sistemas). Después aprendés cómo llegan los ingredientes desde el mercado (redes). Después, cómo guardarlos sin que se contaminen (seguridad). Y recién al final, probás deliberadamente romper cosas para saber qué falla (hacking). Si empezás por el último paso, no sabés qué estás rompiendo.</div>
+    <div class="fila"><span class="lbl porque">Por qué así</span>Porque <b>la seguridad sin bases es peligrosa y el hacking sin fundamentos es adivinanza</b>. Un hacker sin sistemas ni redes no hackea: aprieta botones de un programa que no entiende. Con la base correcta, cada etapa se aprende más rápido que la anterior.</div>
+    <div class="fila"><span class="lbl orden">Cómo seguirla</span>Elegí <b>un recurso principal</b> por etapa y terminalo antes de pasar. Los demás son apoyo: los consultás cuando te trabás, no los haces en paralelo. Terminar uno vale más que empezar cinco.</div>
+    <div class="fila"><span class="lbl conecta">Cuánto tiempo</span>Con <b>30–60 minutos al día</b> y constancia, las 5 etapas toman unos <b>12 a 18 meses</b>. No hay prisa: lo que importa es no parar. Si un mes no podés, retomás donde estabas — no perdés todo.</div>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Cómo está armado cada recurso</span><br>
+    Cada ficha trae: <b>qué es</b> (en una frase), <b>costo</b> (gratis o no), <b>nivel</b>, <b>por qué está entre los mejores</b>, y el <b>orden</b> que tiene dentro de su etapa. No hace falta que todos te gusten: elegí el que te llame y quedate ahí.
+  </div>
+</section>
+
+<!-- ==================== MAPA ==================== -->
+<section class="cap">
+  <h2><span class="num">Visión general</span>El mapa completo</h2>
+  <p class="promesa">Cinco etapas. Cada una es un cimiento para la que viene después.</p>
+
+  <div class="mapa">
+    <div class="paso">
+      <div class="nro">1</div>
+      <div class="txt"><b>Programación — escribir las instrucciones</b><span>Aprendés a hablar con la máquina: variables, condicionales, bucles, funciones. Es el alfabeto de todo lo demás. <b>Base:</b> este PDF (01) + freeCodeCamp / CS50x.</span></div>
+    </div>
+    <div class="flecha">▼</div>
+    <div class="paso">
+      <div class="nro">2</div>
+      <div class="txt"><b>Sistemas — entender la máquina</b><span>Qué es el sistema operativo, la memoria, los procesos, el disco y Linux. Sin esto, "seguridad" es una palabra vacía. <b>Base:</b> Linux Journey + OSTEP.</span></div>
+    </div>
+    <div class="flecha">▼</div>
+    <div class="paso">
+      <div class="nro">3</div>
+      <div class="txt"><b>Redes — entender cómo se hablan las máquinas</b><span>IP, DNS, TCP/IP, enrutamiento, puertos. Es el camino por donde viaja todo lo que un atacante (o un defensor) usa. <b>Base:</b> Professor Messer Network+ + Cisco.</span></div>
+    </div>
+    <div class="flecha">▼</div>
+    <div class="paso">
+      <div class="nro">4</div>
+      <div class="txt"><b>Seguridad — proteger lo anterior</b><span>Principios de confidencialidad, autenticación, criptografía, defensa y detección. Acá se entiende QUÉ hay que cuidar y por qué. <b>Base:</b> Security+ + TryHackMe.</span></div>
+    </div>
+    <div class="flecha">▼</div>
+    <div class="paso">
+      <div class="nro">5</div>
+      <div class="txt"><b>Hacking — descubrir cómo se rompe</b><span>Ofensiva ética: hallar fallas antes que los malos. Requiere las cuatro etapas anteriores para tener sentido. <b>Base:</b> Bandit → TryHackMe → PortSwigger → HTB → PicoCTF.</span></div>
+    </div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Las etapas se solapan</span><br>
+    No es "termino la 1 y olvido". En la etapa 5 vas a volver a programar (scripts en Python y Bash), a sistemas (escalada de privilegios) y a redes (reconocimiento). <b>Cada etapa profundiza la anterior</b>: por eso el camino es en espiral, no en línea recta.
+  </div>
+</section>
+
+<!-- ==================== POR QUÉ ESTE ORDEN ==================== -->
+<section class="cap">
+  <h2><span class="num">Racional</span>Por qué en este orden — y por qué no empezar por hacking</h2>
+  <p class="promesa">La tentación de todos es arrancar por hacking. Es el peor lugar para arrancar.</p>
+
+  <div class="bloque">
+    <h3>El razonamiento</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El hacking no es una habilidad suelta: es la <b>aplicación de todo lo demás en sentido contrario</b>. Para romper algo primero tenés que entender cómo está construido. Un sistema que no sabés cómo funciona, una red que no sabés leer y un programa que no sabés escribir: eso no es hacking, es apretar botones.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en un <b>cerrajero</b>. Nadie le enseña "cómo abrir cerraduras ajenas" primero. Primero aprende cómo funciona un mecanismo de bloqueo (sistemas), qué materiales lo componen (fundamentos), y solo después practica la apertura — y lo hace <b>con permiso</b>, sobre cerraduras propias o de clientes. El orden inverso produce gente que rompe cosas sin saber qué rompió.</div>
+    <div class="fila"><span class="lbl porque">Por qué la 1 va primero</span>Porque <b>todo lo demás son programas</b>. Las herramientas de red son programas. Los sistemas operativos corren programas. Los exploits son programas. Saber leer y escribir código hace el resto del camino 3 veces más fácil.</div>
+    <div class="fila"><span class="lbl orden">Por qué la 2 va antes que la 3</span>Porque las redes <b>viven dentro de sistemas</b>: un paquete lo procesa un sistema operativo, lo enruta otro y lo guarda un tercero. Sin entender procesos, permisos y memoria, "firewall" es solo una palabra.</div>
+    <div class="fila"><span class="lbl conecta">Por qué la 4 y la 5 se separan</span>La <b>seguridad</b> es el pensamiento: qué proteger, con qué principios, cómo se falla. El <b>hacking</b> es la práctica ofensiva de ese pensamiento. Primero se aprende el porqué, después el cómo.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:36%">Si empezás por…</th><th>Lo que te pasa</th></tr>
+    <tr><td><b>Hacking directo</b></td><td>Copias comandos que no entendés, no sabés por qué funcionan y no podés improvisar cuando el caso cambia. Te estancás rápido.</td></tr>
+    <tr><td><b>Redes sin sistemas</b></td><td>Entendés la teoría pero no podés ver nada en vivo: no sabés usar una terminal ni leer lo que hace tu propia máquina.</td></tr>
+    <tr><td><b>Programación sin nada más</b></td><td>Sabés escribir pero no sabés qué pasa cuando tu código corre: ni la memoria, ni la red, ni el disco. Te falta el "por dentro".</td></tr>
+    <tr><td><b>El orden de esta ruta</b></td><td>Cada etapa te da las herramientas de la siguiente. Es el camino más corto aunque parezca el más largo.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== ETAPA 1 ==================== -->
+<section class="cap">
+  <h2><span class="num">Etapa 1 · Mes 1 a 3</span>Programación desde 0</h2>
+  <p class="promesa">El objetivo no es "saber un lenguaje". Es aprender a pensar en pasos.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es y por qué va primero?</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>Programar es <b>darle instrucciones ordenadas a una máquina</b> para que haga algo por vos. Es el alfabeto: sin él, todo lo demás es leer sin entender.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>idioma local</b> de la computadora. Podés vivir en un país sin hablar el idioma, pero preguntar en la calle te va a costar el triple. En etapa 1 aprendés a pedir direcciones.</div>
+    <div class="fila"><span class="lbl porque">Qué te llevás</span>Variables, tipos de datos, condicionales, bucles, funciones, listas, manejo de errores y — lo más importante — <b>el hábito de leer un error y no asustarte</b>.</div>
+    <div class="fila"><span class="lbl orden">Orden dentro de la etapa</span>1) Primer contacto en el navegador (para no instalar nada). 2) Un curso estructurado que hagas de principio a fin. 3) Un proyecto propio tuyo, aunque sea chico.</div>
+    <div class="fila"><span class="lbl conecta">Después qué</span>Con esto listo podés leer el resto de la ruta. Sin esto, las etapas 2 a 5 son inalcanzables.</div>
+  </div>
+
+  <div class="recurso">
+    <h4>1. freeCodeCamp</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">DE 0</span><span class="pill orden">EMPEZÁ ACÁ</span></div>
+    <p><b>Qué es:</b> organización sin fines de lucro con cursos y certificaciones gratuitas: diseño web, JavaScript, Python, bases de datos. Todo ocurre <b>en el navegador</b>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es el arranque más fácil que existe: escribís código desde el primer minuto, sin instalar nada, con ejercicios corregidos al instante. Sirve para descubrir si esto te gusta con cero fricción.</p>
+    <p class="url">freecodecamp.org</p>
+  </div>
+
+  <div class="recurso">
+    <h4>2. CS50 — Introducción a la Informática (Harvard)</h4>
+    <div class="pills"><span class="pill gratis">GRATIS · OpenCourseWare</span><span class="pill nivel">INICIAL A INTERMEDIO</span><span class="pill nivel">SUBTÍTULOS EN ESPAÑOL</span></div>
+    <p><b>Qué es:</b> el curso introductorio de Harvard, uno de los más vistos del mundo. 11 semanas: Scratch → C → arreglos → algoritmos → memoria → estructuras → Python → SQL → web → proyecto final.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> enseña <b>a pensar como programador</b> y a ver qué hace la computadora por dentro. Empezar con C es intencional: después Python te va a parecer fácil, y esa base "por dentro" es exactamente lo que necesitás en la etapa 2.</p>
+    <p class="url">cs50.harvard.edu/x</p>
+  </div>
+
+  <div class="recurso">
+    <h4>3. The Odin Project</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS · OPEN SOURCE</span><span class="pill nivel">DE 0 A EMPLEO</span><span class="pill nivel">PROYECTOS REALES</span></div>
+    <p><b>Qué es:</b> plan de estudios completo de desarrollo web en dos rutas (JavaScript o Ruby on Rails), mantenido por una comunidad abierta.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> no te deja copiar: te hace <b>resolver proyectos solo</b>, que es como se aprende de verdad. Tiene Discord para cuando te trabás. Es el mejor si tu meta es <b>construir cosas</b>.</p>
+    <p class="url">theodinproject.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>4. MOOC.fi — Universidad de Helsinki</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">DE 0</span><span class="pill nivel">PYTHON / JAVA</span></div>
+    <p><b>Qué es:</b> los cursos abiertos de la Universidad de Helsinki, incluido el <em>Python Programming MOOC</em>, uno de los mejores cursos universitarios de Python del mundo.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>universidad de verdad, gratis</b>, con cientos de ejercicios corregidos automáticamente y rigor académico. Ideal si querés base sólida en lugar de atajos.</p>
+    <p class="url">mooc.fi</p>
+  </div>
+
+  <div class="recurso">
+    <h4>5. Codecademy</h4>
+    <div class="pills"><span class="pill mixto">GRATIS + PLAN PRO OPCIONAL</span><span class="pill nivel">DE 0</span><span class="pill nivel">INTERACTIVO</span></div>
+    <p><b>Qué es:</b> plataforma de cursos interactivos donde escribís código y ves el resultado al lado.</p>
+    <p class="porque"><b>Por qué sirve:</b> es la puerta de entrada más cómodo para probar distintos lenguajes sin instalar nada. El plan gratuito alcanza para arrancar bien.</p>
+    <p class="url">codecademy.com</p>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Cuál elegir</span><br>
+    <b>Nunca toqué código →</b> freeCodeCamp. <b>Quiero profundidad de verdad →</b> CS50x. <b>Quiero construir webs →</b> The Odin Project. <b>Quiero rigor académico →</b> MOOC.fi. <b>Regla:</b> uno solo a la vez, hasta el final.
+  </div>
+</section>
+
+<!-- ==================== ETAPA 2 ==================== -->
+<section class="cap">
+  <h2><span class="num">Etapa 2 · Mes 3 a 7</span>Sistemas</h2>
+  <p class="promesa">Ahora mirás por dentro: qué pasa cuando encendés la computadora y ejecutás tu código.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es?</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>Los <b>sistemas</b> estudian cómo funciona la computadora por dentro: el sistema operativo, la memoria RAM, los procesos, el disco, Linux y cómo se arranca todo.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Si la programación es <b>saber manejar un auto</b>, los sistemas es <b>saber qué hay bajo el capó</b>: el motor, el aceite, la transmisión. No hace falta ser mecánico para conducir, pero cuando algo falla, el que entiende el motor sigue caminando y el otro se queda a la vereda.</div>
+    <div class="fila"><span class="lbl porque">Por qué importa</span>Porque <b>la seguridad es la ausencia de fallas en estos detalles</b>: permisos mal puestos, memoria mal usada, procesos que corren como administrador. Sin sistemas, cada concepto de seguridad posterior queda en el aire.</div>
+    <div class="fila"><span class="lbl orden">Orden dentro de la etapa</span>1) <b>Linux Journey</b> — aprendé la terminal y lo básico de Linux. 2) <b>OSTEP</b> — la teoría profunda de los sistemas operativos. 3) <b>Nand2Tetris</b> — opcional, para construir una computadora desde cero.</div>
+    <div class="fila"><span class="lbl conecta">Conecta con</span>Redes (todo paquete lo procesa un sistema) y Seguridad (permisos, usuarios, procesos). Es la etapa que separa a un usuario de un técnico.</div>
+  </div>
+
+  <div class="recurso">
+    <h4>1. Linux Journey</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS · SIN REGISTRO</span><span class="pill nivel">DE 0</span><span class="pill orden">PRIMERO</span></div>
+    <p><b>Qué es:</b> tutorial de Linux hecho para principiantes (creado en 2015, hoy mantenido por LabEx). Se divide en niveles: <em>Grasshopper</em> (inicio, terminal, usuarios), <em>Journeyman</em> (archivos, kernel, arranque) y <em>Networking Nomad</em> (redes). Incluye una <b>terminal Linux en el navegador</b>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es gratuito, sin registro, y te pone la terminal en las manos desde el minuto uno. Es el puente perfecto entre "sé programar" y "entiendo la máquina".</p>
+    <p class="url">linuxjourney.com (hoy en labex.io/linuxjourney)</p>
+  </div>
+
+  <div class="recurso">
+    <h4>2. OSTEP — Operating Systems: Three Easy Pieces</h4>
+    <div class="pills"><span class="pill gratis">LIBRO GRATIS PARA SIEMPRE</span><span class="pill nivel">INTERMEDIO</span><span class="pill orden">DESPUÉS</span></div>
+    <p><b>Qué es:</b> el libro de sistemas operativos de la Universidad de Wisconsin-Madison, de Remzi y Andrea Arpaci-Dusseau. Se organiza en tres piezas: <b>virtualización, concurrencia y persistencia</b> (más capítulos de seguridad). Con tareas y proyectos.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>gratuito en PDF, para siempre</b>, y está escrito con una claridad legendaria: explica cómo un sistema operativo reparte el CPU, la memoria y el disco sin abrumarte. Es el libro de sistemas más recomendado para autodidactas.</p>
+    <p class="url">ostep.org</p>
+  </div>
+
+  <div class="recurso">
+    <h4>3. Nand2Tetris — Construir una computadora desde cero</h4>
+    <div class="pills"><span class="pill gratis">GRATIS · OPEN SOURCE</span><span class="pill nivel">INTERMEDIO A AVANZADO</span><span class="pill mixto">COURSERA DE PAGO OPCIONAL</span></div>
+    <p><b>Qué es:</b> el curso <em>From Nand to Tetris</em>: construís una computadora entera empezando por una compuerta NAND, pasando por el CPU, el ensamblador, el compilador y hasta un juego. Se usa en más de 400 universidades.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>gratis y open source</b> en su sitio oficial. No hay mejor forma de entender qué es realmente una computadora que <b>construirla</b>. Opcional pero transformador: cuando lo terminás, "memoria" y "CPU" dejan de ser palabras.</p>
+    <p class="url">nand2tetris.org</p>
+  </div>
+
+  <div class="recurso">
+    <h4>4. CS:APP — Computer Systems: A Programmer's Perspective (CMU)</h4>
+    <div class="pills"><span class="pill mixto">LIBRO DE PAGO</span><span class="pill nivel">AVANZADO</span><span class="pill orden">CUANDO QUIERAS MÁS</span></div>
+    <p><b>Qué es:</b> el libro clásico de Carnegie Mellon, Bryant &amp; O'Hallaron. Cubre representación de datos, memoria, procesos, E/S de red y programación concurrente, siempre <b>desde el punto de vista de quien programa</b>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es el siguiente escalón después de OSTEP si te gustó el "por dentro". Ideal para cuando ya programás y querés entender qué pasa debajo de tu código.</p>
+    <p class="url">csapp.cs.cmu.edu</p>
+  </div>
+</section>
+
+<!-- ==================== ETAPA 3 ==================== -->
+<section class="cap">
+  <h2><span class="num">Etapa 3 · Mes 7 a 9</span>Redes informáticas</h2>
+  <p class="promesa">Cómo dos máquinas separadas por el mundo logran hablarse.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es?</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>Las <b>redes</b> estudian cómo viaja la información entre computadoras: direcciones IP, el modelo TCP/IP, DNS, enrutamiento, puertos, cableado y Wi-Fi.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>sistema postal</b>. Tu mensaje es una carta. La dirección IP es el domicilio. El DNS es la guía que convierte "la panadería" en un número de calle. El enrutador es el cartero que decide por qué camino va. Y el sobre (el paquete) tiene una dirección de destino y una de origen. Si entendés el correo, entendés internet.</div>
+    <div class="fila"><span class="lbl porque">Por qué importa</span>Porque <b>ciberseguridad = proteger cosas que viajan por una red</b>. Sin entender paquetes, puertos y DNS, un ataque es magia y una defensa es una adivinanza.</div>
+    <div class="fila"><span class="lbl orden">Orden dentro de la etapa</span>1) <b>Professor Messer Network+</b> — teoría completa en video gratis. 2) <b>Cisco Networking Academy</b> — práctica guiada. 3) <b>NetworkChuck</b> — para desbloquear temas difíciles con energía. 4) <b>Libro de Kurose &amp; Ross</b> — si querés profundidad académica.</div>
+    <div class="fila"><span class="lbl conecta">Conecta con</span>Seguridad (qué es un firewall, un ataque de red) y Hacking (reconocimiento, escaneo de puertos, interceptación de tráfico).</div>
+  </div>
+
+  <div class="recurso">
+    <h4>1. Professor Messer — CompTIA Network+ (N10-009)</h4>
+    <div class="pills"><span class="pill gratis">CURSO DE VIDEO GRATIS</span><span class="pill nivel">INICIAL A INTERMEDIO</span><span class="pill orden">PRIMERO</span></div>
+    <p><b>Qué es:</b> el curso completo de video para la certificación CompTIA Network+, con la temática oficial cubierta de punta a punta, más grupos de estudio y quizzes.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>gratis, completo y ordenado</b>, con el estándar de la industria como guía. Sirve aunque nunca vayas a rendir el examen: te da el vocabulario y el mapa mental de las redes.</p>
+    <p class="url">professormesser.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>2. Cisco Networking Academy (NetAcad)</h4>
+    <div class="pills"><span class="pill gratis">CURSOS GRATIS</span><span class="pill nivel">DE 0</span><span class="pill mixto">CERTIFICADO OPCIONAL DE PAGO</span></div>
+    <p><b>Qué es:</b> la academia de redes de Cisco, con cursos como <em>Introduction to Networks</em> y rutas completas hasta el CCNA. Se pueden tomar gratis desde la web.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>la referencia de la industria en redes</b>, con laboratorios guiados. Cuando digas "redes" en un currículum, el sello de Cisco pesa.</p>
+    <p class="url">netacad.com · skillsforall.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>3. NetworkChuck</h4>
+    <div class="pills"><span class="pill gratis">GRATIS (YOUTUBE)</span><span class="pill nivel">DE 0</span><span class="pill nivel">EN INGLÉS</span></div>
+    <p><b>Qué es:</b> un canal de YouTube que explica redes, Linux, código y ciberseguridad con mucha energía y demos en vivo.</p>
+    <p class="porque"><b>Por qué sirve:</b> es el <b>antídoto contra la fatiga</b>. Cuando un tema denso (subnetting, OSI) no te entre, mirá su versión: la analogía que necesitás probablemente está ahí.</p>
+    <p class="url">youtube.com/@NetworkChuck</p>
+  </div>
+
+  <div class="recurso">
+    <h4>4. Computer Networking: A Top-Down Approach (Kurose &amp; Ross)</h4>
+    <div class="pills"><span class="pill mixto">LIBRO DE PAGO</span><span class="pill nivel">INICIAL A INTERMEDIO</span><span class="pill nivel">USO UNIVERSITARIO</span></div>
+    <p><b>Qué es:</b> el libro de texto de redes más usado en universidades del mundo. Empieza por la capa de aplicación (lo que ya conocés: la web) y baja hasta la capa física.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> su enfoque <b>de arriba hacia abajo</b> hace que las redes sean comprensibles: entendés el qué antes del cómo. Es el complemento de lectura ideal a los videos.</p>
+    <p class="url">gaia.cs.umass.edu/kurose-ross</p>
+  </div>
+</section>
+
+<!-- ==================== ETAPA 4 ==================== -->
+<section class="cap">
+  <h2><span class="num">Etapa 4 · Mes 9 a 11</span>Seguridad informática</h2>
+  <p class="promesa">Ahora aprendés a proteger: qué cuidar, por qué se pierde y cómo se defiende.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es?</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>La <b>seguridad informática</b> es el arte de proteger datos y sistemas: confidencialidad (que nadie lo vea), integridad (que nadie lo cambie) y disponibilidad (que siempre esté disponible). Se llama el "triángulo CIA".</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>seguridad de una casa</b>: la cerradura (autenticación), las paredes (cifrado), la alarma (detección) y el seguro (respuesta). Notá que no basta con una cerradura: si la alarma no funciona, no te enterás de la visita. La seguridad es un sistema, no un objeto.</div>
+    <div class="fila"><span class="lbl porque">Por qué importa</span>Porque acá se entiende <b>qué se está defendiendo y por qué</b>. Es lo que transforma "sé usar herramientas" en "sé tomar decisiones".</div>
+    <div class="fila"><span class="lbl orden">Orden dentro de la etapa</span>1) <b>Professor Messer Security+</b> — la base teórica. 2) <b>TryHackMe — Pre Security / Cyber Security 101</b> — práctica guiada de cero. 3) <b>Cisco CyberOps</b> — si te gusta el lado defensor (defensa).</div>
+    <div class="fila"><span class="lbl conecta">Conecta con</span>Hacking: la etapa 5 es exactamente esto, pero en modo ofensivo y con permiso. Mucha gente hace Security+ y TryHackMe a la vez: se refuerzan.</div>
+  </div>
+
+  <div class="recurso">
+    <h4>1. Professor Messer — CompTIA Security+ (SY0-701)</h4>
+    <div class="pills"><span class="pill gratis">CURSO DE VIDEO GRATIS</span><span class="pill nivel">INICIAL A INTERMEDIO</span><span class="pill orden">PRIMERO</span></div>
+    <p><b>Qué es:</b> el curso completo de video para la certificación Security+, cubriendo amenazas, criptografía, gestión de identidades, arquitecturas de seguridad y cumplimiento.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> <b>gratis, completo y con el temario oficial</b>. Es el estándar de entrada a la ciberseguridad en muchos países, y te da el vocabulario que se usa en el trabajo.</p>
+    <p class="url">professormesser.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>2. TryHackMe — Pre Security y Cyber Security 101</h4>
+    <div class="pills"><span class="pill gratis">PLAN GRATUITO</span><span class="pill nivel">DE 0</span><span class="pill orden">LA PRÁCTICA</span></div>
+    <p><b>Qué es:</b> plataforma de aprendizaje de ciberseguridad con <b>más de 1000 laboratorios</b> y rutas guiadas que se abren en el navegador. Sus rutas empiezan por <em>Pre Security</em> y <em>Cyber Security 101</em>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>aprender haciendo, desde el minuto uno</b>, con salas guiadas paso a paso y entornos listos para usar (no hay que montar nada). Es el puente ideal entre la teoría y la práctica real.</p>
+    <p class="url">tryhackme.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>3. Cisco CyberOps Associate</h4>
+    <div class="pills"><span class="pill gratis">CURSOS DE INICIO GRATIS</span><span class="pill nivel">INTERMEDIO</span><span class="pill mixto">EXAMEN DE PAGO</span></div>
+    <p><b>Qué es:</b> la formación de Cisco para el lado <b>defensor</b> de la seguridad: análisis de eventos, detección de intrusos, respuesta a incidentes y el trabajo de un equipo SOC.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> si TryHackMe te gusta pero te atrae más <b>proteger que atacar</b>, este es tu camino. El perfil defensor (SOC Analyst) tiene muchísima más demanda laboral que el ofensivo.</p>
+    <p class="url">netacad.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>CS50 Cybersecurity (Harvard)</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">INICIAL</span></div>
+    <p><b>Qué es:</b> la versión de Harvard enfocada en seguridad, con el mismo estilo claro del CS50 clásico.</p>
+    <p class="porque"><b>Por qué sirve:</b> si ya hiciste CS50x, este te da el marco de seguridad <b>con el mismo lenguaje y la misma claridad</b> que ya conocés. Es el complemento natural.</p>
+    <p class="url">cs50.harvard.edu/cybersecurity</p>
+  </div>
+</section>
+
+<!-- ==================== ETAPA 5 ==================== -->
+<section class="cap">
+  <h2><span class="num">Etapa 5 · Mes 11 en adelante</span>Hacking</h2>
+  <p class="promesa">El capítulo final: encontrar las fallas antes que los malos — siempre con permiso.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es?</h3>
+    <div class="fila"><span class="lbl teoria">Qué es</span>El <b>hacking ético</b> es usar las mismas técnicas que un atacante, pero <b>autorizado</b>, para descubrir fallas y arreglarlas antes de que alguien las aproveche. Se llama "pentesting" (pruebas de penetración).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Volvamos al <b>cerrajero</b>: prueba cerraduras ajenas solo con dueño presente, con contrato firmado y con un informe final explicando qué falló y cómo se arregla. Esa es la diferencia entre un profesional y un delincuente: <b>permiso, alcance y reporte</b>.</div>
+    <div class="fila"><span class="lbl porque">Por qué al final</span>Porque cada técnica usa todo lo anterior: un exploit es <b>código</b> (etapa 1) que corre en un <b>sistema</b> (etapa 2), que viaja por una <b>red</b> (etapa 3) y rompe una <b>medida de seguridad</b> (etapa 4). Sin las cuatro, es un truco mágico que no podés repetir.</div>
+    <div class="fila"><span class="lbl orden">Orden dentro de la etapa</span>1) <b>OverTheWire: Bandit</b> — la terminal y Linux en forma de juego. 2) <b>TryHackMe</b> — rutas guiadas de hacking. 3) <b>PortSwigger Web Security Academy</b> — el rey del hacking web. 4) <b>Hack The Box Academy</b> — para sistematizar y certificarte. 5) <b>PicoCTF</b> — competición y diversión.</div>
+    <div class="fila"><span class="lbl conecta">Nunca termina</span>Esta etapa no se "completa": se practica para siempre. Es la más divertida y la que más rápido te obliga a volver a estudiar las etapas 1 a 4.</div>
+  </div>
+
+  <div class="recurso">
+    <h4>1. OverTheWire — Bandit</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">ABSOLUTAMENTE PRINCIPIANTE</span><span class="pill orden">PRIMERO</span></div>
+    <p><b>Qué es:</b> un "wargame" (juego de guerra) por niveles: empezás en el nivel 0 y para pasar al siguiente tenés que encontrar la contraseña escondida. Está diseñado <b>expresamente para quien nunca usó una terminal</b>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> te enseña <b>Linux y la línea de comandos jugando</b>, que es la habilidad número uno del hacking. Es gratis, no necesita instalación y el propio sitio te dice que no te rindas. Cuando terminás Bandit, ya sabés usar una terminal.</p>
+    <p class="url">overthewire.org/wargames/bandit</p>
+  </div>
+
+  <div class="recurso">
+    <h4>2. TryHackMe — rutas de hacking</h4>
+    <div class="pills"><span class="pill gratis">PLAN GRATUITO</span><span class="pill nivel">PRINCIPIANTE A AVANZADO</span><span class="pill orden">EL CAMINO PRINCIPAL</span></div>
+    <p><b>Qué es:</b> las mismas rutas guiadas de antes, pero en modo ofensivo: <em>Jr Penetration Tester</em>, <em>Offensive Pentesting</em>, <em>Web Application Pentesting</em> y más.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es el <b>camino guiado más amigable</b> hacia el pentesting: cada sala te explica qué hacer, pero tenés que hacerlo vos. Tiene laboratorios en el navegador y progreso visible.</p>
+    <p class="url">tryhackme.com</p>
+  </div>
+
+  <div class="recurso">
+    <h4>3. PortSwigger — Web Security Academy</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS · SIN TRUCOS</span><span class="pill nivel">PRINCIPIANTE A AVANZADO</span><span class="pill orden">EL MEJOR EN WEB</span></div>
+    <p><b>Qué es:</b> la academia oficial de los creadores de Burp Suite (la herramienta estándar del hacking web). Cubre SQL injection (16 laboratorios), XSS (30), CSRF, XXE, SSRF, request smuggling y decenas de temas más, con <b>laboratorios interactivos</b>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>100 % gratuita</b> (la mantienen así a propósito), está siempre actualizada y está hecha por quienes escribieron el libro de referencia del tema. Si te vas a especializar en seguridad web, este es el sitio.</p>
+    <p class="url">portswigger.net/web-security</p>
+  </div>
+
+  <div class="recurso">
+    <h4>4. Hack The Box Academy</h4>
+    <div class="pills"><span class="pill gratis">MÓDULOS GRATIS</span><span class="pill mixto">SUSCRIPCIÓN Y CERTIFICADOS DE PAGO</span><span class="pill nivel">PRINCIPIANTE A AVANZADO</span></div>
+    <p><b>Qué es:</b> la plataforma de formación de Hack The Box: módulos cortos y rutas por rol (pentester, SOC, ingeniero de seguridad), con una <b>máquina de pentesting en el navegador (Pwnbox)</b> para practicar sin montar nada.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>muy práctica y muy bien estructurada</b>: rutas fáciles como <em>Cracking into Hack The Box</em> y <em>Information Security Foundations</em> para arrancar. Tiene módulos gratuitos y certificaciones reconocidas en la industria si querés invertir.</p>
+    <p class="url">academy.hackthebox.com</p>
+  </div>
+
+  <div class="grupo">
+  <div class="recurso">
+    <h4>5. PicoCTF — ahora CyLab Security Academy (Carnegie Mellon)</h4>
+    <div class="pills"><span class="pill gratis">100 % GRATIS</span><span class="pill nivel">PRINCIPIANTE (DISEÑADO PARA ESTUDIANTES)</span><span class="pill orden">PARA DIVERTIRTE</span></div>
+    <p><b>Qué es:</b> el concurso de captura de banderas (CTF) de Carnegie Mellon, uno de los más populares del mundo para principiantes. Cada reto es un puzzle de seguridad con una "bandera" que hay que encontrar. Su comunidad continúa en la <em>CyLab Security Academy</em>.</p>
+    <p class="porque"><b>Por qué está entre los mejores:</b> es <b>gratis</b>, está pensado para gente que empieza, y el formato de competición hace que aprendas <b>sin darte cuenta</b>. Es la mejor forma de medir de verdad lo que sabés.</p>
+    <p class="url">picoctf.org · cylabacademy.org</p>
+  </div>
+
+  <div class="peligro">
+    <span class="b t" style="color:#b91c1c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Línea legal — leela ahora</span><br>
+    Todas las plataformas de arriba son <b>legales y éticas</b>: practicás en laboratorios que te pertenecen o que te dan permiso. <b>Nunca</b> uses estas técnicas contra un sistema que no te pertenezca sin permiso por escrito. En muchos países es delito, aunque solo "mires". Empezá por los retos de <b>bug bounty</b> (programas oficiales que pagan por hallar fallos) cuando estés listo. La sección final de este documento lo explica.
+  </div>
+  </div>
+</section>
+
+<!-- ==================== CRONOGRAMA ==================== -->
+<section class="cap">
+  <h2><span class="num">Plan concreto</span>Cronograma mes a mes</h2>
+  <p class="promesa">Un plan realista para 30–60 minutos al día. Si vas más lento, no pasa nada: el orden es lo que importa.</p>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 1 · Programación desde 0</b><span>~Mes 1 a 3</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> freeCodeCamp o CS50x de principio a fin. Todos los días un poco. Un proyecto tuyo al final.</p>
+      <ul>
+        <li>Semanas 1–4: primeros programas, variables, tipos, condicionales.</li>
+        <li>Semanas 5–8: bucles, funciones, listas, errores.</li>
+        <li>Semanas 9–12: un proyecto propio + repaso de lo que quedó flojo.</li>
+      </ul>
+      <div class="hito"><b>Señal de que podés avanzar:</b> podés escribir un programa chico sin mirar un tutorial — aunque lo googles puntualmente.</div>
+    </div>
+  </div>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 2 · Linux y la línea de comandos</b><span>~Mes 3 a 4</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> Linux Journey completo (Grasshopper + Journeyman) usando la terminal del navegador. Después, OverTheWire Bandit para reforzar jugando.</p>
+      <ul>
+        <li>Navegar archivos, leer, copiar, buscar, permisos, usuarios.</li>
+        <li>Bandit niveles 0 a 10+ como práctica extra.</li>
+      </ul>
+      <div class="hito"><b>Señal de avance:</b> te sentís cómodo abriendo una terminal y no usas el mouse para todo.</div>
+    </div>
+  </div>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 3 · Sistemas</b><span>~Mes 4 a 7</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> OSTEP — un capítulo por vez, con las tareas que se pueda. Nand2Tetris opcional si te enganchó el "por dentro".</p>
+      <ul>
+        <li>Virtualización: procesos, planificación de CPU, memoria.</li>
+        <li>Concurrencia: hilos, bloqueos, condiciones de carrera.</li>
+        <li>Persistencia: discos, sistemas de archivos.</li>
+      </ul>
+      <div class="hito"><b>Señal de avance:</b> podés explicar con tus palabras qué hace el sistema operativo cuando abrís un programa.</div>
+    </div>
+  </div>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 4 · Redes informáticas</b><span>~Mes 7 a 9</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> Professor Messer Network+ en video + Cisco Networking Academy para la práctica. NetworkChuck cuando un tema se ponga denso.</p>
+      <ul>
+        <li>Modelo TCP/IP y OSI, direcciones IP, subredes, DNS.</li>
+        <li>Enrutamiento, puertos, HTTP/HTTPS, cableado y Wi-Fi.</li>
+        <li>Herramientas: <code>ping</code>, <code>traceroute</code>, <code>nslookup</code>, <code>ipconfig</code>/<code>ifconfig</code>.</li>
+      </ul>
+      <div class="hito"><b>Señal de avance:</b> podés diagnosticar por qué "no te anda el internet" y saber qué paso está fallando.</div>
+    </div>
+  </div>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 5 · Seguridad informática</b><span>~Mes 9 a 11</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> Professor Messer Security+ para la teoría, en paralelo con TryHackMe (Pre Security / Cyber Security 101) para la práctica.</p>
+      <ul>
+        <li>Amenazas, malware, criptografía, autenticación, control de acceso.</li>
+        <li>Primeros laboratorios guiados: analizar, detectar, responder.</li>
+        <li>Opción defensora: Cisco CyberOps.</li>
+      </ul>
+      <div class="hito"><b>Señal de avance:</b> entendés por qué una contraseña débil es un problema REAL y cómo se defiende un sistema.</div>
+    </div>
+  </div>
+
+  <div class="fase">
+    <div class="cab"><b>Fase 6 · Hacking ético</b><span>~Mes 11 en adelante · no termina</span></div>
+    <div class="cuerpo">
+      <p><b>Qué hacés:</b> el orden de la etapa 5 — Bandit, TryHackMe, PortSwigger, HTB Academy, PicoCTF — rotando según te interese.</p>
+      <ul>
+        <li>Semanas 1–6: Bandit + TryHackMe <em>Jr Penetration Tester</em>.</li>
+        <li>Semanas 7–14: PortSwigger Web Security Academy (todo lo de web).</li>
+        <li>Después: HTB Academy + PicoCTF + tus primeros programas de bug bounty.</li>
+      </ul>
+      <div class="hito"><b>Señal de avance:</b> encontrás un fallo y <b>podés explicar por qué existe y cómo se arregla</b> — no solo explotarlo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HÁBITOS ==================== -->
+<section class="cap">
+  <h2><span class="num">Sostenibilidad</span>Hábitos que funcionan</h2>
+  <p class="promesa">El 90 % de quienes abandonan no lo hacen por dificultad: lo hacen por falta de sistema.</p>
+
+  <div class="bloque">
+    <h3>Lo que separa a quien termina de quien abandona</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El aprendizaje técnico es <b>acumulativo y de pulso diario</b>: 40 minutos todos los días rinden mucho más que 5 horas el sábado. El cerebro consolida mientras dormís, no mientras mirás.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>fitness</b>: nadie se pone fuerte entrenando una vez por mes con mucha furia. Se pone fuerte entrenando seguido, con progresión, descansando lo necesario. Estudiar código es idéntico.</div>
+    <div class="fila"><span class="lbl porque">Qué hacer</span>1) <b>Un recurso principal</b>, no diez. 2) <b>Horario fijo</b> (el mismo todos los días, aunque sean 20 minutos). 3) <b>Escribir, no solo mirar</b>: si pasás 30 minutos viendo un video, pasá 30 escribiendo algo. 4) <b>Un proyecto propio</b> por etapa, aunque sea tonto: un generador de memes, una calculadora, un script que renombre archivos.</div>
+    <div class="fila"><span class="lbl orden">Cuando te trabés</span>Regla de los <b>20 minutos</b>: intentá solo 20 minutos. Si no sale, buscá la palabra clave exacta del error. Si tampoco, mirá la solución y <b>reescribila a mano sin copiar</b>. Entonces seguís.</div>
+    <div class="fila"><span class="lbl conecta">Cómo medir</span>No cuentes horas: cuentes <b>cosas terminadas</b>. "Terminé el módulo 3", "resolví la sala", "publiqué mi proyecto". Las listas de tareas vencidas dan motivación real; los sentimientos de culpa, no.</div>
+  </div>
+
+  <h3 class="sub">Cuatro reglas anti-abandono</h3>
+  <table>
+    <tr><th style="width:34%">Regla</th><th>Por qué funciona</th></tr>
+    <tr><td><b>No empieces dos cursos a la vez</b></td><td>La culpa de no avanzar en el segundo te hace dejar también el primero.</td></tr>
+    <tr><td><b>Dejá un "gancho" para mañana</b></td><td>Terminá el día a mitad de algo fácil: retomás al día siguiente sin fricción.</td></tr>
+    <tr><td><b>Cuaderno de errores</b></td><td>Anotá cada error y su arreglo. En dos semanas vas a ver que se repiten — y desaparecen.</td></tr>
+    <tr><td><b>Contale a alguien</b></td><td>Explicar lo que aprendés a otra persona es la mejor prueba de que lo entendiste.</td></tr>
+  </table>
+</section>
+
+<!-- ==================== ERRORES COMUNES ==================== -->
+<section class="cap">
+  <h2><span class="num">Trampas</span>Errores comunes al aprender</h2>
+  <p class="promesa">Todos caen en estos. Saber que existen ya te ahorra meses.</p>
+
+  <table>
+    <tr><th style="width:34%">Error</th><th>Por qué pasa</th><th style="width:32%">Qué hacer en su lugar</th></tr>
+    <tr><td><b>Coleccionar cursos</b></td><td>Dopamina de "empezar", no de avanzar. Tenés 12 pestañas abiertas y ninguna terminada.</td><td>Uno solo. Los demás los borrás de la vista hasta terminar el primero.</td></tr>
+    <tr><td><b>Ver videos sin practicar</b></td><td>Se siente productivo pero no crea memoria muscular. Es mirar a nadar desde la orilla.</td><td>Regla: 1 minuto escribiendo por cada minuto mirando. Como mínimo.</td></tr>
+    <tr><td><b>Querer entenderlo todo antes de seguir</b></td><td>La perfección paraliza. Algunas cosas solo se entienden después, usándolas.</td><td>Anotá la duda y seguí. Volvé en dos semanas y va a tener sentido.</td></tr>
+    <tr><td><b>Empezar por hacking</b></td><td>Es lo más llamativo, pero no se puede hackear sin entender lo que se rompe.</td><td>Seguí esta ruta. Llegás a la etapa 5 más rápido de lo que creés.</td></tr>
+    <tr><td><b>Buscar el lenguaje "perfecto"</b></td><td>Hay miles de artículos "Python vs JavaScript" que no llevan a ninguna parte.</td><td>Cualquiera de los tres grandes (Python, JavaScript, C) sirve. Las ideas son las mismas.</td></tr>
+    <tr><td><b>Programar solo sin comunidad</b></td><td>Los bloqueos largos desaniman y no tenés a quién preguntarle.</td><td>Un Discord, un foro, o este cuaderno. Preguntar no es trampa.</td></tr>
+    <tr><td><b>Abandonar cuando aparece un error feo</b></td><td>El mensaje en inglés y con números parece un muro.</td><td>Es la computadora dándote el punto exacto del fallo. Es tu mejor amigo en ese momento.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato tranquilizador</span><br>
+    Todos los profesionales que hoy te parecen imparables pasaron por exactamente lo mismo: errores tontos, semanas de bloqueo y la sensación de no saber nada. <b>La diferencia no es talento: es que no pararon.</b>
+  </div>
+</section>
+
+<!-- ==================== ÉTICA ==================== -->
+<section class="cap">
+  <h2><span class="num">Imprescindible</span>Ética y ley: la línea que nunca se cruza</h2>
+  <p class="promesa">La habilidad es la misma; lo que la separa del delito es el permiso.</p>
+
+  <div class="bloque">
+    <h3>La regla de oro</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El hacking ético se practica sobre sistemas que <b>te pertenecen</b> o sobre los que tenés <b>autorización por escrito</b>. El resto es un delito en prácticamente todos los países, aunque solo "hayas mirado".</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la diferencia entre <b>abrir tu propia puerta con llave</b> y abrirla sin permiso. La técnica es idéntica; el acto no. Nadie discute la habilidad del cerrajero: se discute si tenía autorización.</div>
+    <div class="fila"><span class="lbl porque">Por qué te conviene</span>Además de ser lo correcto, es lo <b>profesional</b>: las empresas contratan a quien demuestra criterio ético. Un informe limpio, dentro del alcance y a tiempo vale más que el exploit más brillante.</div>
+    <div class="fila"><span class="lbl orden">Dónde practicar legalmente</span>1) Los <b>laboratorios de esta ruta</b> (TryHackMe, HTB, PortSwigger, Bandit, PicoCTF) — son tuyos o autorizados. 2) Tu propia máquina y tus propios servicios. 3) Cuando estés listo: programas de <b>bug bounty</b> oficiales, donde la empresa te invita a buscar fallos y te paga por ellos.</div>
+    <div class="fila"><span class="lbl conecta">Qué nunca hacer</span>Nunca escanees o toques un sistema que no te pertenezca. Nunca compres datos ajenos. Nunca uses lo que aprendés para dañar o extorsionar. <b>Si tenés duda si es legal: no lo hagas.</b></div>
+  </div>
+
+  <div class="peligro">
+    <span class="b t" style="color:#b91c1c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Resumen en una línea</span><br>
+    <b>Practicá siempre en entornos que te dan permiso, documentá lo que encontrás, y reportá para arreglar — nunca para dañar.</b>
+  </div>
+
+  <h3 class="sub">Tabla resumen de toda la ruta</h3>
+  <table>
+    <tr><th style="width:6%">#</th><th style="width:22%">Etapa</th><th style="width:40%">Recurso principal</th><th>Para qué te sirve</th></tr>
+    <tr><td><b>1</b></td><td>Programación</td><td>freeCodeCamp · CS50x · The Odin Project</td><td>Escribir instrucciones y pensar en pasos</td></tr>
+    <tr><td><b>2</b></td><td>Sistemas</td><td>Linux Journey · OSTEP · Nand2Tetris</td><td>Entender la máquina por dentro y Linux</td></tr>
+    <tr><td><b>3</b></td><td>Redes</td><td>Professor Messer · Cisco NetAcad</td><td>Entender cómo se hablan las máquinas</td></tr>
+    <tr><td><b>4</b></td><td>Seguridad</td><td>Security+ · TryHackMe · Cisco CyberOps</td><td>Saber qué proteger y cómo se defiende</td></tr>
+    <tr><td><b>5</b></td><td>Hacking</td><td>Bandit · TryHackMe · PortSwigger · HTB · PicoCTF</td><td>Encontrar fallas con permiso y reportarlas</td></tr>
+  </table>
+
+  <div class="cierre">
+    <h3>Empezá hoy, no mañana</h3>
+    <p>Ya tenés el mapa: <b>cinco etapas, los mejores recursos del mundo y un orden que funciona</b>. Lo único que falta es el primer paso.</p>
+    <p><b>Acción de hoy:</b> abrí <b>freecodecamp.org</b> (o el documento <b>01 · Programación desde 0</b> de esta serie) y hacé tu primer programa. Veinte minutos. Mañana volvés.</p>
+    <p style="margin-bottom:0">El resto del camino ya está trazado. <b>Solo queda caminarlo.</b></p>
+  </div>
+</section>
+
+</body>
+</html>
