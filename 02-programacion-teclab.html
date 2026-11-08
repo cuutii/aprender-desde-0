@@ -262,11 +262,16 @@
   <div class="bloque">
     <h3>¿Qué es una proposición?</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>proposición</b> es un enunciado al que se le puede asignar un valor de verdad: <b>verdadero (1)</b> o <b>falso (0)</b>. Las preguntas ("¿Tenés hambre?") y los imperativos ("¡No quiero hacerlo!") <b>no</b> son proposiciones: no se les puede asignar un valor. "El cielo está nublado", en cambio, sí: es verdadero o falso.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>interruptor</b>: o está prendido o está apagado. No hay un "medio prendido". La lógica binaria es exactamente eso: el mundo reducido a dos estados, como los bits de la computadora.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>interruptor</b>: o está prendido o está apagado. No hay un "medio prendido". La lógica binaria es exactamente eso: el mundo reducido a dos estados, como los bits de la computadora. Y si el enunciado no se puede contestar con "sí" o "no" (una pregunta, una orden), el programa no puede trabajar con él.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Permite <b>razonar y programar decisiones</b> con certeza matemática.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>operadores lógicos</b>: OR (disyunción, <code>+</code>), AND (conjunción, <code>·</code>) y NOT (negación). El resultado de una operación es siempre otra proposición.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>a OR b</code> con <code>b = 1</code> da <b>1</b> sin importar el valor de <code>a</code>. <code>NOT A</code> invierte: 0 → 1, 1 → 0.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Cargá los valores: <code>a = 0</code>, <code>b = 1</code>.<br>2. Resolvé <code>a OR b</code>: como <code>b</code> ya es 1, el resultado es <b>1</b> (no importa <code>a</code>).<br>3. Resolvé <code>NOT a</code>: como <code>a</code> es 0, da <b>1</b>.<br>4. Anotá el valor final: siempre 0 o 1, nunca otra cosa.</div>
   </div>
+
+  <pre><span class="c">// Evaluación a mano: a = 0, b = 1</span>
+<span class="k">a OR b</span>   →  <span class="n">1</span>   <span class="c">// salida: 1 (b ya es 1)</span>
+<span class="k">a AND b</span>   →  <span class="n">0</span>   <span class="c">// salida: 0 (a es 0)</span>
+<span class="k">NOT a</span>     →  <span class="n">1</span>   <span class="c">// salida: 1 (invierte el 0)</span></pre>
 
   <table>
     <tr><th style="width:16%">Operador</th><th style="width:14%">Símbolo</th><th style="width:34%">En palabras</th><th>Ejemplo</th></tr>
@@ -297,7 +302,7 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>menú de opciones de una máquina de café</b>: con 2 botones (leche sí/no, azúcar sí/no) hay 4 combinaciones. La tabla las lista todas para que no se te escape ninguna.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Probar una expresión <b>sin ejecutar el programa</b>: si la tabla da bien, el código da bien.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Resolviendo por dentro hacia afuera: primero las operaciones entre paréntesis, después las siguientes, hasta llegar a un único valor por fila.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para <code>(P ∧ Q) ∨ R</code> con P, Q, R: 8 filas. En cada una se reemplaza el valor, se resuelve <code>P ∧ Q</code> y después se aplica <code>∨ R</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Contá las variables: con 3 hay 2³ = <b>8 filas</b>.<br>2. Escribí las columnas P, Q, R con todos los 0 y 1 posibles.<br>3. En cada fila resolvé primero lo de adentro: <code>P ∧ Q</code>.<br>4. Con ese resultado aplicá <code>∨ R</code> y anotá el 0 o 1 final.</div>
   </div>
 
   <pre><span class="c"># Tabla de verdad de (P AND Q) OR R — 8 combinaciones</span>
@@ -309,7 +314,8 @@
 <span class="n">1  0  0  |    0</span>
 <span class="n">1  0  1  |    1</span>
 <span class="n">1  1  0  |    1</span>
-<span class="n">1  1  1  |    1</span></pre>
+<span class="n">1  1  1  |    1</span>
+<span class="c">// salida: 1 en las filas donde R = 1, y también en la última (P=1, Q=1, R=0)</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Leyes de Morgan (de memoria)</span><br>
@@ -332,11 +338,20 @@
   <div class="bloque">
     <h3>¿Qué es un algoritmo?</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Es un <b>conjunto definido de instrucciones</b>, con una <b>orden</b> y una <b>cantidad determinada</b> (finita) de pasos, que producen un resultado. Tres características obligatorias: <b>finito</b> (no infinito), <b>definido</b> (cada paso define una acción o condición) y <b>ordenado</b> (secuencia establecida).</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>receta de la abuela</b>: "primero los huevos, después la harina". Si un paso dice "cociná hasta que esté" sin decir cuánto ni cómo, no está definido. Si dice "agregá harina mientras quiera", no es finito. La receta de la abuela funcionaba porque era finita, definida y ordenada.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>receta de la abuela</b>: "primero los huevos, después la harina". Si un paso dice "cociná hasta que esté" sin decir cuánto ni cómo, no está definido. Si dice "agregá harina mientras quiera", no es finito. La receta de la abuela funcionaba porque era finita, definida y ordenada. <b>Otro ejemplo:</b> es como un manual de instrucciones de un mueble de IKEA: si un paso dice "ajustá lo que haga falta", no es un algoritmo; si dice "poné 4 tornillos de 5 cm", sí.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Resolver un <b>problema concreto</b>: buscar, encaminar u ordenar.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Tipos por objetivo: <b>búsqueda</b> (encontrar un ítem), <b>encaminamiento</b> (calcular una trayectoria) y <b>ordenamiento</b> (ordenar según un criterio, Capítulo 8).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Pasos de solución de problemas: 1. detectar el problema → 2. recabar datos → 3. plantear hipótesis → 4. elegir alternativa → 5. implementar y verificar. Y si cada paso tiene un solo predecesor y un solo sucesor, el algoritmo es <b>secuencial/lineal</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Detectar el problema.<br>2. Recabar los datos.<br>3. Plantear la hipótesis.<br>4. Elegir la alternativa.<br>5. Implementar y verificar.<br>Y si cada paso tiene un solo predecesor y un solo sucesor, el algoritmo es <b>secuencial/lineal</b>.</div>
   </div>
+
+  <pre><span class="c"># Algoritmo: precio de venta de un producto</span>
+<span class="n">1.</span> Leer costo
+<span class="n">2.</span> Leer stock
+<span class="n">3.</span> <span class="k">si</span> stock &gt;= <span class="n">100</span> <span class="k">y</span> costo &lt; <span class="n">1500</span>  →  ganancia = <span class="n">15</span> %
+   <span class="k">sino</span>                        →  ganancia = <span class="n">20</span> %
+<span class="n">4.</span> precio = costo + ganancia
+<span class="n">5.</span> Escribir precio
+<span class="c">// salida con costo = 1000, stock = 120: 1391,5 → 1392</span></pre>
 
   <table>
     <tr><th style="width:20%">Característica</th><th style="width:36%">Qué exige</th><th>Si falla…</th></tr>
@@ -362,7 +377,7 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El diagrama es el <b>plano de una casa</b> (se ve de un vistazo); el pseudocódigo es la <b>lista de obras</b> escrita en palabras. Después, el código es la casa construida.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Ordenar la idea <b>sin pelearse con la sintaxis</b> de un lenguaje.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El diagrama usa símbolos estándar: <b>óvalo</b> (inicio/fin), <b>rombo</b> (decisión), <b>rectángulo</b> (proceso) y <b>flechas</b> (flujo). Siempre arranca en óvalo; del rombo salen las ramas y se conecta a óvalo si termina o a rectángulo si continúa.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Leé el diagrama siguiendo las flechas desde el óvalo de inicio hasta el de fin. Cada rombo es un "si… entonces… si no…" que elige rama.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Arrancá en el óvalo de inicio.<br>2. Seguí las flechas: cada rectángulo es un paso que se ejecuta.<br>3. En cada rombo preguntá la condición y tomá la rama que dice "sí" o la que dice "no".<br>4. Terminá en el óvalo de fin.</div>
   </div>
 
   <h3 class="sub">Variables y tipos (el vocabulario mínimo)</h3>
@@ -396,7 +411,8 @@ Escribir <span class="s">"ingresar el stock del producto"</span>;  Leer stock
 precio_ganancia = costo + ganancia
 precio_total    = precio_ganancia * <span class="n">1.21</span>
 precio_redondeado = redon(precio_total)
-Escribir <span class="s">"el precio de venta del producto es"</span>, precio_redondeado</pre>
+Escribir <span class="s">"el precio de venta del producto es"</span>, precio_redondeado
+<span class="c">// salida con costo = 1000, stock = 120: el precio de venta del producto es 1392</span></pre>
 </section>
 
 <!-- ==================== CAP 5 ==================== -->
@@ -407,11 +423,25 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   <div class="bloque">
     <h3>if, if-else y switch</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Los <b>condicionales</b> evalúan la veracidad de una sentencia con valores booleanos. <code>if</code> ejecuta un bloque si se cumple; <code>if-else</code> elige entre dos caminos; el <b>condicional múltiple</b> (<code>switch</code>) evalúa una variable y ejecuta el camino según su valor — una alternativa a sucesivos <code>if</code> cuando hay muchos casos.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>menú del cajero automático</b>: si apretás "extraer", hace una cosa; si "transferir", otra. Y si hay cinco opciones, el <code>switch</code> es el menú completo en vez de cinco preguntas seguidas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>menú del cajero automático</b>: si apretás "extraer", hace una cosa; si "transferir", otra. Y si hay cinco opciones, el <code>switch</code> es el menú completo en vez de cinco preguntas seguidas. <b>Otro ejemplo:</b> es como el portero del club: si tenés carnet, entrás; si no, te quedás afuera; si es socio vitalicio, entrás por la puerta VIP (switch).</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Elegir <b>un camino</b> según los datos.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Evalúa la condición → obtiene true/false → entra al bloque que cumplió. Los dos bloques <b>nunca se ejecutan a la vez</b>.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En pseudocódigo: <code>si condición Entonces … SiNo … FinSi</code>. En Java/C++: <code>if (condición) { … } else { … }</code> y <code>switch (valor) { case …: … }</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Evaluá la condición y quedate con <code>true</code> o <code>false</code>.<br>2. Si es <code>true</code>, ejecutá el bloque del <code>if</code> y salteá el resto.<br>3. Si es <code>false</code>, saltá al bloque <code>else</code> (si existe). Los dos bloques <b>nunca se ejecutan a la vez</b>.<br>Sintaxis: en pseudocódigo <code>si condición Entonces … SiNo … FinSi</code>; en Java/C++ <code>if (condición) { … } else { … }</code> y <code>switch (valor) { case …: … }</code>.</div>
   </div>
+
+  <pre><span class="c">// ¿Aprueba? la nota decide el camino</span>
+<span class="k">int</span> nota = <span class="n">8</span>;
+<span class="k">if</span> (nota &gt;= <span class="n">6</span>) cout &lt;&lt; <span class="s">"Aprobado"</span>;
+<span class="k">else</span>          cout &lt;&lt; <span class="s">"Desaprobado"</span>;
+<span class="c">// salida: Aprobado</span>
+
+<span class="k">int</span> opcion = <span class="n">2</span>;   <span class="c">// menú del cajero: el switch resuelve de una</span>
+<span class="k">switch</span> (opcion) {
+  <span class="k">case</span> <span class="n">1</span>: cout &lt;&lt; <span class="s">"Extraer"</span>;     <span class="k">break</span>;
+  <span class="k">case</span> <span class="n">2</span>: cout &lt;&lt; <span class="s">"Transferir"</span>;  <span class="k">break</span>;
+  <span class="k">default</span>: cout &lt;&lt; <span class="s">"Opcion invalida"</span>;
+}
+<span class="c">// salida: Transferir</span></pre>
 
   <table>
     <tr><th style="width:24%">Estructura</th><th style="width:38%">Cuándo usarla</th><th>Detalle</th></tr>
@@ -437,7 +467,7 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>while</b>: "seguí corriendo mientras no llueva" (podés no correr nunca si ya llueve). <b>do-while</b>: "tirá la pelota y fijate si rebota" — tirás siempre una vez. <b>for</b>: "lavad 5 platos" — sabés cuántos hay.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Hacer en 3 líneas lo que a mano llevaría 50.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El programa mantiene un <b>contador</b> o reevalúa la condición; cuando deja de cumplirse, sale del bucle y continúa.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Mirá la salida de los tres en el ejemplo: la diferencia entre <code>while</code> y <code>do-while</code> se ve en el segundo código.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Cargá la condición (y el contador, si hace falta).<br>2. Mirá la condición: si es verdadera, ejecutá el bloque y volvé al paso 2.<br>3. Si es falsa, salí del bucle y seguí con el resto del programa.<br>La diferencia se ve en la salida: el <code>while</code> puede no correr nunca y el <code>do-while</code> corre siempre una vez.</div>
   </div>
 
   <pre><span class="k">int</span> i = <span class="n">0</span>;
@@ -447,7 +477,8 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
 <span class="k">do</span> { cout &lt;&lt; i &lt;&lt; endl; i++; } <span class="k">while</span> (i &lt; <span class="n">10</span>); <span class="c">// imprime 11 UNA sola vez:</span>
                                     <span class="c">// do-while corre siempre al menos 1 vez</span>
 
-<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt; <span class="n">10</span>; i++) { cout &lt;&lt; i &lt;&lt; endl; } <span class="c">// imprime 1 al 9</span></pre>
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt; <span class="n">10</span>; i++) { cout &lt;&lt; i &lt;&lt; endl; } <span class="c">// imprime 1 al 9</span>
+<span class="c">// salida completa: primero 0..9, después 11, al final 1..9</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Trampa clásica del for</span><br>
@@ -471,7 +502,7 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La función es el <b>botón del microondas</b>: apretás una vez y ejecuta una rutina entera guardada. La recursividad es <b>dos espejos enfrentados</b>: la función se ve a sí misma una y otra vez… hasta que algo corta (el caso base). Ejemplo clásico: el <b>factorial</b>.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Funciones: <b>reusar</b> y ordenar. Recursividad: resolver problemas que se parecen a sí mismos.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>La función <code>void</code> ejecuta y no devuelve nada; la que declara un tipo devuelve con <code>return</code>. La recursiva se llama a sí misma hasta llegar a un caso que no se repite.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span></div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Definí la función con su tipo de retorno y sus parámetros.<br>2. Llamala donde haga falta: <code>calcularpreciodeventa(costo, stock)</code>.<br>3. Ella ejecuta su bloque y, si tiene <code>return</code>, devuelve el valor al punto de llamada.<br>4. En recursividad, cada llamada se apila hasta llegar al caso base, que devuelve sin volver a llamarse.</div>
   </div>
 
   <pre><span class="c">// void: hace el trabajo, no devuelve nada</span>
@@ -488,7 +519,15 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
     <span class="k">else</span>
         precio_final = (costo * <span class="n">1.20</span>) * <span class="n">1.21</span>;
     <span class="k">return</span> precio_final;
-}</pre>
+}
+<span class="c">// salida con costo = 1000, stock = 120: 1391 (1391,5 sin decimales)</span></pre>
+
+  <pre><span class="c">// Recursividad: el factorial se llama a sí mismo</span>
+<span class="k">int</span> factorial(<span class="k">int</span> n) {
+    <span class="k">if</span> (n &lt;= <span class="n">1</span>) <span class="k">return</span> <span class="n">1</span>;        <span class="c">// caso base: acá se corta</span>
+    <span class="k">return</span> n * factorial(n - <span class="n">1</span>);   <span class="c">// se llama de nuevo</span>
+}
+<span class="c">// salida: factorial(4) → 4 · 3 · 2 · 1 = 24</span></pre>
 
   <div class="grupo">
   <h3 class="sub">Listas, arreglos y matrices</h3>
@@ -514,11 +553,18 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   <div class="bloque">
     <h3>Algoritmos de ordenamiento</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Ordenan los elementos de un arreglo según un <b>criterio</b>. Son "computacionalmente altos" cuando la demanda de procesamiento y memoria crece con la cantidad de elementos. La <b>complejidad</b> se expresa con notación <b>O()</b>: qué tan rápido crece el costo a medida que crecen los datos.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>Burbuja:</b> como apilar cartas mezclando de a dos — los pesados "se hunden" y los livianos suben. <b>Selección:</b> buscar siempre el menor de la pila y ponerlo en su lugar. <b>Inserción:</b> tomar cada carta e ir metiéndola en su lugar dentro de la mano ya ordenada.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span><b>Burbuja:</b> como apilar cartas mezclando de a dos — los pesados "se hunden" y los livianos suben. <b>Selección:</b> buscar siempre el menor de la pila y ponerlo en su lugar. <b>Inserción:</b> tomar cada carta e ir metiéndola en su lugar dentro de la mano ya ordenada. Por eso, con 5 cartas cualquiera de los tres sirve; con 5 millones la burbuja se hace eterna — ahí aparece la notación <b>O()</b>.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Poner los datos en orden para <b>buscar después</b> rápido (búsqueda binaria) y presentarlos bien.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Comparando elementos y moviéndolos — o construyendo una estructura ordenada de entrada (el <b>árbol</b>: inserta en orden y después recorre).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Criterio típico de examen: ¿qué algoritmo usar para ordenar palabras alfabéticamente? — cualquiera sirve, pero el de inserción es el más intuitivo para datos casi ordenados.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Pasos de la <b>burbuja</b>: 1. compará dos elementos vecinos;<br>2. si están al revés, intercambialos;<br>3. avanzá hasta el final de la fila;<br>4. repetí vueltas hasta que haya una vuelta sin cambios.<br>Criterio típico de examen: ¿qué algoritmo usar para ordenar palabras alfabéticamente? — cualquiera sirve, pero el de inserción es el más intuitivo para datos casi ordenados.</div>
   </div>
+
+  <pre><span class="c">// Burbuja a mano: 5, 3, 8, 1</span>
+<span class="k">vuelta 1:</span> (5,3)→3,5 · (5,8) ok · (8,1)→1,8   <span class="c">// el 8 viaja al final</span>
+<span class="k">vuelta 2:</span> (3,5) ok · (5,1)→1,5 · (5,8) ok
+<span class="k">vuelta 3:</span> (3,1)→1,3 · (3,5) ok · (5,8) ok
+<span class="k">vuelta 4:</span> sin cambios → se corta
+<span class="c">// salida: 1 3 5 8</span></pre>
 
   <table>
     <tr><th style="width:18%">Algoritmo</th><th>Idea</th></tr>
@@ -547,11 +593,23 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   <div class="bloque">
     <h3>Clases, objetos y conceptos</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>clase</b> es el <b>molde</b>; un <b>objeto</b> es la cosa hecha con ese molde (la <b>instanciación</b>). Los <b>atributos</b> son sus propiedades, los <b>métodos</b> sus comportamientos, y los <b>mensajes</b> la comunicación entre objetos. Nace en el MIT a fines de los 50, con Lisp.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La clase <code>Persona</code> es el <b>molde de cédula</b>: define que toda persona tiene nombre, altura y año de nacimiento. Tus datos y los míos son dos <b>objetos</b> distintos hechos con el mismo molde — mismas variables, valores distintos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La clase <code>Persona</code> es el <b>molde de cédula</b>: define que toda persona tiene nombre, altura y año de nacimiento. Tus datos y los míos son dos <b>objetos</b> distintos hechos con el mismo molde — mismas variables, valores distintos. <b>Otro ejemplo:</b> es como el plano de una casa: el plano no es la casa, pero sin el plano no podés construir dos iguales.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Modelar el <b>mundo real</b> en software de forma ordenada y reutilizable.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con cuatro pilares: <b>encapsulamiento</b> (ocultar lo interno), <b>herencia</b> (la hija hereda atributos y métodos de la padre), <b>abstracción</b> (extraer lo esencial) y <b>polimorfismo</b> (el mismo mensaje, comportamientos distintos).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Creás la clase, la instanciás (<code>Producto lapiz = new Producto()</code>) y le mandás mensajes (llamás sus métodos).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Definí la clase con sus atributos y métodos.<br>2. Instanciá: <code>Producto lapiz = new Producto()</code>.<br>3. Mandale mensajes (llamá sus métodos): <code>lapiz.informarPrecio()</code> ejecuta el código de <b>ese</b> objeto.</div>
   </div>
+
+  <pre><span class="c">// El molde (clase) y las cosas hechas con él</span>
+<span class="k">public class</span> Producto {
+    <span class="k">private</span> String nombre;                          <span class="c">// encapsulado</span>
+    <span class="k">public</span> Producto(String n) { nombre = n; }       <span class="c">// constructor</span>
+    <span class="k">public void</span> informar() { System.out.println(<span class="s">"Producto: "</span> + nombre); }
+}
+
+Producto lapiz = <span class="k">new</span> Producto(<span class="s">"lapiz"</span>);   <span class="c">// instanciación</span>
+Producto goma  = <span class="k">new</span> Producto(<span class="s">"goma"</span>);    <span class="c">// mismo molde, otro objeto</span>
+lapiz.informar();  goma.informar();         <span class="c">// mensajes</span>
+<span class="c">// salida: Producto: lapiz / Producto: goma</span></pre>
 
   <table>
     <tr><th style="width:24%">Concepto</th><th>En una frase</th></tr>
@@ -580,8 +638,13 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El JDK es el <b>taller del carpintero</b>, el JRE la <b>carpintería en general</b> (donde se puede usar lo hecho) y la JVM el <b>operario</b> que realmente ejecuta. Por eso "corre en cualquier lado": cada sistema operativo tiene su propio operario (JVM) y el mismo archivo <code>.class</code> le sirve a todos.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar Java <b>sin recompilar</b> al cambiar de plataforma.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El compilador Java traduce a <code>.class</code> (bytecode) y la JVM lo interpreta. Multiplataforma = el mismo bytecode corre donde haya JVM.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>javac MiClase.java</code> compila → genera <code>MiClase.class</code> → <code>java MiClase</code> lo ejecuta en la JVM.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Escribí el código en <code>MiClase.java</code>.<br>2. Compilá: <code>javac MiClase.java</code> → genera <code>MiClase.class</code> (el bytecode).<br>3. Ejecutá: <code>java MiClase</code> → la JVM lee ese bytecode y corre el programa.</div>
   </div>
+
+  <pre><span class="c">// Terminal, paso a paso</span>
+&gt; javac MiClase.java     <span class="c">// salida: (vacía = compiló sin errores)</span>
+&gt; dir MiClase.class      <span class="c">// salida: MiClase.class — el bytecode listo</span>
+&gt; java MiClase           <span class="c">// salida: lo que imprima el main</span></pre>
 
   <h3 class="sub">Constructores, visibilidad y excepciones</h3>
   <table>
@@ -613,11 +676,20 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   <div class="bloque">
     <h3>Logging, colecciones y TDD</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>El <b>logging</b> genera mensajes durante la ejecución con severidades (SEVERE, WARNING, INFO, FINE) y handlers que dicen a dónde van (consola, archivo). Las <b>colecciones</b> de <code>java.util</code> guardan objetos. El <b>test unitario</b> (con <b>JUnit</b>) prueba componentes de forma aislada. Y <b>TDD</b> es un ciclo: <b>Red → Green → Refactor</b>.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El log es la <b>cármara de seguridad del programa</b>: cuando algo falla, mirás las grabaciones en vez de adivinar. TDD es <b>escribir el examen antes que el curso</b>: primero el test que falla (Red), después el código que lo hace pasar (Green), después limpiar (Refactor).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El log es la <b>cámara de seguridad del programa</b>: cuando algo falla, mirás las grabaciones en vez de adivinar. TDD es <b>escribir el examen antes que el curso</b>: primero el test que falla (Red), después el código que lo hace pasar (Green), después limpiar (Refactor).</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Logging: <b>observar</b>. Colecciones: <b>guardar muchos</b>. Tests: <b>verificar</b>. TDD: <b>garantizar</b> desde el diseño.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>Iterator</b> para recorrer colecciones sin exponer su estructura, <b>fixtures</b> (datos preparados para el test) y <b>mocks</b> (objetos simulados con Mockito) para aislar lo que se prueba.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Escribís el test → falla (Red) → hacés que pase (Green) → mejorás el código sin romperlo (Refactor). Y ahí entra en juego el <b>Garbage Collector</b>: la JVM libera sola la memoria de los objetos que ya no se usan.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Escribí el test (el código todavía no existe).<br>2. Corrélo: falla — <b>Red</b>.<br>3. Escribir solo el código necesario para que pase — <b>Green</b>.<br>4. Mejorá el código sin romper el test — <b>Refactor</b>.<br>Y ahí entra en juego el <b>Garbage Collector</b>: la JVM libera sola la memoria de los objetos que ya no se usan.</div>
   </div>
+
+  <pre><span class="c">// JUnit: el test primero, el código después</span>
+<span class="n">@Test</span>
+<span class="k">public void</span> testCalcularPrecio() {
+    <span class="k">int</span> r = calcularPrecioDeVenta(<span class="n">1000</span>, <span class="n">120</span>);
+    assertEquals(<span class="n">1391</span>, r);   <span class="c">// todavía no existe → falla</span>
+}
+<span class="c">// salida Red: 1 test falló (el método no existe)</span>
+<span class="c">// salida Green: Process finished with exit code 0</span></pre>
 
   <table>
     <tr><th style="width:30%">Colección (java.util)</th><th style="width:34%">Qué es</th><th>Cuándo</th></tr>
@@ -650,7 +722,7 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es un <b>restaurante</b>: el comensal (cliente) pide, el mozo (HTTP) lleva el pedido, la cocina (servidor) responde con el plato. Si pedís algo que no está en la carta → <b>404</b>. Si el pedido salió bien → <b>200 OK</b>.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>HTTP: <b>transportar</b> peticiones y respuestas. HTML/CSS: <b>maquetar</b> lo que se ve.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>verbos</b>: <code>GET</code> (traer), <code>POST</code> (crear), <code>PUT</code> (actualizar), <code>DELETE</code> (eliminar). Y <b>códigos de estado</b>: 200 OK, 404 no encontrado, 500 error del servidor.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Escribís <code>index.html</code> + <code>estilo.css</code>, lo abrís en el navegador (doble clic) y el navegador te responde. Sin servidor: para eso hay <code>localhost</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Creá <code>index.html</code> con la estructura y <code>estilo.css</code> con los estilos.<br>2. Hacé doble clic en <code>index.html</code>: el navegador lo abre desde <code>file://</code>, sin servidor.<br>3. El navegador lee las etiquetas y pinta la página en pantalla.<br>Si querés un servidor en tu propia máquina, usá <code>localhost</code>.</div>
   </div>
 
   <table>
@@ -681,7 +753,8 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   &lt;<span class="k">input</span> type=<span class="s">"text"</span> id=<span class="s">"nombre"</span> name=<span class="s">"nombre"</span> <span class="n">required</span>&gt;
   &lt;<span class="k">input</span> type=<span class="s">"submit"</span> value=<span class="s">"Enviar"</span>
          style=<span class="s">"background-color: green; color: white;"</span>&gt;
-&lt;/<span class="k">form</span>&gt;</pre>
+&lt;/<span class="k">form</span>&gt;
+<span class="c">// salida: el navegador muestra el header rojo con el logo y el formulario con el botón Enviar verde</span></pre>
 </section>
 
 <!-- ==================== CAP 13 ==================== -->
@@ -692,10 +765,10 @@ Escribir <span class="s">"el precio de venta del producto es"</span>, precio_red
   <div class="bloque">
     <h3>JDBC: cómo Java habla con la base</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>base de datos</b> guarda y da acceso controlado a los datos. Las <b>relacionales</b> los organizan en tablas con SQL y claves (MySQL, PostgreSQL, SQLite3). Las <b>NoSQL</b> no usan tablas definidas (documentos, grafos, clave-valor; ej. MongoDB). <b>JDBC</b> es la API de Java para conectarse: Driver → DriverManager → Connection → Statement → ResultSet.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>JDBC es el <b>mozo entre vos y la cocina de datos</b>: le pedís (SQL), él lleva el pedido y te devuelve el plato (<code>ResultSet</code>). URL típica: <code>jdbc:mysql://localhost:3306/test</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>JDBC es el <b>mozo entre vos y la cocina de datos</b>: le pedís (SQL), él lleva el pedido y te devuelve el plato (<code>ResultSet</code>). URL típica: <code>jdbc:mysql://localhost:3306/test</code>. Y como en el restaurante: si no cerrás la puerta de la cocina al terminar (el <code>close()</code>), las conexiones se acumulan y el resto no consigue entrar. <b>Otro ejemplo:</b> es como el traductor entre vos y el chef: vos hablás en Java, la base habla en SQL, y el traductor (JDBC) evita que se confundan.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Consultar, insertar, modificar y borrar datos <b>desde el programa</b>.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con SQL: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>CREATE TABLE</code>, <code>DROP</code>. Restricciones: <code>NOT NULL</code>, <code>PRIMARY KEY</code>.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Siempre cerrar en <code>finally</code>: <code>connection.close()</code> — una conexión abierta es una puerta abierta.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Cargá el driver: <code>Class.forName("org.postgresql.Driver")</code>.<br>2. Abrí la conexión: <code>DriverManager.getConnection(url, usuario, clave)</code>.<br>3. Creá el <code>Statement</code> y pasale el SQL.<br>4. Recorré el <code>ResultSet</code> con <code>while (rs.next())</code>.<br>5. Cerrá todo en <code>finally</code>: <code>connection.close()</code> — una conexión abierta es una puerta abierta.</div>
   </div>
 
   <pre><span class="k">Class</span>.forName(<span class="s">"org.postgresql.Driver"</span>);
@@ -710,7 +783,8 @@ connection = <span class="k">DriverManager</span>.getConnection(
     <span class="k">int</span> prom = (rs.getInt(<span class="n">3</span>) + rs.getInt(<span class="n">4</span>) + rs.getInt(<span class="n">5</span>)) / <span class="n">3</span>;
     System.out.println(prom &gt;= <span class="n">6</span> ? <span class="s">"Aprobado"</span> : <span class="s">"Desaprobado"</span>);
 }
-<span class="c">// finally: connection.close();  → "Conexión cerrada"</span></pre>
+<span class="c">// finally: connection.close();  → "Conexión cerrada"</span>
+<span class="c">// salida con 2 filas: Nombre: López / Aprobado / Nombre: Ruiz / Desaprobado</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Autenticar ≠ autorizar</span><br>
@@ -731,11 +805,17 @@ connection = <span class="k">DriverManager</span>.getConnection(
   <div class="bloque">
     <h3>Estructura de un proyecto Android</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Android nace en 2008 con código abierto (licencia Apache); cada versión se nombra con postres (Android 12 "S"). El IDE oficial es <b>Android Studio</b> (basado en IntelliJ) y el <b>AVD</b> es un emulador para probar sin celular. Las apps del curso se escriben en <b>Java</b>.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El proyecto es una <b>casa con planta</b>: el <code>AndroidManifest.xml</code> es la <b>puerta de entrada</b> (declara qué habitaciones hay y qué permisos se necesitan), <code>/res/layout</code> son los <b>planos de cada cuarto</code>, y <code>/java</code> es el <b>mobiliario</b> que hace que las cosas funcionen.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El proyecto es una <b>casa con planta</b>: el <code>AndroidManifest.xml</code> es la <b>puerta de entrada</b> (declara qué habitaciones hay y qué permisos se necesitan), <code>/res/layout</code> son los <b>planos de cada cuarto</code>, y <code>/java</code> es el <b>mobiliario</b> que hace que las cosas funcionen. <b>Otro ejemplo:</b> es como el director de orquesta: cada músico (activity) toca su parte, y el manifest es el programa del concierto.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Organizar el código, las pantallas y los recursos de forma que el sistema los encuentre.</div>
-    <div class="fila"><span class="lbl como">Cómo lo hace</span></div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span><code>R.id.x</code>, <code>R.layout.x</code>, <code>R.string.x</code>: la clase <b>R.java</b> generada da acceso a todos los recursos desde el código.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con la estructura de carpetas: el <code>AndroidManifest.xml</code> declara activities y permisos, <code>/res/layout</code> guarda los XML de las pantallas y <code>/java</code> el código que las mueve. Android Studio genera la clase <b>R.java</b> con un id por cada recurso.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Definí el recurso: un id en el XML o un texto en <code>strings.xml</code>.<br>2. Android Studio lo registra en <code>R.java</code> al compilar.<br>3. Usalo desde Java: <code>R.id.x</code>, <code>R.layout.x</code>, <code>R.string.x</code>.<br>Si el recurso no existe, el programa ni compila.</div>
   </div>
+
+  <pre><span class="c">// Android Studio → Terminal del proyecto (Windows)</span>
+&gt; .\gradlew assembleDebug
+<span class="c">// salida: BUILD SUCCESSFUL in 12s</span>
+&gt; .\gradlew installDebug
+<span class="c">// salida: Installed on emulator-5554 — ya podés tocar el ícono</span></pre>
 
   <table>
     <tr><th style="width:34%">Ruta</th><th>Contenido</th></tr>
@@ -777,8 +857,15 @@ connection = <span class="k">DriverManager</span>.getConnection(
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Shared Preferences es la <b>libreta de notas del bolsillo</b> (tus preferencias: tema oscuro, último usuario). SQLite es el <b>archivador</b> con carpetas y fichas. Room es el <b>archivador con un buen encargado</b> que no te deja equivocarte al buscar.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Que los datos <b>sobrevivan</b> a cerrar la app.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Guardando en el almacenamiento interno del dispositivo, con APIs que validan y versionan la estructura.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Preferencias: <code>getSharedPreferences()</code> → editar → <code>commit()</code>. Room: definir la entidad, el DAO y consultar con <code>@Query</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Preferencias: 1. <code>getSharedPreferences()</code> para abrir la libreta;<br>2. <code>edit()</code> y <code>putString("clave", valor)</code> para escribir;<br>3. <code>commit()</code> para guardar (sin eso, no se guarda nada).<br>Room: 1. definir la entidad, 2. definir el DAO con <code>@Query</code>, 3. consultar desde el código.</div>
   </div>
+
+  <pre><span class="c">// SharedPreferences: guardar la última ciudad vista</span>
+SharedPreferences prefs = getSharedPreferences(<span class="s">"config"</span>, MODE_PRIVATE);
+prefs.edit().putString(<span class="s">"ciudad"</span>, <span class="s">"Cordoba"</span>).commit();
+String c = prefs.getString(<span class="s">"ciudad"</span>, <span class="s">""</span>);
+System.out.println(c);
+<span class="c">// salida: Cordoba — sigue ahí aunque cierres la app</span></pre>
 
   <div class="grupo">
   <h3 class="sub">Segundo plano, red y arquitectura</h3>
@@ -816,16 +903,16 @@ connection = <span class="k">DriverManager</span>.getConnection(
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El archivo secuencial es una <b>fila de cajones sin numerar</b>: para encontrar algo, abrís todos. El hash es un <b>cajón numerado</b>: calculás el número y vas directo. Los <b>índices</b> son el <b>índice del libro</b>: en vez de hojear todo, mirás la página indicada.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Encontrar datos <b>rápido sin barrer la tabla entera</b>.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con estructuras auxiliares: <b>primarios</b> (sobre la clave primaria), <b>secundarios</b> (otros atributos), <b>agrupados</b> (junto a los datos) y <b>multinivel</b> (árbol).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Árboles de índice: <b>AVL</b> (balanceado por altura), <b>B</b> (orden m, pocas alturas), <b>B+</b> (hojas encadenadas) — el <b>B+ es el índice predeterminado de los SGBD</b>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. La consulta trae una clave.<br>2. El motor baja por el árbol comparando: izquierda si es menor, derecha si es mayor.<br>3. Llega al dato sin barrer la tabla.<br>Tipos de árbol: <b>AVL</b> (balanceado por altura), <b>B</b> (orden m, pocas alturas), <b>B+</b> (hojas encadenadas) — el <b>B+ es el índice predeterminado de los SGBD</b>.</div>
   </div>
 
   <div class="bloque">
     <h3>Modelos de datos y el Entidad-Relación</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>modelo de datos</b> describe datos, relaciones y restricciones de forma abstracta. El <b>SGBD</b> (DBMS) es el software que administra la base con arquitectura ANSI-SPARC en 3 niveles: <b>externo</b> (vistas), <b>conceptual</b> (modelo lógico global) e <b>interno</b> (almacenamiento físico). Se usa <b>DDL</b> para estructura y <b>DML</b> para manipulación.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El modelo <b>jerárquico</b> es un árbol genealógico (padre/hijo, uno a muchos). El <b>de red</b> le agrega vínculos cruzados. El <b>relacional</b> — el actual — son <b>planillas Excel con reglas</b>: columnas, filas y claves.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El modelo <b>jerárquico</b> es un árbol genealógico (padre/hijo, uno a muchos). El <b>de red</b> le agrega vínculos cruzados: los primos que están en ramas distintas. El <b>relacional</b> — el actual — son <b>planillas Excel con reglas</b>: columnas, filas y claves. Como una planilla: si cada cliente repite su dirección en cada fila, cuando se mude tenés que cambiarla en todas.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Organizar la realidad para que la base la guarde sin repetir ni contradecirse.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con el <b>diagrama Entidad-Relación</b>: entidades (los sustantivos), atributos (sus propiedades) y relaciones (los verbos). Las <b>12 reglas de Codd</b> definen qué SGBD es realmente relacional.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El rol del <b>DBA</b>: definir estructuras físicas, perfiles y seguridad (usuarios/roles/permisos), integridad, respaldo y recuperación, y monitorear rendimiento.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El rol del <b>DBA</b>, paso a paso:<br>1. definir estructuras físicas (tablas, índices, espacios);<br>2. crear perfiles y seguridad: usuarios, roles y permisos;<br>3. cuidar la integridad de los datos;<br>4. hacer respaldo y recuperación;<br>5. monitorear el rendimiento.</div>
   </div>
 
   <div class="grupo">
@@ -859,7 +946,8 @@ connection = <span class="k">DriverManager</span>.getConnection(
   <span class="k">PRIMARY KEY</span>(id_alumno, id_materia),
   <span class="k">FOREIGN KEY</span> (id_alumno)  <span class="k">REFERENCES</span> alumnos(id),
   <span class="k">FOREIGN KEY</span> (id_materia) <span class="k">REFERENCES</span> materias(id)
-);</pre>
+);
+<span class="c">// salida: CREATE TABLE — las tablas quedaron creadas en la base</span></pre>
 </section>
 
 <!-- ==================== CAP 17 ==================== -->
@@ -873,7 +961,7 @@ connection = <span class="k">DriverManager</span>.getConnection(
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>DDL es <b>armar la biblioteca</b> (estanterías, secciones). DML es <b>prestar, devolver y buscar libros</b>. Y una <b>vista</b> es una <b>puerta que da a un pasillo ya armado</b>: una consulta guardada con nombre, sin datos propios.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Preguntar y modificar los datos con precisión.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El <code>SELECT</code> se lee en este <b>orden fijo</b>:</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span></div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Armá la consulta respetando el orden: <code>SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY</code>.<br>2. Guardá la salida: el motor devuelve <b>filas</b>, no pantallas.<br>3. Correlá la consulta en pgAdmin y compará el resultado con lo que esperabas.</div>
   </div>
 
   <pre><span class="k">SELECT</span>   lista de columnas     <span class="c">-- proyección: QUÉ columnas</span>
@@ -906,7 +994,9 @@ connection = <span class="k">DriverManager</span>.getConnection(
 
 <span class="c">-- Vista guardada + función reutilizable</span>
 <span class="k">CREATE OR REPLACE VIEW</span> alumnos_cantidad_materias <span class="k">AS</span> <span class="k">SELECT</span> … ;
-<span class="k">SELECT</span> * <span class="k">FROM</span> alumnos_cantidad_materias <span class="k">WHERE</span> cantidad &gt; <span class="n">1</span>;</pre>
+<span class="k">SELECT</span> * <span class="k">FROM</span> alumnos_cantidad_materias <span class="k">WHERE</span> cantidad &gt; <span class="n">1</span>;
+<span class="c">// salida 1º: cantidad = 4</span>
+<span class="c">// salida 2º: una fila por materia con su cantidad, de la A a la Z</span></pre>
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · API 3 (biblioteca)</span><br>
@@ -925,7 +1015,7 @@ connection = <span class="k">DriverManager</span>.getConnection(
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>procedimiento</b> es un <b>empleado</b> a quien le delegás "registrar esta devolución". La <b>función</b> es una <b>calculadora</b> que siempre devuelve un número. El <b>trigger</b> es el <b>alarma</b>: nadie la llama, se activa sola cuando pasás por la puerta.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar reglas de negocio <b>sin tocar el programa</b>.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>PL/SQL/SPL</b>: extensión de SQL con <code>IF…THEN…ELSE</code>, bucles <code>WHILE</code>/<code>FOR</code> (sobre <b>cursores</b>: DECLARE/OPEN/FETCH/CLOSE) y variables nombradas. Manejo de errores con <b>SQLCODE</b>: 0 = éxito, negativo = error grave, +100 = "no hay más filas".</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Creás el trigger, hacés un <code>UPDATE</code> y… el log se llena solo. Verificá con <code>SELECT</code> después de cada sentencia.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Creá la función y el trigger (una sola vez).<br>2. Hacé un <code>UPDATE</code> normal sobre la tabla.<br>3. El trigger se dispara solo y llena <code>alumnos_logs</code>.<br>4. Verificá con <code>SELECT</code> después de cada sentencia.</div>
   </div>
 
   <pre><span class="c">-- Log automático: cada UPDATE en alumnos deja rastro</span>
@@ -941,7 +1031,8 @@ connection = <span class="k">DriverManager</span>.getConnection(
 <span class="k">AFTER UPDATE ON</span> alumnos
 <span class="k">FOR EACH ROW EXECUTE PROCEDURE</span> alumnos_update_trigger_fnc();
 
-<span class="k">UPDATE</span> alumnos <span class="k">SET</span> dni = <span class="s">'1000000'</span> <span class="k">WHERE</span> id = <span class="n">1</span>;  <span class="c">-- dispara el log</span></pre>
+<span class="k">UPDATE</span> alumnos <span class="k">SET</span> dni = <span class="s">'1000000'</span> <span class="k">WHERE</span> id = <span class="n">1</span>;  <span class="c">-- dispara el log</span>
+<span class="c">// salida: UPDATE 1 — y en alumnos_logs apareció una fila con la fecha</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">SQL dinámico (y su peligro)</span><br>
@@ -970,7 +1061,8 @@ connection = <span class="k">DriverManager</span>.getConnection(
 use peliculas;
 db.peliculas.save({titulo:<span class="s">'Batman el caballero oscuro'</span>});
 db.peliculas.find();
-show dbs;</pre>
+show dbs;
+<span class="c">// salida: find → el documento insertado; show dbs → peliculas en la lista</span></pre>
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · API 4 (biblioteca) + laboratorios</span><br>
@@ -989,7 +1081,7 @@ show dbs;</pre>
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>puerta y el pasillo</b>: apretás el botón (puerta) y caes en la lista de ciudades (pasillo), donde cada fila tiene su propia disposición gracias al <code>CustomAdapter</code>.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Enlazar dos activities con un intent y mostrar una lista con diseño propio.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>3 clases Java + 3 layouts + manifest + gradle. El <code>onClick</code> del botón apunta al método <code>goToListActivity()</code> que lanza el intent.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Arrancás la app → <code>onCreate</code> infla <code>activity_main.xml</code> → tocás el botón → <code>startActivity(intent)</code> → <code>ListActivity</code> infla <code>activity_list.xml</code> → el adapter pinta cada fila con <code>item_list.xml</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Arrancás la app: <code>onCreate</code> infla <code>activity_main.xml</code>.<br>2. Tocás el botón: <code>goToListActivity()</code> arma el intent.<br>3. <code>startActivity(intent)</code> abre <code>ListActivity</code>.<br>4. Su <code>onCreate</code> infla <code>activity_list.xml</code>.<br>5. El adapter pinta cada fila con <code>item_list.xml</code>.</div>
   </div>
 
   <pre><span class="k">public class</span> <span class="s">MainActivity</span> <span class="k">extends</span> AppCompatActivity {
@@ -1003,7 +1095,8 @@ show dbs;</pre>
         Intent myIntent = <span class="k">new</span> Intent(<span class="k">this</span>, ListActivity.<span class="k">class</span>);
         startActivity(myIntent);   <span class="c">// abre la segunda pantalla</span>
     }
-}</pre>
+}
+<span class="c">// salida: al tocar el botón se abre la segunda pantalla</span></pre>
 
   <pre><span class="k">void</span> <span class="s">setupListView</span>() {
     listview = findViewById(R.id.listView);
@@ -1013,7 +1106,8 @@ show dbs;</pre>
     <span class="c">// adapter propio: cada fila usa item_list.xml (ícono + texto)</span>
     CustomAdapter adapter = <span class="k">new</span> CustomAdapter(<span class="k">this</span>, R.layout.item_list, names);
     listview.setAdapter(adapter);
-}</pre>
+}
+<span class="c">// salida: 5 filas (Londres, Paris, Buenos Aires, New York, Miami), cada una con su ícono</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Las piezas que lo sostienen</span><br>

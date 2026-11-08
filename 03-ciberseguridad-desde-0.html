@@ -264,7 +264,7 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>correo postal</b>: escribís una carta (capa de aplicación), la metés en un sobre (presentación), la pasas al correo (transporte), tiene dirección y ruta (red), va en un camión con patente (enlace), el camión rueda por la ruta (física)… Si algo falla, sabés en qué eslabón pasó.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Da un <b>lenguaje común</b>: permite decir "ese ataque golpea la capa 3" y que todos sepan de qué hablamos.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada capa le agrega a los datos un <b>encabezado</b> (encapsulación). Al llegar, el receptor lo quita capa por capa hasta leer el mensaje original (desencapsulación). Cada capa tiene su unidad de datos: <b>dato → segmento → paquete → trama → bits</b>.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando abrís una web: el navegador (capa 7) manda la petición, TCP (capa 4) la parte en segmentos, IP (capa 3) le pone direcciones, la tarjeta de red (capa 2) la arma en tramas y el cable (capa 1) manda los bits. En tu máquina lo podés ver con <code>tracert</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando abrís una web, la petición baja por las capas:<br>1. El navegador (capa 7) manda la petición.<br>2. TCP (capa 4) la parte en segmentos.<br>3. IP (capa 3) le pone las direcciones de origen y destino.<br>4. La tarjeta de red (capa 2) la arma en tramas.<br>5. El cable (capa 1) manda los bits. En tu máquina lo podés ver con <code>tracert</code>.</div>
   </div>
 
   <div class="grupo">
@@ -286,8 +286,21 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La IP pública es tu <b>domicilio en el mapa del mundo</b>. Las privadas son los <b>interiorismos de tu casa</b>: el repartidor solo ve el portón (el router); adentro, cada cuarto tiene su número pero no existe afuera.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Permite <b>encontrar</b> y <b>dirigir</b> el tráfico hasta el dispositivo correcto.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Tu router traduce las privadas a la pública (NAT) cuando el tráfico sale, y revierte al volver. Por eso mil dispositivos de tu casa comparten una sola IP pública.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Windows: <code>Win+R</code> → <code>cmd</code> → <code>ipconfig</code> (buscá "Dirección IPv4"). En Linux: <code>Ctrl+Alt+T</code> → <code>ifconfig</code>. En macOS: <code>ifconfig | grep "inet " | grep -v 127.0.0.1</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Tres formas de mirar tu IP:<br>1. En Windows: <code>Win+R</code> → <code>cmd</code> → <code>ipconfig</code> (buscá "Dirección IPv4").<br>2. En Linux: <code>Ctrl+Alt+T</code> → <code>ifconfig</code>.<br>3. En macOS: <code>ifconfig | grep "inet " | grep -v 127.0.0.1</code>.<br>Para verlo todo de una (IP, máscara, gateway y vecinos), usá el <code>pre</code> de abajo.</div>
   </div>
+
+  <pre><span class="c"># 1. Configuración completa de tu red (Windows)</span>
+ipconfig /all
+<span class="c"># → Descripción del adaptador . . . . . . : Intel(R) Wi-Fi 6 AX201</span>
+<span class="c">#   Dirección IPv4. . . . . . . . . . .  : 192.168.0.34  (Preferido)</span>
+<span class="c">#   Máscara de subred . . . . . . . . .  : 255.255.255.0</span>
+<span class="c">#   Puerta de enlace predeterminada . .  : 192.168.0.1   (tu router)</span>
+
+<span class="c"># 2. Quién es quién en tu red local (el vecindario)</span>
+arp -a
+<span class="c"># → Interfaz: 192.168.0.34 --- 0x4</span>
+<span class="c">#   192.168.0.1    00-1a-2b-3c-4d-5e   dinámico   ← el router</span>
+<span class="c">#   192.168.0.15   a4-83-e1-11-22-33   dinámico   ← otra máquina de la casa</span></pre>
 
   <table>
     <tr><th style="width:18%">Clase</th><th>Rango privado</th><th>Uso típico</th></tr>
@@ -303,7 +316,7 @@
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Reconocimiento de red (10 min)</span><br>
-    Descubrí tu vecindario: <code>arp -a</code> muestra la tabla ARP (quién es quién en tu red local), <code>tracert google.com</code> muestra los saltos hasta Google, y <code>nslookup google.com</code> traduce el nombre a IP. Mirá la dirección MAC destino al salir de tu red: es la de tu router.
+    Descubrí tu vecindario en tres pasos:<br>1) <code>arp -a</code> muestra la tabla ARP (quién es quién en tu red local).<br>2) <code>tracert google.com</code> muestra los saltos hasta Google.<br>3) <code>nslookup google.com</code> traduce el nombre a IP. Mirá la dirección MAC destino al salir de tu red: es la de tu router.
   </div>
 </section>
 
@@ -318,7 +331,7 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en una <b>cámara de seguridad con llave</b>: solo la gente autorizada tiene la llave (confidencialidad), nadie puede borrar las grabaciones (integridad) y la cámara tiene que estar prendida y con batería (disponibilidad). Si falla una, el sistema entero falla.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Protege <b>información</b> (no solo equipos): datos de clientes, claves, planes, reputation.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando controles en tres frentes: <b>personas</b> (capacitación, contraseñas), <b>procesos</b> (permisos, respaldos, auditorías) y <b>tecnología</b> (cifrado, firewalls, antivirus).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ante cada dato, preguntá: ¿quién lo puede ver? ¿Puede alguien modificarlo sin que nadie se dé cuenta? ¿Está disponible cuando hace falta? Si la respuesta a alguna es "no sé", hay trabajo pendiente.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ante cada dato, preguntá en orden:<br>1. ¿Quién lo puede ver?<br>2. ¿Puede alguien modificarlo sin que nadie se dé cuenta?<br>3. ¿Está disponible cuando hace falta? Si la respuesta a alguna es "no sé", hay trabajo pendiente.</div>
   </div>
 
   <table>
@@ -350,6 +363,14 @@
     <tr><td><b>DoS / DDoS</b></td><td>Colapsan tu servidor con tráfico basura desde mil computadoras.</td></tr>
   </table>
 
+  <pre><span class="c"># Google Dorks: el mismo Google, con filtros que el atacante ya usa</span>
+inurl:/wp-content/uploads/ ext:txt <span class="s">"username"</span> OR <span class="s">"password"</span>
+<span class="c"># → archivos .txt subidos sin permisos que contienen credenciales</span>
+intitle:<span class="s">"webcamXP 5"</span>
+<span class="c"># → cámaras web con la pantalla de acceso a la vista en resultados</span>
+<span class="s">"Index of"</span> inurl:phpmyadmin
+<span class="c"># → carpetas sin índice: se navega el servidor como si fuera tu PC</span></pre>
+
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato que duele</span><br>
     Un ciberataque detectado cada <b>39 segundos</b> (U. de Maryland). Más del <b>80 %</b> de los eventos involucran phishing. La media mundial de detección de una brecha es de <b>186 días</b>. Y la frase clásica del curso: <b>"Solo hay dos tipos de empresas: las hackeadas y las que lo serán."</b>
@@ -357,7 +378,7 @@
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Google Dorks (20 min)</span><br>
-    Google también busca <b>dentro</b> de archivos expuestos. Probá en el buscador: <code>inurl:/wp-content/uploads/ ext:txt "username" OR "password"</code> — y después <code>intitle:"webcamXP 5"</code> o <code>"Index of" inurl:phpmyadmin</code>. Verás lo que un atacante ve con solo buscar. <b>Observá, no toques nada de lo que encuentres.</b>
+    Google también busca <b>dentro</b> de archivos expuestos. Probá, en el buscador:<br>1) <code>inurl:/wp-content/uploads/ ext:txt "username" OR "password"</code>.<br>2) Después <code>intitle:"webcamXP 5"</code> o <code>"Index of" inurl:phpmyadmin</code>.<br>Verás lo que un atacante ve con solo buscar. <b>Observá, no toques nada de lo que encuentres.</b>
   </div>
 </section>
 
@@ -372,8 +393,18 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>ladrón de casas</b>: primero mira qué horarios tiene la familia, después prepara las ganzúas, entra por la ventana que dejó abierta y recién ahí se lleva lo que quiere. Nadie "roba por casualidad".</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Gana <b>acceso</b>, se <b>queda</b> y <b>extrae</b>: datos, plata, control.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Explotando la <b>superficie de ataque</b>: todo lo que puede ser atacado — hardware, software, SO, firmware… y <b>RRHH</b>, la capa más blanda.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Hay ataques <b>pasivos</b> (vigilar, espiar el tráfico, OSINT — no tocan nada) y <b>activos</b> (penetrar, persistir, sabotear, exfiltrar). Los pasivos se usan para preparar los activos.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Un ataque se prepara y se ejecuta en dos tiempos:<br>1. Primero los ataques <b>pasivos</b>: vigilás sin tocar nada (espiar el tráfico, OSINT).<br>2. Después los <b>activos</b>: penetrar, persistir, sabotear, exfiltrar.<br>3. Los pasivos se usan para preparar los activos: primero mirás, después entrás.</div>
   </div>
+
+  <pre><span class="c"># Estático en terminal: qué es la muestra, SIN ejecutarla</span>
+md5sum <span class="s">"Hive Loader.exe"</span>
+<span class="c"># → e99a18c428cb38d5f260853678922e03  Hive Loader.exe   (32 caracteres)</span>
+
+strings <span class="s">"Hive Loader.exe"</span> | grep -i <span class="s">"http"</span>
+<span class="c"># → http://comand-control.evil/payload   (la URL que va a consultar)</span>
+<span class="c">#   C:\Users\admin\AppData\Roaming\Hive   (dónde se va a instalar)</span>
+
+<span class="c"># Con la huella en mano: pegala en virustotal.com → 61 motores la revisan en segundos</span></pre>
 
   <div class="grupo">
   <h3 class="sub">La familia malware</h3>
@@ -412,7 +443,7 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La <b>ventana abierta</b> es la vulnerabilidad (nadie la dejó a propósito). La <b>escalera</b> es el exploit, el instrumento con el que el ladrón entra. Y el ladrón que la usa es la amenaza. Podés quitar la escalera, pero si la ventana sigue abierta…</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>El exploit convierte un fallo en un <b>hecho</b>: acceso, roto, caído.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Hay exploits <b>remotos</b> (desde afuera) y <b>locales</b> (desde la máquina); <b>conocidos</b> (ya hay parche) y <b>de día cero</b> (el fabricante aún no sabe).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El catálogo oficial es el <b>CVE</b> (la base NVD) y los exploits listos para usar están en <b>Exploit Database</b>. Ahí se busca "¿existe exploit para esto?".</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para saber si ya existe exploit para algo:<br>1. Buscá el fallo por su número en el <b>CVE</b> (base <b>NVD</b>, nvd.nist.gov): ahí está la ficha y el puntaje.<br>2. En <b>Exploit Database</b> (exploit-db.com) preguntá: "¿existe exploit para esto?".<br>3. Anotá si ya hay parche: sin parche, el riesgo es urgente.</div>
   </div>
 
   <h3 class="sub">El análisis de riesgos en 6 fases</h3>
@@ -438,9 +469,19 @@
   <p style="font-size:10.5pt">Los puertos van del <b>0 al 65535</b>: 0–1023 son los <b>conocidos</b> (los de arriba), 1024–49151 los <b>registrados</b> y el resto <b>dinámicos</b>. Cada puerto puede estar <b>abierto</b> (alguien escucha), <b>cerrado</b> (nadie atiende) o <b>filtrado</b> (un firewall lo bloquea).</p>
   </div>
 
+  <pre><span class="c"># Escaneo con versión de servicio: qué corre detrás de cada puerto</span>
+nmap -sV <span class="n">192.168.0.50</span>
+<span class="c"># → Starting Nmap 7.95 ( https://nmap.org )</span>
+<span class="c">#   PORT     STATE SERVICE VERSION</span>
+<span class="c">#   21/tcp   open  ftp     vsftpd 3.0.3</span>
+<span class="c">#   22/tcp   open  ssh     OpenSSH 8.4p1 Debian 5</span>
+<span class="c">#   80/tcp   open  http    Apache httpd 2.4.51</span>
+<span class="c">#   443/tcp  closed https   ← cerrado: nadie atiende ahí</span>
+<span class="c"># → cada versión vieja es candidata a CVE: buscala en Exploit Database</span></pre>
+
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Escaneo con Nmap (20 min, en grupo)</span><br>
-    Instalá Nmap (<code>nmap.org/download.html</code> en Windows, <code>sudo apt install nmap</code> en Kali) y escaneá una red de práctica. Mirá: ¿qué puertos aparecen desprotegidos? ¿Cuáles tendrían más probabilidad de ataque? ¿Se repiten los mismos tipos de ataque por puerto? <b>Ejemplo:</b> <code>nmap 45.33.49.119</code> → <code>22/ssh</code>, <code>25/smtp</code>, <code>80/http</code>, <code>443/https</code>.
+    1) Instalá Nmap (<code>nmap.org/download.html</code> en Windows, <code>sudo apt install nmap</code> en Kali).<br>2) Escaneá una red de práctica: <b>Ejemplo:</b> <code>nmap 45.33.49.119</code> → <code>22/ssh</code>, <code>25/smtp</code>, <code>80/http</code>, <code>443/https</code>.<br>3) Mirá: ¿qué puertos aparecen desprotegidos? ¿Cuáles tendrían más probabilidad de ataque? ¿Se repiten los mismos tipos de ataque por puerto?
   </div>
 </section>
 
@@ -455,8 +496,18 @@
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>desarmar un reloj sin encenderlo</b> (estático) versus <b>encenderlo bajo una campana de vidrio</b> y ver para qué tiembla (dinámico). Los dos se complementan: el estático te dice qué <em>podría</em> hacer; el dinámico te dice qué <em>hace</em>.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Responder: <b>¿qué es esto, qué toca y a quién le avisa?</b></div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El dinámico sigue un método: crear una <b>línea base</b> de la VM (snapshot), correr la muestra, capturar tráfico y procesos, y <b>comparar</b> contra la línea base. Todo lo que cambió es sospechoso.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. VM aislada (sin red o en red interna). 2. Snapshot. 3. Ejecutar la muestra con <b>Any.run</b> o tu sandbox. 4. Tomar capturas. 5. Comparar. 6. Escribir el informe.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Paso a paso del análisis dinámico:<br>1. Armá una VM aislada (sin red o en red interna).<br>2. Tomá un snapshot: es tu botón de "deshacer".<br>3. Subí la muestra a <b>Any.run</b> (o a tu sandbox) y elegí el SO del entorno.<br>4. Ejecutá y mirá en vivo: procesos, conexiones y archivos.<br>5. Tomá capturas de cada panel.<br>6. Compará contra la línea base y escribí el informe.</div>
   </div>
+
+  <pre><span class="c"># Estático en terminal: identificá la muestra antes de tocarla</span>
+file <span class="s">"Hive Loader.exe"</span>
+<span class="c"># → PE32 executable (GUI) Intel 80386, for MS Windows</span>
+
+md5sum <span class="s">"Hive Loader.exe"</span>
+<span class="c"># → e99a18c428cb38d5f260853678922e03  Hive Loader.exe   ← este hash va en el informe</span>
+
+strings <span class="s">"Hive Loader.exe"</span> | head <span class="c"># primeras cadenas del binario</span>
+<span class="c"># → .rsrc$   .idata   kernel32.dll   CreateFileA   IsDebuggerPresent</span></pre>
 
   <table>
     <tr><th style="width:16%">Tipo</th><th style="width:34%">Herramientas del curso</th><th>Para qué</th></tr>
@@ -473,7 +524,7 @@
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · 1ª entrega del Proyecto Final</span><br>
-    Informe de <b>análisis dinámico</b> (máx. 3 páginas, formato <code>.doc</code "Idea+Apellido"): nombre de la muestra, fecha, OS, MD5, screenshots de comportamiento, diagrama de procesos, conexiones HTTP/DNS, y conclusiones (tipo de malware, en máx. 4 párrafos de 2 oraciones). Muestra de ejemplo del curso: <b>Hive Loader.exe</b> (ransomware Hive) — hipótesis: correo → .zip → cifrado → movimiento lateral → persistencia.
+    Informe de <b>análisis dinámico</b> (máx. 3 páginas, formato <code>.doc</code> "Idea+Apellido"). Pasos:<br>1) Analizá la muestra en tu VM aislada o en Any.run y sacá los screenshots de comportamiento.<br>2) Anotá nombre de la muestra, fecha, OS y MD5; sumá el diagrama de procesos y las conexiones HTTP/DNS.<br>3) Escribí las conclusiones (tipo de malware, en máx. 4 párrafos de 2 oraciones).<br>Muestra de ejemplo del curso: <b>Hive Loader.exe</b> (ransomware Hive) — hipótesis: correo → .zip → cifrado → movimiento lateral → persistencia.
   </div>
 </section>
 
@@ -485,11 +536,22 @@
   <div class="bloque">
     <h3>Qué es el hacking ético</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>probar la seguridad de un sistema con autorización escrita previa</b>, para encontrar fallas antes que los atacantes. Se diferencia del simple escaneo: el pentest implica tiempo, automatización, alcance definido y un informe final.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>seguro contra incendios</b>: nadie prende fuego a tu casa sin permiso, pero el bombero que la revisa <b>con autorización</b> te dice dónde está el matafuegos vencido. El hacker ético hace exactamente eso: busca las salidas de emergencia rotas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>seguro contra incendios</b>: nadie prende fuego a tu casa sin permiso, pero el bombero que la revisa <b>con autorización</b> te dice dónde está el matafuegos vencido. El hacker ético hace exactamente eso: busca las salidas de emergencia rotas. <b>Otro ejemplo:</b> es como un cerrajero contratado por el dueño para probar todas las cerraduras de la casa y entregar un informe de cuáles están flojas — todo con permiso, por escrito.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Encontrar las fallas <b>antes</b> que el atacante, con un informe accionable.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Recorriendo las fases: <b>reconocimiento → escaneo → obtener acceso → mantener acceso → (limpiar huellas: NO en el ético) → reporte</b>.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Se define el <b>alcance</b> por escrito (qué IPs, qué dominios, qué está prohibido), se acuerdan reglas de compromiso, y recién ahí se empieza a trabajar.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Antes de tocar nada:<br>1. Definí el <b>alcance</b> por escrito: qué IPs, qué dominios, qué está prohibido.<br>2. Acordá las reglas de compromiso con el dueño del sistema (qué hora cortás, a quién avisás).<br>3. Recién ahí se empieza a trabajar, guardando cada paso como evidencia.</div>
   </div>
+
+  <pre><span class="c"># Laboratorio mínimo: Kali en VirtualBox, siempre aislada</span>
+<span class="k">sudo apt update</span>
+<span class="c"># → Get:1 http://http.kali.org/kali kali-rolling InRelease [41.4 kB] ...</span>
+<span class="c">#   Get:2 http://http.kali.org/kali kali-rolling/main amd64 Packages [19.8 MB] ...</span>
+
+<span class="k">sudo apt full-upgrade</span> -y
+<span class="c"># → N paquetes a actualizar, 0 nuevos ... (dejalo terminar sin cortar)</span>
+
+<span class="k">sudo</span> /etc/init.d/network-manager restart
+<span class="c"># → red reiniciada: ya podés escanear tu red de práctica</span></pre>
 
   <table>
     <tr><th style="width:22%">Modalidad</th><th style="width:30%">Qué sabe el tester</th><th>Ejemplo de uso</th></tr>
@@ -514,7 +576,7 @@
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Instalar Kali Linux (20 min)</span><br>
-    Descargá el <code>.ova</code> de <code>kali.org/get-kali/</code>, importalo en VirtualBox (con Extension Pack), arrancá con <code>kali:kali</code>, cambiá idioma/teclado (<code>Settings Manager → Keyboard</code>, <code>sudo dpkg-reconfigure locales</code>) y actualizá repositorios. Ahí vas a hacer todo el resto del curso.
+    Descargá el laboratorio en cinco pasos:<br>1) Bajá el <code>.ova</code> de <code>kali.org/get-kali/</code>.<br>2) Importalo en VirtualBox (con Extension Pack).<br>3) Arrancá la VM con <code>kali:kali</code>.<br>4) Cambiá idioma/teclado (<code>Settings Manager → Keyboard</code>, <code>sudo dpkg-reconfigure locales</code>).<br>5) Actualizá repositorios (<code>sudo apt update</code>). Ahí vas a hacer todo el resto del curso.
   </div>
 </section>
 
@@ -526,11 +588,20 @@
   <div class="bloque">
     <h3>Escaneo de vulnerabilidades</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>identificar debilidades</b> en sistemas y aplicaciones. Es más barato y rápido que un pentest completo. Su ciclo: <b>detección → clasificación → remediación</b>, y no termina nunca: es un proceso continuo.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>revisión del gasista</b>: no prende fuego a nada, solo revisa conexiones y te dice "acá hay una fuga". Un pentest en cambio es simular el incendio. Los dos sirven, el primero es la revisión de rutina.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>revisión del gasista</b>: no prende fuego a nada, solo revisa conexiones y te dice "acá hay una fuga". Un pentest en cambio es simular el incendio. Los dos sirven, el primero es la revisión de rutina. <b>Otro ejemplo:</b> es como la revisión técnica del auto: no te dice que el auto va a chocar, te dice que el freno está fino.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Devolver una <b>lista priorizada por riesgo</b>, no un muro de alertas.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>1. Descubrimiento de activos → 2. Priorización → 3. Escaneo → 4. Análisis y remediación → 5. Ciberseguridad continua. Tipos: externo, interno, autenticado, no autenticado, completo o limitado.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ejemplo: entrás a <code>snyk.io/website-scanner</code>, pegás la URL de tu web y te devuelve las vulnerabilidades detectadas con su severidad.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ejemplo con una web de práctica:<br>1. Entrás a <code>snyk.io/website-scanner</code>.<br>2. Pegás la URL de tu web.<br>3. Esperás el análisis: te devuelve cada vulnerabilidad con su severidad (crítica, alta, media, baja).<br>4. La escaneás de nuevo en unos días: el ciclo detección → clasificación → remediación no termina nunca.</div>
   </div>
+
+  <pre><span class="c"># Del CVE al exploit: searchsploit trae la Exploit Database a tu terminal</span>
+searchsploit eternalblue
+<span class="c"># → EDB-ID 41891 | Microsoft Windows 7 / 2008 R2 - Remote Code Execution (MS17-010)</span>
+<span class="c">#   Exploit DB: https://www.exploit-db.com/exploits/41891</span>
+
+searchsploit --nmap <span class="s">salida.nmap</span>
+<span class="c"># → cruzá tu escaneo nmap con los exploits conocidos:</span>
+<span class="c">#   cada host sale listado con las vulnerabilidades candidatas a explotar</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">CVE, NVD y Exploit Database</span><br>
@@ -551,10 +622,10 @@
   <div class="bloque">
     <h3>¿Qué es DevSecOps?</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span><b>DevSecOps</b> = Development + Security + Operations. Integra seguridad en cada etapa del ciclo de desarrollo y operación, de forma <b>automatizada y continua</b>. Su lema es <b>Security Left</b>: la seguridad se piensa desde el minuto 0, no cuando ya está todo construido.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>laboratorio en la cocina</b>: si el control de calidad revisa el pastel recién salido del horno, ya es tarde. El DevSecOps pone la balanza <b>mientras cocinás</b>: cada ingrediente se pesa a medida que entra.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>laboratorio en la cocina</b>: si el control de calidad revisa el pastel recién salido del horno, ya es tarde. El DevSecOps pone la balanza <b>mientras cocinás</b>: cada ingrediente se pesa a medida que entra. <b>Otro ejemplo:</b> es como el cinturón de seguridad: si lo ponés después del accidente no sirve; tiene que estar puesto desde que arrancás.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Detectar y corregir fallos <b>antes</b> de que lleguen a producción, en el pipeline.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Automatizando escaneos en la integración continua (Jenkins + OWASP ZAP), gestionando identidades con <b>IAM</b>, y auditando contenedores con <b>Docker Bench for Security</b> (+200 comprobaciones de la CIS).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Configurás ZAP en Jenkins (<code>Manage Jenkins → Configure System → ZAP HOST localhost, Port 5555</code>), creás un proyecto Freestyle apuntando a una web de prueba, y el pipeline genera el informe HTML/XML en cada build.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Tres pasos y ya está escaneando solo:<br>1. Configurá ZAP en Jenkins: <code>Manage Jenkins → Configure System → ZAP HOST localhost, Port 5555</code>.<br>2. Creás un proyecto Freestyle apuntando a una web de prueba.<br>3. El pipeline genera el informe HTML/XML en cada build.</div>
   </div>
 
   <table>
@@ -574,9 +645,12 @@
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Jenkins + OWASP ZAP</span><br>
     <pre style="margin:6px 0"><span class="k">docker pull</span> jenkins/jenkins
 <span class="k">docker run</span> -p <span class="n">8080</span>:<span class="n">8080</span> -p <span class="n">50000</span>:<span class="n">50000</span> jenkins/jenkins:lts
+<span class="c"># → Jenkins arranca y pide la clave inicial:</span>
+<span class="k">sudo docker exec</span> $(sudo docker ps -q) cat /var/jenkins_home/secrets/initialAdminPassword
+<span class="c"># → 26f5d1b3a7c8492ea1b0d93f7c2e4a11   (la pegás en localhost:8080 y seguís)</span>
 <span class="c"># clave en initialAdminPassword → localhost:8080 → plugin ZAP → Freestyle Project</span>
 <span class="c"># objetivo de prueba: http://testphp.vulnweb.com  → informe HTML/XML</span></pre>
-    Alternativa: instalar ZAP dentro del contenedor y correrlo en modo rápido: <code>zap.sh -cmd -quickurl http://testphp.vulnweb.com -quickout informe.html</code>.
+    1) Alternativa: instalar ZAP dentro del contenedor y correrlo en modo rápido: <code>zap.sh -cmd -quickurl http://testphp.vulnweb.com -quickout informe.html</code>.<br>2) Abrí el <code>informe.html</code>: cada hallazgo trae severidad y recomendación para copiar en el pipeline.
   </div>
 </section>
 
@@ -588,20 +662,26 @@
   <div class="bloque">
     <h3>Information Gathering</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>Es la <b>primera fase del pentest</b>: recopilar toda la información disponible sobre el objetivo. Hay <b>reconocimiento activo</b> (tocás el objetivo: escaneos, peticiones) y <b>pasivo</b> (no lo tocás: OSINT, Google Dorks, redes sociales, WHOIS).</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Como el <b>ladrón que estudia la casa antes</b>: mira horarios, ventanas, si hay perro, quién vive solo. No entra, pero sale sabiendo más que el dueño. La información es la llave antes que la ganzúa.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Como el <b>ladrón que estudia la casa antes</b>: mira horarios, ventanas, si hay perro, quién vive solo. No entra, pero sale sabiendo más que el dueño. La información es la llave antes que la ganzúa. <b>Otro ejemplo:</b> es como el detective que sigue al sospechoso días antes de actuar: todo el trabajo está en mirar, no en tocar.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Recolectar <b>datos de red</b> (dominios, hosts, IP, puertos, servicios, SSL) y <b>del sistema</b> (usuarios, hostname, SO, banners).</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Con herramientas como <b>Whois</b>, y después ataca la debilidad humana y técnica: <b>fuerza bruta</b> con diccionarios generados para el objetivo.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1. Stalkeo del objetivo. 2. Descubrir el servicio (FTP). 3. Generar diccionario. 4. Crackear. 5. Entrar.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>El flujo del reconocimiento:<br>1. Stalkeo del objetivo (sin tocarlo).<br>2. Descubrir el servicio que escucha (por ejemplo FTP).<br>3. Generar un diccionario a medida.<br>4. Crackear la contraseña.<br>5. Entrar.</div>
   </div>
 
   <pre><span class="c"># 1. Generar un diccionario a medida (crunch)</span>
 crunch <span class="n">1</span> <span class="n">2</span> <span class="s">0123456789</span> -o wordlist.txt
+<span class="c"># → Crunch will now produce the following amount of data: 320 bytes (0.32 KB)</span>
+<span class="c">#   110 líneas · wordlist.txt listo en el directorio actual</span>
 
 <span class="c"># 2. Fuerza bruta contra FTP (hydra): -L lista de usuarios, -V verbose</span>
 hydra -t <span class="n">3</span> -V -ensr -L /usr/share/wordlists/metasploit/unix_users.txt <span class="n">192.168.0.50</span> ftp
+<span class="c"># → [DATA] attacking ftp://192.168.0.50:21</span>
+<span class="c">#   [21][ftp] host: 192.168.0.50   login: ftpuser   password: 1234</span>
+<span class="c">#   1 of 1 target successfully completed, 1 valid password found</span>
 
 <span class="c"># 3. Conectar (modo pasivo en LAN)</span>
-ftp -p <span class="n">192.168.0.50</span></pre>
+ftp -p <span class="n">192.168.0.50</span>
+<span class="c"># → 220 (vsFTPd 3.0.3) ... Name: ftpuser · Password: 1234 · 230 Login successful</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Herramientas del workshop</span><br>
@@ -610,7 +690,7 @@ ftp -p <span class="n">192.168.0.50</span></pre>
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Reto "Hora de hackear" (60 min, grupos de 4)</span><br>
-    Comprometer un servidor FTP de la hacklab para obtener el diseño de un prototipo. <b>Reglas:</b> prohibido DoS/DDoS, la evidencia va en un <code>.txt</code> con tu nick, no se publica el método. El paso a paso completo está en el <b>Capítulo 16</b> (Prácticas).
+    Objetivo: comprometer un servidor FTP de la hacklab para obtener el diseño de un prototipo. Pasos:<br>1) Stalkeá al admin y encontrá su usuario y su política de contraseñas.<br>2) Generá el diccionario y crackeá el FTP con Hydra.<br>3) Entrá y dejá la evidencia en un <code>.txt</code> con tu nick.<br><b>Reglas:</b> prohibido DoS/DDoS, no se publica el método. El paso a paso completo está en el <b>Capítulo 16</b> (Prácticas).
   </div>
 </section>
 
@@ -622,11 +702,24 @@ ftp -p <span class="n">192.168.0.50</span></pre>
   <div class="bloque">
     <h3>Cifrar, codificar y ocultar</h3>
     <div class="fila"><span class="lbl teoria">Teoría</span>La <b>criptografía</b> cifra y descifra mensajes con <b>clave</b>. Hay <b>hash</b> (función sin clave, unidireccional), <b>clave simétrica</b> (la misma clave cifra y descifra) y <b>clave asimétrica</b> (pública cifra, privada descifra). La <b>esteganografía</b> es otra cosa: <b>ocultar</b> un mensaje dentro de un archivo para que <b>ni se note que existe</b>.</div>
-    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Cifrar es escribir una carta en un idioma que nadie habla (el cartero la ve pero no entiende). Codificar es cambiar A por 65 (se entiende con una tabla). La esteganografía es <b>esconder la carta dentro de una foto de familia</b>: nadie busca lo que no sabe que está ahí.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Cifrar es escribir una carta en un idioma que nadie habla (el cartero la ve pero no entiende). Codificar es cambiar A por 65 (se entiende con una tabla). La esteganografía es <b>esconder la carta dentro de una foto de familia</b>: nadie busca lo que no sabe que está ahí. <b>Otro ejemplo:</b> es como un candado de bicicleta: cualquiera lo ve (está ahí), pero solo quien tiene la llave lo abre.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Criptografía: <b>confidencialidad</b> e <b>integridad</b>. Esteganografía: <b>ocultamiento</b>.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>El hash convierte cualquier archivo en una huella única e irreversible (MD5, SHA256). El simétrico usa AES/Rijndael (128/192/256 bits). El asimétrico usa un par de claves matemáticamente enlazadas (RSA).</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali: <code>sudo apt install ccrypt</code> para cifrar (<code>ccrypt -e archivo</code>, <code>-d</code> descifra, extensión <code>.cpt</code>); <code>echo nombre -n | md5sum</code> para tu propio hash.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali, paso a paso:<br>1. Instalá Ccrypt: <code>sudo apt install ccrypt</code>.<br>2. Cifrá: <code>ccrypt -e archivo</code> → queda <code>archivo.cpt</code>.<br>3. Descifrá: <code>ccrypt -d archivo.cpt</code> (te pide la clave).<br>4. Sacá tu propio hash: <code>echo -n "texto" | md5sum</code>.</div>
   </div>
+
+  <pre><span class="c"># 1. Tu huella dactilar digital: el mismo texto, siempre el mismo hash</span>
+echo -n <span class="s">"ciberseguridad"</span> | md5sum
+<span class="c"># → 7d2ce74f4315609cd18878c920625ee9   -</span>
+<span class="c">#   cambiá UNA sola letra y el hash cambia por completo (efecto de difusión)</span>
+
+<span class="c"># 2. Cifrar un archivo (queda .cpt: ilegible sin la clave)</span>
+ccrypt -e notas.txt
+<span class="c"># → encrypting notas.txt to notas.txt.cpt ... enter passphrase: ****</span>
+
+<span class="c"># 3. Descifrarlo</span>
+ccrypt -d notas.txt.cpt
+<span class="c"># → decrypting notas.txt.cpt to notas.txt ... done</span></pre>
 
   <table>
     <tr><th style="width:22%">Tipo</th><th style="width:30%">Clave</th><th>Para qué</th></tr>
@@ -658,8 +751,14 @@ ftp -p <span class="n">192.168.0.50</span></pre>
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>vendedor ambulante que se hace pasar por el encargado del edificio</b>: tiene el uniforme correcto, habla con seguridad, y mientras vos mirás el teléfono, entra. La confianza es la vulnerabilidad; el uniforme, el exploit.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Robarte <b>contraseñas, datos bancarios o acceso</b> hacéndote creer que estás donde debés.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Personalizando el mensaje: nombre propio, logo, firma, urgencia. Mientras más creíble, menor es la resistencia.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Detectalo así: <b>pasá el cursor sobre el enlace</b> (la URL real aparece en la esquina inferior izquierda del navegador), revisá el remitente letra por letra y desconfiá de toda urgencia.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Detectalo así, en tres pasos:<br>1. <b>Pasá el cursor sobre el enlace</b>: la URL real aparece en la esquina inferior izquierda del navegador.<br>2. Revisá el remitente letra por letra (un "rn" cambiado por "m" pasa desapercibido).<br>3. Desconfiá de toda urgencia: apurar es su arma.</div>
   </div>
+
+  <pre><span class="c"># Antes de creerle a un correo, mirá cuánto tiene el dominio</span>
+whois seguridad-verificacion.xyz
+<span class="c"># → Creation Date: 2026-10-30    ← creado hace pocos días</span>
+<span class="c">#   Registrar: NameCheap · Organization: Privacy Guard  ← todo oculto</span>
+<span class="c"># banco-real.com.ar, en cambio, tiene 15 años y datos a la vista: otro cantar.</span></pre>
 
   <table>
     <tr><th style="width:24%">Tipo</th><th style="width:36%">A quién apunta</th><th>Canal</th></tr>
@@ -691,8 +790,16 @@ ftp -p <span class="n">192.168.0.50</span></pre>
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La EPP es el <b>cerrojo y el vigilante en la puerta</b> (no deja entrar). La EDR es la <b>alarma y las cámaras con analista</b> (detecta al que ya entró y te dice cómo salió). Un cerrojo sin cámaras no te cuenta qué pasó adentro.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>EPP: <b>bloquear</b> lo conocido y lo sospechoso. EDR: <b>ver</b> lo que pasó, cuándo y cómo, y ayudar a contenerlo.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>EPP detecta con firmas, análisis estático de machine learning, sandboxing, listas negras/blancas y análisis de comportamiento. EDR con 3 componentes: <b>recopilación de datos → motor de detección → motor de análisis</b>.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Se instalan como agente en cada endpoint y se administran desde una consola central. Marcas del curso: CrowdStrike Falcon, Palo Alto Cortex XDR, Kaspersky EDR, Trend Micro Apex One (EPP+EDR), F-Secure RDR.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Así se despliega en una empresa:<br>1. Se instalan como <b>agente</b> en cada endpoint (PC, servidor, notebook).<br>2. Se administran desde una consola central: una sola vista para todo el parque.<br>3. Marcas del curso: CrowdStrike Falcon, Palo Alto Cortex XDR, Kaspersky EDR, Trend Micro Apex One (EPP+EDR), F-Secure RDR.</div>
   </div>
+
+  <pre><span class="c"># En PowerShell: ¿la protección de tu endpoint (EPP) está realmente activa?</span>
+Get-MpComputerStatus | Select-Object AMRunningMode, RealTimeProtectionEnabled
+<span class="c"># → AMRunningMode : Real Time Protection</span>
+<span class="c">#   RealTimeProtectionEnabled : True    ← si dice False, tu EPP no está trabajando</span>
+
+<span class="c"># El EDR, en cambio, te mostraría esto en su consola (el caso RanSim):</span>
+<span class="c"># → detección: "Comportamiento tipo ransomware en C:\Users\...\document.docx"</span></pre>
 
   <div class="nota">
     <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">El antivirus solo no alcanza</span><br>
@@ -701,7 +808,7 @@ ftp -p <span class="n">192.168.0.50</span></pre>
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · RanSim (40 min, en equipo)</span><br>
-    <b>RanSim</b> es un simulador de ransomware <b>inofensivo</b>: no daña tu sistema, solo prueba si tus defensas lo detectarían. Instalalo en Windows, corré la simulación y compará los resultados con tu equipo. Si lo bloquea, bien; si no, sabés qué falta.
+    <b>RanSim</b> es un simulador de ransomware <b>inofensivo</b>: no daña tu sistema, solo prueba si tus defensas lo detectarían. Pasos:<br>1) Instalalo en Windows.<br>2) Corré la simulación.<br>3) Compará los resultados con los de tu equipo: si lo bloquea, bien; si no, sabés qué falta.
   </div>
 </section>
 
@@ -716,8 +823,17 @@ ftp -p <span class="n">192.168.0.50</span></pre>
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>portón, el timbre y el vigilante</b> de un edificio: el portón deja pasar a los que tienen permiso (firewall), el vigilante anota a los raros (IDS) y el que viene con palanca lo echa antes de que entre (IPS).</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Controlar <b>quién entra, quién sale y con qué</b>.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando <b>reglas de filtrado</b> sobre el tráfico, por dirección IP, puerto y protocolo. Un firewall bien configurado es aburrido: solo deja pasar lo acordado.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Windows: <code>SECPOL.MSC</code> → políticas de seguridad de firewall. Linux: <code>iptables</code> o <code>nftables</code>. En la práctica del curso: configurá el firewall de tu SO y probá qué bloquea.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Dónde se toca el fuego:<br>1. En Windows: <code>SECPOL.MSC</code> → políticas de seguridad de firewall.<br>2. En Linux: <code>iptables</code> o <code>nftables</code>.<br>3. En la práctica del curso: configurá el firewall de tu SO y probá qué bloquea (desde otra VM, para verlo en serio).</div>
   </div>
+
+  <pre><span class="c"># Reglas actuales de tu firewall Linux, con contador de paquetes</span>
+sudo iptables -L -n -v
+<span class="c"># → Chain INPUT (policy DROP)</span>
+<span class="c">#   pkts bytes target    prot opt in   out  destination</span>
+<span class="c">#   1243  98K  ACCEPT    tcp  --  *    *    0.0.0.0/0  0.0.0.0/0  tcp dpt:22</span>
+<span class="c">#      0     0  DROP      tcp  --  *    *    0.0.0.0/0  0.0.0.0/0  tcp dpt:3389</span>
+<span class="c"># → policy DROP: por defecto se rechaza todo; solo pasa lo que está en la lista</span>
+<span class="c"># → el contador 0 0 del DROP significa que nadie intentó ese puerto (o que ya cortó)</span></pre>
 
   <table>
     <tr><th style="width:34%">Tipo de firewall</th><th style="width:14%">Capa OSI</th><th>Qué mira</th></tr>
@@ -758,12 +874,18 @@ ftp -p <span class="n">192.168.0.50</span></pre>
     <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>túnel secreto entre dos casas</b>: por encima hay una vereda pública (Internet), pero vos transitás por abajo, tapado y cifrado. Nadie de afuera ve por dónde vas ni qué llevás.</div>
     <div class="fila"><span class="lbl quehace">Qué hace</span>Dificultar la interceptación, dar seguridad en redes públicas, ocultar tu IP/país y acceder a contenido geobloqueado.</div>
     <div class="fila"><span class="lbl como">Cómo lo hace</span>Estableciendo un <b>túnel cifrado</b> entre tu equipo (cliente) y un servidor VPN; todo el tráfico pasa por ahí y llega cifrado a destino.</div>
-    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali: instalás los paquetes de red y configurás la conexión:</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali, en tres pasos:<br>1. Instalás los paquetes de red y reiniciás el gestor (el comando de abajo).<br>2. Cargás la configuración de tu VPN (archivo <code>.ovpn</code> o los datos del proveedor) en Network Manager.<br>3. Conectás y validás que tu IP pública haya cambiado (mirá el <code>pre</code> de validación).</div>
   </div>
 
   <pre><span class="k">sudo apt install</span> network-manager-openvpn-gnome network-manager-pptp \
      network-manager-strongswan network-manager-vpnc
 <span class="k">sudo</span> /etc/init.d/network-manager restart   <span class="c"># reiniciás el gestor y listo</span></pre>
+
+  <pre><span class="c"># Validación: tu IP pública antes y después de conectar</span>
+curl -s ifconfig.me
+<span class="c"># antes:    190.24.10.55    ← la que te asignó tu ISP</span>
+<span class="c"># después:  185.66.10.20    ← la del servidor VPN: ya salís por el túnel</span>
+<span class="c"># si sigue siendo la misma, el túnel NO se levantó: revisá la conexión</span></pre>
 
   <table>
     <tr><th style="width:18%">Protocolo</th><th>Característica</th></tr>
@@ -788,7 +910,7 @@ ftp -p <span class="n">192.168.0.50</span></pre>
 
   <div class="aviso">
     <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica del curso · Configurar y validar una VPN (40 min)</span><br>
-    Siguiendo el documento "Requisitos previos — Instalación de una VPN" del curso: instalá los paquetes, configurá la conexión en Kali y <b>validá</b> que el tráfico salga por el túnel (mirá tu IP pública antes y después). <b>Pregunta trampa del curso:</b> "Todas las VPN transmiten texto claro de forma segura a través de Internet" → <b>Falso</b>: transmiten <b>cifrado</b>.
+    Siguiendo el documento "Requisitos previos — Instalación de una VPN" del curso:<br>1) Instalá los paquetes y configurá la conexión en Kali.<br>2) Conectate al servidor.<br>3) <b>Validá</b> que el tráfico salga por el túnel: mirá tu IP pública antes y después (el <code>pre</code> de arriba).<br><b>Pregunta trampa del curso:</b> "Todas las VPN transmiten texto claro de forma segura a través de Internet" → <b>Falso</b>: transmiten <b>cifrado</b>.
   </div>
 </section>
 
