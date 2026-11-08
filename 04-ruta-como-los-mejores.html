@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ruta: cómo empezaron los mejores</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
+    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
+  }
+  :root {
+    --azul: #1b4f8a; --azul-vivo: #1d4ed8; --azul-humo: #eaf1fa;
+    --naranja: #c2410c; --naranja-humo: #fff3ec;
+    --verde: #15803d; --verde-humo: #edf9f0;
+    --morado: #6d28d9; --morado-humo: #f4f0ff;
+    --gris: #475569; --borde: #d9e1ec;
+  }
+  h1, h2, h3, h4 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  p { margin: 0 0 9px 0; }
+  .portada { page-break-after: always; padding: 26mm 0 0 0; text-align: left; }
+  .portada .serie { display: inline-block; background: var(--naranja); color: #fff; font-size: 10pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 6px 14px; border-radius: 3px; }
+  .portada h1 { font-size: 46pt; letter-spacing: -.02em; margin: 26px 0 0 0; color: var(--azul); }
+  .portada h1 span { color: var(--naranja); display: block; }
+  .portada .regla { height: 5px; background: var(--azul); width: 100%; margin: 26px 0 22px 0; }
+  .portada .sub { font-size: 15pt; color: #33445a; max-width: 95%; line-height: 1.55; margin: 0 0 26px 0; }
+  .portada .caja-que { background: var(--azul-humo); border-left: 6px solid var(--azul); padding: 16px 20px; border-radius: 0 6px 6px 0; font-size: 11pt; }
+  .portada .caja-que strong { color: var(--azul); }
+  .portada .meta { margin-top: 30px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde); padding-top: 12px; }
+  .bloque { background: #fff; border: 1px solid var(--borde); border-left: 5px solid var(--azul); border-radius: 0 7px 7px 0; padding: 13px 17px 6px 17px; margin: 16px 0; page-break-inside: avoid; }
+  .bloque > h3 { font-size: 13.5pt; margin-bottom: 8px; }
+  .fila { margin: 0 0 6px 0; }
+  .lbl { display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #fff; padding: 2px 8px; border-radius: 3px; margin-right: 7px; vertical-align: 1.5px; }
+  .lbl.teoria    { background: var(--azul); }
+  .lbl.ejemplo   { background: var(--naranja); }
+  .lbl.quehace   { background: var(--verde); }
+  .lbl.como      { background: var(--morado); }
+  .lbl.ejecuta   { background: var(--gris); }
+  .fila b.lead { color: #0f172a; }
+  .fila p { display: inline; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 10pt; background: #f3f6fb; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 5px; color: #9a3412; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 10pt; line-height: 1.5; background: #f3f6fb; border: 1px solid #e2e8f0; border-left: 4px solid var(--azul); border-radius: 0 5px 5px 0; padding: 10px 14px; margin: 8px 0 12px 0; color: #0f172a; white-space: pre-wrap; page-break-inside: avoid; }
+  pre .c { color: #64748b; } pre .k { color: var(--azul-vivo); font-weight: 700; } pre .s { color: var(--verde); } pre .n { color: var(--naranja); }
+  .cap { page-break-before: always; }
+  .cap h2 { font-size: 24pt; margin: 0 0 4px 0; letter-spacing: -.01em; border-bottom: 3px solid var(--azul); padding-bottom: 10px; }
+  .cap h2 .num { display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase; color: var(--naranja); margin-bottom: 6px; }
+  .cap .promesa { font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0; border-left: 3px solid var(--naranja); padding-left: 12px; }
+  h3.sub { font-size: 14pt; margin: 15px 0 7px 0; color: var(--azul); }
+  .nota { background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px; padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt; }
+  .nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  .aviso { background: var(--verde-humo); border: 1px solid #bbf7d0; border-radius: 6px; padding: 11px 15px; margin: 14px 0; page-break-inside: avoid; font-size: 10.5pt; }
+  .aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  .grupo { page-break-inside: avoid; }
+  th { background: var(--azul); color: #fff; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 9.5pt; letter-spacing: .04em; }
+  td { border-bottom: 1px solid var(--borde); padding: 6px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  td b { color: var(--azul); }
+  .recurso { border: 1px solid var(--borde); border-radius: 7px; padding: 12px 16px; margin: 12px 0; page-break-inside: avoid; background: #fff; }
+  .recurso h4 { font-size: 12.5pt; margin-bottom: 4px; }
+  .pills { margin: 4px 0 7px 0; }
+  .pill { display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-right: 5px; letter-spacing: .04em; }
+  .pill.gratis   { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+  .pill.mixto    { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+  .pill.nivel    { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+  .recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+  .recurso .porque { color: #475569; font-size: 10pt; }
+  .recurso .porque b { color: var(--naranja); }
+  .indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+  .indice li { padding: 7px 0; border-bottom: 1px dotted var(--borde); font-size: 11.5pt; display: flex; justify-content: space-between; }
+  .indice li span.t { color: var(--azul); font-weight: 600; }
+  .indice li span.d { color: #64748b; font-size: 10pt; }
+  .cierre { background: var(--azul); color: #eaf1fa; padding: 18px 22px; border-radius: 8px; margin-top: 22px; page-break-inside: avoid; }
+  .cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+  .cierre p { color: #dbe7f7; font-size: 10.8pt; }
+  .cierre b { color: #ffd8b0; }
+  .persona { background: #fff; border: 1px solid var(--borde); border-radius: 7px; padding: 10px 14px; margin: 10px 0; page-break-inside: avoid; }
+  .persona h4 { font-size: 12pt; color: var(--azul); margin-bottom: 4px; }
+  .persona .rol { font-size: 9.5pt; color: #64748b; font-style: italic; margin-bottom: 6px; }
+  .persona .fila { margin: 0 0 4px 0; }
+  .persona .lbl { font-size: 8pt; }
+  .fase { background: var(--azul-humo); border-left: 5px solid var(--azul); border-radius: 0 7px 7px 0; padding: 12px 16px; margin: 14px 0; page-break-inside: avoid; }
+  .fase h3 { font-size: 13pt; color: var(--azul); margin-bottom: 6px; }
+  .fase .semana { font-size: 9.5pt; color: var(--naranja); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Ruta 04</div>
+  <h1>Cómo empezaron <span>los mejores</span></h1>
+  <div class="regla"></div>
+  <p class="sub">Una ruta de estudio construida a partir de las historias reales de los mejores hackers, programadores e ingenieros de sistemas del mundo: qué aprendieron primero, en qué orden, con qué edad y qué consejo dan. No es una lista de biografías: es un plan de acción.</p>
+  <div class="caja-que">
+    <strong>Para quién es:</strong> para quien arranca de cero y quiere saber por dónde empezaron los que ya llegaron lejos — sin atajos ni humo.<br><br>
+    <strong>Cómo está escrito:</strong> cada figura usa el mismo molde — <b>Fama</b> (qué hizo), <b>Cómo empezó</b> (sus primeros pasos reales), <b>Dominó</b> (sus áreas) y <b>Lección</b> (una frase que quedó). Al final, los <b>patrones comunes</b> y la <b>ruta por fases</b> que sale de ellos.
+  </div>
+  <p class="meta">Material de estudio personal · Hackers · Programadores · Ingenieros de sistemas<br>Fuentes: Wikipedia, Wikiquote, entrevistas y biografías citadas. Todo lo que aparece acá se practica solo en sistemas propios o autorizados.</p>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer este material</h2>
+  <p class="promesa">Si entendés estas cuatro palabras, ya podés leer el documento entero.</p>
+  <table>
+    <tr><th style="width:22%">Etiqueta</th><th>Qué encontrarás</th></tr>
+    <tr><td><span class="lbl teoria">Fama</span></td><td>Qué hizo o construyó, con hito real y fecha. Es el "por qué lo conocemos".</td></tr>
+    <tr><td><span class="lbl ejemplo">Cómo empezó</span></td><td>Sus primeros pasos reales: qué aprendió primero, con qué edad, qué usó (computadora del colegio, libro, comunidad…).</td></tr>
+    <tr><td><span class="lbl quehace">Dominó</span></td><td>Sus áreas y habilidades principales.</td></tr>
+    <tr><td><span class="lbl como">Lección</span></td><td>Una frase que él haya dicho o que se desprenda de su historia.</td></tr>
+  </table>
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Cómo usar esta ruta</span><br>
+    <b>No leas las biografías como chismes.</b> Leelas como <b>recetas</b>: cada figura es una receta de cómo alguien arrancó. Al final, la sección "Patrones comunes" destila lo que se repite, y la "Ruta por fases" convierte eso en un plan con semanas. Si una figura no te inspira, saltala — el plan no depende de ninguna.
+  </div>
+</section>
+
+<!-- ==================== ÍNDICE ==================== -->
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · Los hackers</span><span class="d">Mitnick, Wozniak, geohot, Barnaby Jack, Jann Horn, mudge…</span></li>
+    <li><span class="t">2 · Los programadores y analistas</span><span class="d">Ritchie, Carmack, Linus, Knuth, Booch, Fowler, Uncle Bob…</span></li>
+    <li><span class="t">3 · Patrones comunes</span><span class="d">Qué se repite en cómo empezaron los mejores</span></li>
+    <li><span class="t">4 · La ruta por fases</span><span class="d">El plan concreto, semana a semana</span></li>
+    <li><span class="t">5 · Hábitos y anti-patrones</span><span class="d">Qué hacer y qué no hacer</span></li>
+    <li><span class="t">6 · Recursos para seguir</span><span class="d">Libros, comunidades, labs legales</span></li>
+  </ul>
+</section>
+
+<!-- ==================== CAP 1: HACKERS ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 1</span>Los hackers: cómo empezaron</h2>
+  <p class="promesa">Los mejores no arrancaron "hackeando": arrancaron por curiosidad, por un juego, por un manual. El hackeo vino después.</p>
+
+  <div class="persona">
+    <h4>Kevin Mitnick (1963–2023)</h4>
+    <div class="rol">El hacker más famoso de los 90 · ingeniería social · phreaking</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>El "fantasma de los cables": entró a los sistemas más seguros de EE.UU. (MCI, Digital Equipment, Motorola, Apple, Qualcomm). Arrestado en 1995, preso 5 años. Después consultor y autor de "El arte de la intrusión" y "El arte de la invisibilidad".</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span><b>A los 16</b> rompió la seguridad del sistema administrativo de su colegio — "solo para mirar", no para cambiar notas. Antes de eso era un <b>phreaker</b>: obsesionado por las redes telefónicas, estudiaba manuales y sistemas COSMOS. Su método estrella fue la <b>ingeniería social</b>: con 4 principios (todos queremos ayudar; el primer movimiento es confianza; no nos gusta decir que no; nos gusta que nos alaben) consiguió códigos con solo 6 llamadas telefónicas.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Ingeniería social, phreaking, evasión, intrusión en redes telefónicas y sistemas Unix.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>Las vulnerabilidades nunca son deliberadas</b>" (del curso de ciberseguridad). Y la otra: la seguridad real no es técnica, es <b>humana</b> — el factor determinante es la capacidad de los usuarios de interpretar y hacer cumplir las políticas.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Steve Wozniak (1950–)</h4>
+    <div class="rol">Cofundador de Apple · electrónica · computadoras personales</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Diseñó el Apple I y el Apple II, las primeras computadoras personales masivas. Cofundador de Apple junto a Steve Jobs.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Desde chico <b>desarmaba y rearmaba equipos electrónicos</b> en el garaje de su casa. A los 13 le interesó la electrónica; a los 20 diseñó la calculadora científica HP-35 (trabajando en HP). Lo que lo lanzó fue el <b>Homebrew Computer Club</b>: una comunidad de entusiastas donde mostró el Apple I. Su lema: "nunca dejé de ser un ingeniero que quiere que las cosas sean simples".</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Electrónica digital, diseño de hardware, simplificación de circuitos, ingeniería de bajo nivel.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>Trabajá en lo que te apasiona, no en lo que te va a dar dinero.</b> Si hacés lo que te gusta, el dinero aparece solo." (de sus charlas y su autobiografía "iWoz").</div>
+  </div>
+
+  <div class="persona">
+    <h4>George Hotz "geohot" (1989–)</h4>
+    <div class="rol">Jailbreak de iPhone y PS3 · comma.ai · tinygrad</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>A los 17 fue el primero en quitar el bloqueo SIM de un iPhone (2007). Hackeó la PS3 (2010), fundó comma.ai (auto-conducción con ML) y tinygrad (framework de deep learning). Trabajó en Facebook, Google Project Zero, Twitter.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Estudiante de una escuela magnet (Bergen County Academies) y finalista de la <b>Intel ISEF</b> tres veces (2004, 2005, 2007 — su proyecto "Holodeck" ganó una beca Intel de US$ 20.000). Breve paso por RIT y Carnegie Mellon. <b>A los 17, en agosto de 2007</b>, desbloqueó el iPhone y lo intercambió por un Nissan 350Z y tres iPhones. Su método: leer, probar, publicar — todo en blogs y foros, en público.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Reverse engineering, jailbreak, explotación de consolas, machine learning, sistemas embebidos.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>La barrera de entrada ya no existe; es autoimpuesta.</b> Necesitás una PC barata, tiempo y la dedicación de bancarla." (se desprende de su historia: arrancó solo, en su cuarto, con lo que tenía).</div>
+  </div>
+
+  <div class="persona">
+    <h4>Robert Tappan Morris (1965–)</h4>
+    <div class="rol">El gusano de 1988 · profesor del MIT</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Creó el primer gusano de Internet (1988), que infectó ~6.000 máquinas (el 10 % de Internet de entonces). Fue el primer condenado por la Computer Fraud and Abuse Act. Hoy es profesor del MIT y cofundador de Y Combinator.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span><b>Estudiante de Cornell</b>, hijo de un científico de Bell Labs (Robert Morris Sr., coinventor de Unix). Creció rodeado de computadoras. El gusano lo escribió como experimento para medir el tamaño de Internet — se le fue de las manos. Después se formó en sistemas y seguridad.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas distribuidos, seguridad, redes, emprendimiento tecnológico.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>un experimento sin límites puede convertirse en el primer incidente de seguridad de la historia</b>. Medí siempre el alcance antes de soltar código.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Barnaby Jack (1977–2013)</h4>
+    <div class="rol">"Jackpotting" de cajeros · seguridad de dispositivos médicos</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Pionero en hackear cajeros automáticos ("jackpotting": hacer que tiren billetes) y marcapasos/insulinas (demostró que se podían controlar de forma remota). Trabajó en IOActive y McAfee.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Creció en Nueva Zelanda. <b>Autodidacta</b>: aprendió reverse engineering y explotación de sistemas embebidos por su cuenta, jugando con hardware real. Su método: comprar el dispositivo, desarmarlo, leer el firmware, encontrar el fallo.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Reverse engineering de hardware, sistemas embebidos, explotación de dispositivos físicos.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>el hardware también es software</b> — todo lo que tiene un chip se puede estudiar, entender y (si tenés autorización) romper para mejorarlo.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Jann Horn (1992–)</h4>
+    <div class="rol">Project Zero · descubridor de Meltdown y Spectre</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Investigador de Google Project Zero. En 2018 descubrió (junto a otros) las vulnerabilidades <b>Meltdown y Spectre</b>, que afectaron a casi todos los procesadores modernos.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Creció en Alemania. <b>Autodidacta desde adolescente</b>: empezó programando y reportando bugs en proyectos open source (Linux kernel, entre otros) antes de tener título. Llegó a Project Zero por la calidad de sus reportes.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Investigación de vulnerabilidades, kernel de Linux, arquitectura de CPU, análisis profundo de código.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>reportar bugs bien documentados es una carrera</b> — la calidad del reporte vale más que la cantidad.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Tavis Ormandy (1981–)</h4>
+    <div class="rol">Project Zero · cientos de CVEs</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Investigador de Google Project Zero. Descubrió vulnerabilidades críticas en productos de seguridad (antivirus, compresores, navegadores) que nadie más miraba.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Nació en Melbourne. <b>Autodidacta</b>: empezó a los 15 años reportando bugs en software libre. Su método: tomar un programa, leerlo entero y buscar los casos borde que nadie prueba.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Auditoría de código, fuzzing, explotación, análisis de software de seguridad.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>el mejor lugar para encontrar bugs es el software que todos confían</b> (antivirus, compresores) — ahí nadie mira.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Peiter "mudge" Zatko (1970–)</h4>
+    <div class="rol">L0pht · DARPA · seguridad de Twitter</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Miembro de L0pht Heavy Industries (el grupo que en 1998 testificó ante el Senado de EE.UU. que podían derribar Internet en 30 minutos). Después DARPA y jefe de seguridad de Twitter.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Estudió en el Berklee College of Music y en la Johns Hopkins. <b>Autodidacta en seguridad</b>: aprendió a programar por su cuenta y se unió a la comunidad hacker de Boston (L0pht) a principios de los 90.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Seguridad de redes, investigación de vulnerabilidades, gestión de seguridad a escala.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>la comunidad y el trabajo en equipo multiplican</b> — L0pht fue un colectivo, no un individuo.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Dan Kaminsky (1979–2021)</h4>
+    <div class="rol">DNS cache poisoning · seguridad de Internet</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Descubrió en 2008 una falla crítica en el DNS (cache poisoning) que afectaba a casi todo Internet. Coordinó un parche masivo con todos los fabricantes a la vez.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Creció en San Francisco. <b>Autodidacta</b> desde adolescente: a los 10 años ya programaba y a los 11 reportaba bugs. Estudió en la Universidad de Santa Clara. Su método: entender un protocolo a fondo y preguntarse "¿qué pasa si lo uso al revés?".</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Protocolos de red, DNS, criptografía aplicada, coordinación de respuesta a incidentes.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>la curiosidad por "¿y si lo uso al revés?"</b> es la semilla de los mejores hallazgos.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Nota sobre hacktivistas</span><br>
+    Figuras como <b>Julian Assange</b> (WikiLeaks) o <b>Edward Snowden</b> son conocidas por sus filtraciones, no por habilidad técnica de intrusión. <b>Sabu / Héctor Monsegur</b> (LulzSec) arrancó como autodidacta en Nueva York y terminó colaborando con el FBI. Son casos de <b>consecuencias</b>, no de método de aprendizaje — por eso no entran en la ruta. La ruta se basa en cómo <b>aprendieron</b>, no en qué hicieron después.
+  </div>
+</section>
+
+<!-- ==================== CAP 2: PROGRAMADORES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 2</span>Los programadores y analistas: cómo empezaron</h2>
+  <p class="promesa">Los mejores no arrancaron por un framework ni por un título: arrancaron por la máquina, por un juego, por un manual leído entero.</p>
+
+  <div class="persona">
+    <h4>Ken Thompson (1943–)</h4>
+    <div class="rol">Cocreador de Unix · B · grep · Go</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Diseñó Unix, inventó B (predecesora de C), grep, ed, las regex modernas y co-diseñó UTF-8 y Go. Turing Award 1983.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>"Siempre me fascinó la lógica; <b>en la escuela primaria ya resolvía problemas aritméticos en binario</b>, simplemente porque me fascinaba." Y: "Me gustaban las máquinas de pinball: forraba la tapa de atrás y <b>estudiaba los esquemas</b>. Ahí aprendí mucha lógica." Berkeley (BS/MS 1965-66) → Bell Labs 1966 → Multics → reescribió su juego Space Travel en un PDP-7 viejo y de ahí nació Unix.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas, algoritmos, autómatas, ingeniería mínima y elegante.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>When in doubt, use brute force.</b>" (máxima suya). Y la otra: la elegancia viene de <b>saber qué quitar</b>.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Dennis Ritchie (1941–2011)</h4>
+    <div class="rol">Creador de C · cocreador de Unix</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Creó el lenguaje C y, junto a Thompson, Unix. Turing Award 1983. Con Kernighan escribió el mítico K&R.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Hijo de un científico de Bell Labs. Harvard 1963 (doble título en física y matemática aplicada). Entró a Bell Labs en 1967, arrancó en el proyecto Multics. No tenía una "historia épica": fue <b>constancia y trabajo en equipo</b> durante años.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas operativos, diseño de lenguajes, complejidad computacional.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"C is quirky, flawed, and an enormous success." Y la otra: <b>evangelizá lo que hacés</b> — Ritchie fue el gran evangelista de Unix.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Bjarne Stroustrup (1950–)</h4>
+    <div class="rol">Creador de C++</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Creó C++ (1979-83) en Bell Labs. Autor de "The C++ Programming Language".</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Familia de clase trabajadora en Aarhus (Dinamarca). <b>No tenía computadora en casa</b>: "La primera computadora que vi fue la GIER del departamento de matemáticas; una máquina danesa vieja con cinta de papel. Ahí aprendí a programar en Algol 60." Aprendió POO de Kristen Nygaard, uno de sus inventores. PhD en Cambridge (1979).</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Diseño de lenguajes, arquitectura, rendimiento, sistemas.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>A program that has not been tested does not work.</b>" Y la otra: <b>un programa no testeado no funciona</b> — la verificación es parte del código.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Guido van Rossum (1956–)</h4>
+    <div class="rol">Creador de Python</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Creó Python (1989-91) como hobby de vacaciones de Navidad. Fue su "dictador benevolente de por vida" hasta 2018.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Medalla de bronce en la Olimpiada Matemática Internacional 1974. Maestría en Ámsterdam (1982). Aprendió Pascal y ALGOL y <b>empezó a programar en el mainframe del sótano de la universidad</b>. En el CWI ayudó a desarrollar ABC y aportó glob() a BSD Unix.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Diseño de lenguajes, claridad de sintaxis, herramientas para programadores.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"Le debo todo lo que aprendí en ese proyecto (ABC) y a la gente con quien trabajé." Y la otra: <b>un proyecto puede nacer de un hobby de dos semanas</b>.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Anders Hejlsberg (1960–)</h4>
+    <div class="rol">Turbo Pascal · C# · TypeScript</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Autor original de Turbo Pascal, arquitecto jefe de Delphi, arquitecto líder de C# y creador de TypeScript en Microsoft.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Estudió ingeniería eléctrica en la Universidad Técnica de Dinamarca. "Mientras estaba en la universidad, en 1980, empecé a escribir programas para el microordenador Nascom, incluido un <b>compilador de Pascal inspirado en el 'Tiny Pascal' de Niklaus Wirth</b>." Lo reescribió para CP/M y MS-DOS; Borland lo licenció como Turbo Pascal.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Compiladores, diseño de lenguajes, tipado, entornos de desarrollo.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>leé un libro/clase de referencia, rehacé su programa entero y después mejoralo</b> — su primer compilador fue una reinterpretación del "Tiny Pascal" de Wirth.</div>
+  </div>
+
+  <div class="persona">
+    <h4>James Gosling (1955–)</h4>
+    <div class="rol">Creador de Java</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Fundador y diseñador principal de Java (1994). Creó su compilador y su JVM originales.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>En el secundario escribió software para <b>analizar datos del satélite ISIS-2</b> para el departamento de física de la Universidad de Calgary. BSc en Calgary; MA y PhD en Carnegie Mellon. Como estudiante de posgrado creó una VM p-code para que su profesor corriera programas de UCSD Pascal en un DEC VAX: esa filosofía es el germen de la JVM.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas, máquinas virtuales, compiladores, APIs masivas.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>usá un problema real y ajeno para aprender</b> — escribió código para un satélite antes de tener título.</div>
+  </div>
+
+  <div class="persona">
+    <h4>John Carmack (1970–)</h4>
+    <div class="rol">id Software · Doom · Quake</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Cofundador de id Software y programador jefe de Commander Keen, Wolfenstein 3D, Doom y Quake. Pionero de gráficos 3D en tiempo real. Después CTO de Oculus.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Se enganchó con Space Invaders y Pac-Man. A los 14 intentó robar Apple II de su escuela (fue arrestado y enviado a un hogar juvenil). Después se formó solo: "se encerró en su cuarto por días, alimentado por pizza y soda, y se enseñó a programar", leyó el libro "Hackers" y navegó en ARPANET. Dos semestres en la Universidad de Missouri-Kansas City y <b>se retiró para trabajar como programador independiente</b>.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Aritmética en punto flotante, optimización, algoritmos de render, disciplina de trabajo.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"En la era de la información <b>las barreras de entrada ya no existen; son autoimpuestas</b>. No necesitás millones: necesitás una PC barata, pizza y Diet Coke en la heladera, y la dedicación de bancarla."</div>
+  </div>
+
+  <div class="persona">
+    <h4>Linus Torvalds (1969–)</h4>
+    <div class="rol">Linux · Git</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Creó el kernel Linux (1991) y Git. Millennium Technology Prize 2012.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>"Su interés en las computadoras comenzó con un <b>VIC-20 a los 11 años, en 1981</b>. Empezó en BASIC y después escribía código máquina directo para la CPU 6502 (en vez de usar ensamblador)." Después compró un Sinclair QL que modificó muchísimo "porque era tan difícil conseguir software en Finlandia": escribió su propio ensamblador, bibliotecas y juegos (incluido un clon de Pac-Man). Universidad de Helsinki 1988-96; <b>en 1990 vio Unix por primera vez</b>.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas, C, diseño pragmático, gestión de comunidades y código ajeno.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>Talk is cheap. Show me the code.</b>" (lista de correo del kernel, 2000). Y la otra: <b>construí tu propio clon</b> de lo que te gusta (su Pac-Man) para aprender.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Margaret Hamilton (1936–)</h4>
+    <div class="rol">Software de vuelo del Apollo · "software engineering"</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Dirigió el software de vuelo del Apollo Guidance Computer en el MIT. Acuñó el término "software engineering". Medalla Presidencial de la Libertad (2016).</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>BA en matemática y menor en filosofía (Earlham College, 1958). Enseñó matemática y francés en un secundario. En 1959 entró al departamento de meteorología del MIT con Edward Lorenz, programando en LGP-30 y PDP-1. Dijo: "la informática y la ingeniería de software aún no existían como disciplinas; los programadores aprendían en el trabajo, con experiencia práctica."</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Software crítico, tolerancia a fallos, rigor de proceso.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"Al principio el software se trataba como un hijo adoptado... <b>empecé a usar el término 'software engineering' para diferenciarlo</b>." Y la otra: <b>nombrá lo que hacés</b> — ponerle nombre a la disciplina la legitimó.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Donald Knuth (1938–)</h4>
+    <div class="rol">The Art of Computer Programming · TeX</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Autor de "The Art of Computer Programming", creador de TeX, premio Turing 1974, pionero del análisis de algoritmos.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>En 8º grado ganó un concurso de palabras formables con "Ziegler's Giant Bar"; con tiempo ganado por una falsa gastritis <b>recorrió un diccionario sin abreviar</b> y encontró +4.500 (los jueces habían hallado 2.500). Beca de física en Case Institute (1956); allí conoció el IBM 650 y "después de leer el manual del equipo, decidió <b>reescribir el ensamblador y el compilador</b> porque creía que podía hacerlo mejor". En 1958 escribió un programa para que su equipo de básquet ganara partidos. Cambió de física a matemática (BS+MS 1960); a los 22 le aceptaron un compilador ALGOL por US$ 5.500; PhD en Caltech (1963).</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Algoritmos, matemática discreta, complejidad, tipografía, escritura técnica.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>Premature optimization is the root of all evil</b> (o al menos la mayor parte) en la programación." (1974). Y la otra: <b>leé el manual entero y rehacé el programa</b>.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Jeff Dean (1968–)</h4>
+    <div class="rol">MapReduce · Bigtable · Spanner · Google AI</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Diseñó MapReduce, Bigtable, Spanner y Protocol Buffers en Google. Dirigente de Google AI/DeepMind.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Familia de investigadores que se mudaba mucho; escuelas en Minnesota. B.S. summa cum laude en CS y economía por la Universidad de Minnesota (1990), con tesis sobre redes neuronales escrita en C. Antes de la maestría <b>trabajó en la OMS modelando y pronosticando la pandemia de VIH/SIDA</b>. PhD en la Universidad de Washington (1996). Después DEC WRL con Sanjay Ghemawat; se unió a Google en 1999.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas distribuidos, medición y perfiles de rendimiento, algoritmos a escala.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"<b>Si no podés entender qué hay en la información, va a ser muy difícil organizarla.</b>" Y la otra: <b>un problema real (VIH/SIDA) puede ser tu primer proyecto serio</b>.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Grady Booch (1955–)</h4>
+    <div class="rol">UML · ingeniería de software</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Co-creador del UML, Chief Scientist de Rational Software, autor de "Object-Oriented Analysis and Design with Applications".</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Su propio relato: "Golpeé las puertas de la oficina de ventas de IBM local hasta que un vendedor se apiadó de mí... me dio un manual de Fortran. Volví a la semana siguiente diciendo: 'Esto es re copado, leí todo el manual y escribí un programa chico. ¿Dónde consigo una computadora?'... <b>Ese tipo me conseguía tiempo de programación en un IBM 1130 los fines de semana y a la noche.</b>" Después: US Air Force Academy (1977), MS en ingeniería eléctrica (UC Santa Barbara, 1979).</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Arquitectura de software, modelado, documentación, abstracción.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"Toda la historia de la ingeniería de software es la de <b>la subida en los niveles de abstracción</b>." Y la otra: <b>pedí tiempo de máquina a quien pueda dártelo</b> — Booch le debe su carrera a un vendedor de IBM.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Martin Fowler (1963–)</h4>
+    <div class="rol">Refactoring · ágil</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Escribió "Refactoring", "UML Distilled" y "Patterns of Enterprise Application Architecture". Firmó el Manifiesto Ágil (2001). Chief Scientist de ThoughtWorks.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Nació y creció en Walsall (Inglaterra). Se graduó en University College London en 1986. "Empezó a trabajar con software a principios de los 80"; salido de la universidad entró a Coopers & Lybrand (1986-91) y en 2000 a ThoughtWorks. <b>Arrancó en consultoría, no en una startup</b>.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Modelado, refactoring, arquitectura de aplicaciones, metodologías ágiles.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"La gente subestima el tiempo que pasa depurando... <b>Con los tests, sé al instante si agregué un bug.</b>" Y la otra: <b>escribir sobre lo que aprendés</b> (sus libros salieron de su práctica diaria).</div>
+  </div>
+
+  <div class="persona">
+    <h4>Robert C. Martin "Uncle Bob" (1952–)</h4>
+    <div class="rol">SOLID · Clean Code · Clean Architecture</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Firmante del Manifiesto Ágil, creador de los principios SOLID, autor de "Clean Code" (2009) y "Clean Architecture" (2017).</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>"<b>Martin se unió a la industria del software a los 17 años y es autodidacta.</b>" Fundó Object Mentor en 1991 y se dedicó a formar equipos.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Diseño orientado a objetos, disciplina de código, TDD, ética profesional.</div>
+    <div class="fila"><span class="lbl como">Lección</span>"Las funciones deben hacer una cosa, <b>hacerla bien y hacer solo eso</b>." Y la otra: <b>la disciplina vale más que el talento</b> — autodidacta a los 17, sin título.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Steve McConnell (1963–)</h4>
+    <div class="rol">Code Complete</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Autor de "Code Complete" (1993), considerado uno de los libros fundamentales de construcción de software. Jolt Award 1993.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>BA en filosofía con menor en CS por Whitman College, luego MS en ingeniería de software por Seattle University. Trabajó en Microsoft en el equipo TrueType de Windows 3.1 y en Boeing en un proyecto de Iniciativa de Defensa Estratégica.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Prácticas de construcción de software, revisión de código, estimación.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>poner por escrito lo que se hace bien</b> — "Code Complete" nació para reunir en un solo lugar las técnicas de construcción que la industria repartía en pedazos.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Luis von Ahn (1978–)</h4>
+    <div class="rol">reCAPTCHA · Duolingo (Guatemala)</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Inventó el CAPTCHA y reCAPTCHA (vendido a Google en 2009). Cofundador y CEO de Duolingo. Becario MacArthur 2006.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Nació en la Ciudad de Guatemala. "Cuando tenía ocho años, su mamá le compró una computadora <b>Commodore 64</b>, comenzando su fascinación por la tecnología." Colegio Americano de Guatemala (1996). A los 18 se fue a EE.UU.: B.S. en matemática por Duke (summa cum laude, 2000) y PhD en CS por Carnegie Mellon (2005) bajo Manuel Blum.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Criptografía, cómputo humano, diseño de producto educativo.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Su experiencia de volar a El Salvador a rendir el TOEFL por US$ 1.200 le dejó "una impresión negativa de una industria extractiva, lista para ser disrumpida": <b>un problema propio y real puede convertirse en una idea de negocio global</b>.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Juan Linietsky (1976–) y Ariel Manzur</h4>
+    <div class="rol">Godot Engine (Argentina)</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Cocreador y líder del motor Godot (MIT, usado por Battlefield y en secundarias de Virginia), el motor libre más usado fuera de Unity/Unreal.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Nacido en Buenos Aires en 1976; "desde temprana edad desarrolló interés por la programación y los videojuegos". Con Manzur (también porteño) fundó Codenix en 1999 y en 2001 empezó un motor propio (Larvotor → Legacy → NG3D → Larvita → Godot), licenciado a empresas argentinas. Tras la crisis argentina, en <b>2014 liberó el código en GitHub bajo MIT</b>; en 2022 fundó W4 Games.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Motores de gráficos, C++, arquitectura de herramientas, comunidades.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>construí tu propio motor/proyecto durante años aunque nadie lo compre, y abrilo cuando sea grande</b> — Godot cerrado 13 años antes de volverse libre.</div>
+  </div>
+
+  <div class="persona">
+    <h4>Miguel de Icaza (1972–)</h4>
+    <div class="rol">GNOME · Mono · Xamarin (México)</div>
+    <div class="fila"><span class="lbl teoria">Fama</span>Inició GNOME (1997) y los proyectos Mono y Xamarin. Creó Midnight Commander y Gnumeric. Premio de la FSF 1999.</div>
+    <div class="fila"><span class="lbl ejemplo">Cómo empezó</span>Nació en la Ciudad de México, en una familia de científicos (padre físico, madre bióloga). Estudió matemática en la UNAM pero <b>abandonó antes de recibirse para trabajar en IT</b>. "Empezó a escribir software libre en 1992." En 1994 escribió Midnight Commander para Linux.</div>
+    <div class="fila"><span class="lbl quehace">Dominó</span>Sistemas, ports de plataformas, lenguajes, interoperabilidad.</div>
+    <div class="fila"><span class="lbl como">Lección</span>Se desprende de su historia: <b>el título no es el camino único</b> — dejó la carrera y se formó construyendo software real para la comunidad.</div>
+  </div>
+</section>
+
+<!-- ==================== CAP 3: PATRONES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 3</span>Patrones comunes: cómo empezaron los mejores</h2>
+  <p class="promesa">Esto es lo que se repite. No es una lista de héroes: es la receta destilada.</p>
+
+  <div class="bloque">
+    <h3>Lo que se repite en todos</h3>
+    <div class="fila"><span class="lbl teoria">Patrón 1</span><b>Arrancaron por lo fundamental, no por frameworks.</b> Lógica, matemática, binario, ALGOL, la máquina misma. Thompson resolvía en binario en primaria; Knuth leyó el manual del IBM 650 y reescribió su ensamblador; Stroustrup aprendió ALGOL 60 en una máquina con cinta de papel.</div>
+    <div class="fila"><span class="lbl ejemplo">Patrón 2</span><b>No tenían computadora en casa y no los detuvo.</b> Usaron la de la universidad, la del colegio, la de un vendedor de IBM (Booch), el mainframe del sótano (van Rossum), un VIC-20 barato (Torvalds), un Sinclair QL (Torvalds). <b>El que no tiene máquina busca máquina.</b></div>
+    <div class="fila"><span class="lbl quehace">Patrón 3</span><b>Leían el manual entero y rehacían programas ajenos.</b> Knuth reescribió el ensamblador y el compilador de su facultad; Hejlsberg rehizo el "Tiny Pascal" de Wirth; Carmack devoró el libro "Hackers"; Booch leyó el manual de Fortran completo en una semana.</div>
+    <div class="fila"><span class="lbl como">Patrón 4</span><b>Construyeron proyectos propios desde chicos, casi siempre con un problema real detrás.</b> El clon de Pac-Man de Torvalds, el predictor de básquet de Knuth, el software del satélite ISIS-2 de Gosling, el análisis del clima de Hamilton, el desbloqueo del iPhone de geohot.</div>
+    <div class="fila"><span class="lbl ejecuta">Patrón 5</span><b>Poco o nada de carrera formal al inicio.</b> Uncle Bob autodidacta a los 17; Carmack y De Icaza sin recibirse; Hamilton aprendiendo "en el trabajo" porque la carrera no existía; Mitnick y geohot autodidactas.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Lo que se repite (segunda mitad)</h3>
+    <div class="fila"><span class="lbl teoria">Patrón 6</span><b>Casi todos cruzaron un umbral de máquina.</b> Alguien les consiguió tiempo de CPU (vendedor de IBM, mainframe del sótano, PDP-7 viejo, VIC-20 barato) y ahí se volvieron adictos. <b>El primer "funciona" es el gancho.</b></div>
+    <div class="fila"><span class="lbl ejemplo">Patrón 7</span><b>Escribieron mucho y documentaron lo que aprendieron.</b> Ritchie y Kernighan (K&R), Knuth (TAOCP), McConnell (Code Complete), Fowler (Refactoring), Uncle Bob (Clean Code), Booch (UML), Mitnick ("El arte de la intrusión").</div>
+    <div class="fila"><span class="lbl quehace">Patrón 8</span><b>Enseñaron o evangelizaron mientras hacían.</b> Ritchie "evangelista" de Unix, Booch instructor, Fowler conferencista, von Ahn profesor de CMU, Hamilton peleando por nombrar a la disciplina.</div>
+    <div class="fila"><span class="lbl como">Patrón 9</span><b>Insistieron con lo simple y lo verificable.</b> "When in doubt, use brute force" (Thompson), "un programa no testeado no funciona" (Stroustrup), "premature optimization is the root of all evil" (Knuth), "Talk is cheap, show me the code" (Torvalds).</div>
+    <div class="fila"><span class="lbl ejecuta">Patrón 10</span><b>Empezaron por curiosidad o por un juego, no por un plan de carrera.</b> Space Invaders (Carmack), pinball desarmado (Thompson), videojuegos (Linietsky), un hobby de Navidad (van Rossum), el iPhone (geohot), el satélite (Gosling).</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">La conclusión en una línea</span><br>
+    <b>Los mejores no tenían un plan: tenían curiosidad, un problema real y la constancia de no parar hasta que funcionara.</b> El título, el framework y el puesto vinieron después — a veces años después.
+  </div>
+</section>
+
+<!-- ==================== CAP 4: RUTA POR FASES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 4</span>La ruta por fases (el plan concreto)</h2>
+  <p class="promesa">Ahora convertimos los patrones en semanas. Esto es lo que vas a hacer, en este orden.</p>
+
+  <div class="fase">
+    <div class="semana">Fase 0 · Semanas 1–2 · Fundamentos</div>
+    <h3>La máquina, la lógica y las redes</h3>
+    <p><b>Qué hacer:</b> aprender lógica proposicional, binario, cómo funciona una computadora (CPU, memoria, disco), y redes (modelo OSI, IP, puertos, TCP/UDP). Leer <b>un manual completo</b> (el de tu lenguaje o el de tu sistema) y rehacer un programa de ejemplo.</p>
+    <p><b>Por qué:</b> todos los mejores arrancaron por lo fundamental (Patrón 1). Sin esto, los frameworks son magia.</p>
+    <p><b>Hito:</b> podés explicar, sin mirar, cómo viaja un paquete de tu navegador al servidor y vuelta.</p>
+  </div>
+
+  <div class="fase">
+    <div class="semana">Fase 1 · Semanas 3–4 · Un lenguaje + un proyecto</div>
+    <h3>Elegí UN lenguaje y construí algo pequeño con un problema real</h3>
+    <p><b>Qué hacer:</b> Python (si querés rapidez) o C (si querés entender la máquina). No aprendas 3 a la vez. Hacé un proyecto chico con un problema propio: una calculadora, un bot, un scraper, un juego. <b>Que funcione y que sea tuyo.</b></p>
+    <p><b>Por qué:</b> Patrón 4 (proyecto propio con problema real) y Patrón 10 (curiosidad). Hejlsberg rehizo el "Tiny Pascal"; vos rehacé algo que te guste.</p>
+    <p><b>Hito:</b> tenés un repositorio en GitHub con un programa que vos escribiste y que resuelve un problema tuyo.</p>
+  </div>
+
+  <div class="fase">
+    <div class="semana">Fase 2 · Semanas 5–6 · Linux y la terminal</div>
+    <h3>Cruzar el umbral de la máquina</h3>
+    <p><b>Qué hacer:</b> instalá Linux (en VM o dual boot), usá la terminal todos los días, aprendé Git (clone, commit, push, branch, merge), y leé código ajeno (cloná 3 repos de GitHub y leélos). Instalá tu entorno de desarrollo.</p>
+    <p><b>Por qué:</b> Patrón 6 (cruzar el umbral de máquina) y Patrón 2 (buscar máquina). Casi todos los mejores se volvieron adictos cuando consiguieron tiempo de CPU real.</p>
+    <p><b>Hito:</b> podés clonar un repo, modificarlo y subir tu cambio sin mirar un tutorial.</p>
+  </div>
+
+  <div class="fase">
+    <div class="semana">Fase 3 · Semanas 7–8 · Seguridad (si te interesa)</div>
+    <h3>Laboratorio propio y redes</h3>
+    <p><b>Qué hacer:</b> instalá VirtualBox + Kali Linux, practicá en redes propias, aprendé Wireshark, Nmap, y los conceptos de la triada CIA, vulnerabilidades y puertos. <b>Solo en sistemas propios o autorizados.</b></p>
+    <p><b>Por qué:</b> Patrón 1 (fundamentos) aplicado a seguridad. Mitnick, geohot y Barnaby Jack arrancaron con curiosidad por cómo funcionan las cosas por dentro.</p>
+    <p><b>Hito:</b> podés escanear tu propia red y explicar qué encontraste.</p>
+  </div>
+
+  <div class="fase">
+    <div class="semana">Fase 4 · Semanas 9–10 · Comunidad y CTFs</div>
+    <h3>Encontrá gente y competí</h3>
+    <p><b>Qué hacer:</b> uníte a una comunidad (Discord, foro, meetup local), participá en CTFs (TryHackMe, Hack The Box, picoCTF), y empezá a leer writeups de otros. <b>Enseñá lo que aprendés</b>: escribí un post o dá una charla corta.</p>
+    <p><b>Por qué:</b> Patrón 7 (escribir/documentar) y Patrón 8 (enseñar). Booch le debe su carrera a un vendedor de IBM; la comunidad es tu vendedor.</p>
+    <p><b>Hito:</b> resolviste tu primer CTF o escribiste tu primer writeup.</p>
+  </div>
+
+  <div class="fase">
+    <div class="semana">Fase 5 · Continuo · Mantener y compartir</div>
+    <h3>El hábito, no el sprint</h3>
+    <p><b>Qué hacer:</b> mantené 1-2 proyectos activos, escribí sobre ellos (blog, README, notas), y ayudá a otros (responder preguntas, revisar código). Leé un libro técnico por mes. <b>No acumules cursos sin construir.</b></p>
+    <p><b>Por qué:</b> Patrón 7 y Patrón 8. Los mejores no pararon: escribieron libros, enseñaron, mantuvieron proyectos durante décadas.</p>
+    <p><b>Hito:</b> en 6 meses tenés un portafolio con 2-3 proyectos propios y un hábito de escritura.</p>
+  </div>
+</section>
+
+<!-- ==================== CAP 5: HÁBITOS Y ANTI-PATRONES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 5</span>Hábitos y anti-patrones</h2>
+  <p class="promesa">Lo que hay que hacer — y lo que hay que evitar.</p>
+
+  <div class="bloque">
+    <h3>Hábitos de los mejores (copiá estos)</h3>
+    <div class="fila"><span class="lbl teoria">Hábito 1</span><b>Leer el manual entero.</b> No la documentación de "getting started": el manual completo. Knuth leyó el manual del IBM 650 y reescribió su ensamblador.</div>
+    <div class="fila"><span class="lbl ejemplo">Hábito 2</span><b>Rehacer programas ajenos.</b> Tomá un programa que te guste y reescribilo desde cero. Hejlsberg rehizo el "Tiny Pascal" de Wirth.</div>
+    <div class="fila"><span class="lbl quehace">Hábito 3</span><b>Construir proyectos propios con un problema real.</b> No tutoriales: problemas tuyos. Torvalds hizo un clon de Pac-Man; Gosling, software para un satélite.</div>
+    <div class="fila"><span class="lbl como">Hábito 4</span><b>Escribir y enseñar.</b> Un README, un post, una charla. Si no podés explicarlo, no lo entendiste. (Feynman + Fowler + Uncle Bob.)</div>
+    <div class="fila"><span class="lbl ejecuta">Hábito 5</span><b>Verificar siempre.</b> "Un programa no testeado no funciona" (Stroustrup). Probá, medí, no asumas.</div>
+    <div class="fila"><span class="lbl ejecuta">Hábito 6</span><b>Simplificar.</b> "When in doubt, use brute force" (Thompson). La elegancia es saber qué quitar. No optimices antes de tiempo (Knuth).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Anti-patrones (evitá estos)</h3>
+    <div class="fila"><span class="lbl teoria">Anti 1</span><b>Saltar los fundamentos.</b> Aprender React antes que HTML/CSS/JS. Los mejores arrancaron por la máquina y la lógica.</div>
+    <div class="fila"><span class="lbl ejemplo">Anti 2</span><b>Coleccionar cursos sin construir.</b> 10 cursos terminados y 0 proyectos. Construí uno solo y completo.</div>
+    <div class="fila"><span class="lbl quehace">Anti 3</span><b>Aprender 3 lenguajes a la vez.</b> Elegí uno y dominálo. Hejlsberg hizo Turbo Pascal antes de C#.</div>
+    <div class="fila"><span class="lbl como">Anti 4</span><b>Esperar a "estar listo".</b> Nadie se sintió listo. Carmack se retiró de la universidad; De Icaza abandonó la carrera. Empezá ya.</div>
+    <div class="fila"><span class="lbl ejecuta">Anti 5</span><b>No documentar ni compartir.</b> Si no escribís, no queda. Si no compartís, no crecés. (Patrón 7 y 8.)</div>
+    <div class="fila"><span class="lbl ejecuta">Anti 6</span><b>Optimizar prematuramente.</b> "Premature optimization is the root of all evil" (Knuth). Primero que funcione, después que sea rápido.</div>
+  </div>
+</section>
+
+<!-- ==================== CAP 6: RECURSOS ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 6</span>Recursos para seguir</h2>
+  <p class="promesa">El material que los mejores usaron o recomendarían hoy.</p>
+
+  <div class="recurso">
+    <h4>Libros que valen oro</h4>
+    <div class="pills"><span class="pill gratis">LECTURA</span><span class="pill nivel">FUNDAMENTAL</span></div>
+    <p><b>Code Complete</b> (McConnell) · <b>Clean Code</b> (Uncle Bob) · <b>The Pragmatic Programmer</b> (Hunt & Thomas) · <b>Structure and Interpretation of Computer Programs</b> (SICP) · <b>The Art of Computer Programming</b> (Knuth, cuando estés listo).</p>
+    <p class="porque"><b>Por qué:</b> son los libros que condensan lo que los mejores aprendieron en décadas. Leelos como los leyeron ellos: <b>con lápiz y rehaciendo los ejemplos</b>.</p>
+  </div>
+
+  <div class="recurso">
+    <h4>Comunidades y labs legales</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">PRÁCTICA</span></div>
+    <p><b>TryHackMe</b> y <b>Hack The Box</b> (seguridad, legal) · <b>picoCTF</b> (CTF para principiantes) · <b>Exercism</b> y <b>Codewars</b> (ejercicios de código) · <b>GitHub</b> (leer código ajeno).</p>
+    <p class="porque"><b>Por qué:</b> la comunidad es el "umbral de máquina" moderno. Ahí encontrás problemas reales y gente que te ayuda.</p>
+  </div>
+
+  <div class="recurso">
+    <h4>La serie "Aprender desde 0"</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">TU BASE</span></div>
+    <p><b>00 · Ruta de aprendizaje</b> (el mapa completo) · <b>01 · Programación desde 0</b> · <b>02 · Programación aplicada</b> (Java, web, Android, BD) · <b>03 · Ciberseguridad desde 0</b>.</p>
+    <p class="porque"><b>Por qué:</b> es el material de estudio que acompaña esta ruta. Si algo de acá te interesa, esos cursos lo desarrollan con el mismo molde.</p>
+  </div>
+
+  <div class="cierre">
+    <h3>Cerrá el círculo</h3>
+    <p>Recorriste las historias de <b>hackers, programadores e ingenieros</b> que llegaron lejos. Ninguno tenía un plan perfecto: tenían <b>curiosidad, un problema real y la constancia de no parar</b>.</p>
+    <p><b>Siguiente paso concreto:</b> elegí <b>un</b> lenguaje, <b>un</b> proyecto chico y <b>una</b> comunidad. Empezá hoy, aunque sea con 30 minutos. <b>Ya tenés el mapa; ahora falta caminar.</b></p>
+    <p style="margin-bottom:0">Sigue en la serie: <b>00 · Ruta de aprendizaje</b> (el mapa completo) · <b>01 · Programación desde 0</b> · <b>02 · Programación aplicada</b> · <b>03 · Ciberseguridad desde 0</b>.</p>
+  </div>
+</section>
+
+</body>
+</html>
