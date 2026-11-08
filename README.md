@@ -10,6 +10,7 @@ Guías de estudio en HTML imprimible (A4) de la serie "Aprender desde 0". Cada c
 | 01 · Programación desde 0 | [`01-programacion-desde-0.html`](01-programacion-desde-0.html) | Fundamentos: variables, tipos, operaciones, condicionales, bucles (12 capítulos) |
 | 02 · Programación aplicada | [`02-programacion-teclab.html`](02-programacion-teclab.html) | Lógica, Java/POO, web, Android y bases de datos (20 capítulos) |
 | 03 · Ciberseguridad desde 0 | [`03-ciberseguridad-desde-0.html`](03-ciberseguridad-desde-0.html) | Las 14 clases del curso de Coderhouse + prácticas paso a paso (17 capítulos) |
+| 04 · Cómo empezaron los mejores | [`04-ruta-como-los-mejores.html`](04-ruta-como-los-mejores.html) | Ruta basada en las historias reales de los mejores hackers y programadores (10 patrones + plan por fases) |
 
 ## Uso
 - **Online:** https://cuutii.github.io/aprender-desde-0/
