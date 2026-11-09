@@ -175,6 +175,61 @@
   </div>
 </section>
 
+<!-- ==================== CAP 2b: AMENAZAS Y MALWARE ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 2 (bis)</span>Amenazas, ataques y malware</h2>
+  <p class="promesa">El malware no es magia: es un programa que alguien escribió para hacerte daño. Y tiene nombre y apellido.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es el malware?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Malware</b> = software malicioso. Es un programa que alguien escribió para robar, romper o espiar tu computadora. No se "contagia" solo: alguien tiene que ejecutarlo (abrir un archivo, hacer clic en un enlace, instalar algo).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>ladrón disfrazado de repartidor</b>: toca el timbre con un paquete que parece inofensivo, vos lo dejás entrar, y una vez adentro hace lo que quiere. La diferencia con un ladrón real es que el malware no necesita forzar la puerta: <b>vos le abrís</b>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Roba datos, plata, acceso, o rompe tu sistema. A veces sin que te des cuenta.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aprovechando que la gente abre archivos de desconocidos, hace clic en enlaces sospechosos o usa contraseñas débiles. <b>La persona es la capa más blanda</b> (la que más falla).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para protegerte, en 3 pasos: 1) <b>No abras</b> archivos de gente que no conocés. 2) <b>Mantené actualizado</b> el sistema y el antivirus. 3) <b>Desconfiá</b> de los "tu PC está infectada, hacé clic acá" — son estafas.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Los tipos de malware más comunes</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Hay varios "apellidos" de malware, según lo que hacen: <b>troyano</b> (se disfraza de programa legítimo), <b>adware</b> (publicidad molesta), <b>spyware</b> (espía), <b>keylogger</b> (roba lo que escribís), <b>ransomware</b> (secuestra tus archivos y pide rescate), <b>rootkit</b> (se esconde en el sistema), <b>cryptojacking</b> (usa tu PC para minar criptomonedas) y <b>scareware</b> (te asusta para que pagues).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>ransomware</b> es como un ladrón que entra a tu casa, mete todas tus cosas en una caja con candado y te pide plata para devolverte la llave. El <b>keylogger</b> es como alguien que se sienta atrás tuyo mirando qué teclas apretás (y anota tus contraseñas). El <b>troyano</b> es el caballo de Troya: parece un regalo, pero adentro viene el enemigo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Cada uno ataca de una forma distinta, pero todos buscan lo mismo: <b>robar, romper o espiar</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aprovechando que la gente abre archivos de desconocidos, hace clic en enlaces sospechosos o usa contraseñas débiles.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para reconocerlos: si tu PC se pone lenta sin razón, aparecen ventanas de publicidad, o tus archivos aparecen con extensiones raras (.encrypted, .locked), desconfiá. Cortá internet y llamá a alguien de confianza.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>VirusTotal: el policía que reconoce a los malos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>VirusTotal</b> es una web (virustotal.com) donde subís un archivo y <b>más de 60 antivirus</b> lo analizan a la vez. Te dice si es malicioso y qué hace. Es gratis y se usa en el día a día de cualquier analista de seguridad.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>llevar una muestra sospechosa a 60 policías a la vez</b> a ver si alguno la reconoce. Si 1 policía dice "es malo" y 59 dicen "no sé", probablemente sea un falso positivo. Si 40 dicen "es malo", es malo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te dice si un archivo es <b>malicioso o no</b>, y qué hace cuando se ejecuta.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Comparando el archivo contra bases de datos de firmas (como una huella dactilar) y ejecutándolo en sandboxes aislados para ver su comportamiento.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Entrá a virustotal.com. 2) Subí el archivo (o pegá su hash). 3) Mirá el resultado: si muchos motores lo marcan como malicioso, no lo abras. 4) Mirá la pestaña "Behavior" para ver qué hace cuando se ejecuta (qué archivos crea, qué conexiones hace).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>El hash: la huella dactilar del archivo</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>hash</b> es un número único que identifica un archivo (como una huella dactilar). El mismo archivo siempre da el mismo hash. Si cambiás una sola letra, el hash cambia por completo. Se usa para verificar que un archivo no fue modificado y para buscarlo en bases de datos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como la <b>huella dactilar de una persona</b>: dos personas distintas no tienen la misma huella. Y si una persona cambia (crece, se corta un dedo), la huella cambia. Así, el hash de un archivo es su "DNA": si alguien lo modificó, el hash ya no coincide.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Identifica un archivo de forma única e irreversible.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando una función matemática (MD5, SHA256) que convierte cualquier archivo en un número fijo de caracteres.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Windows: <code>Get-FileHash archivo.exe</code> (PowerShell). En Linux/Mac: <code>sha256sum archivo</code> o <code>md5sum archivo</code>. El resultado lo podés buscar en VirusTotal o en Google.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>WannaCry: el ransomware que paralizó el mundo</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>WannaCry</b> fue un ransomware que en 2017 infectó 10.000 máquinas por hora en 150 países. Bloqueaba los archivos y pedía rescate. Lo peor: se propagaba solo (como un gusano), sin que nadie hiciera clic. Aprovechaba una vulnerabilidad de Windows que ya tenía parche — pero muchos no lo habían instalado.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>virus que se propaga por el aire</b>: no necesitás tocar a nadie para contagiarte. Solo necesitás estar en la misma habitación (red). Y el "antídoto" (el parche) ya existía — pero mucha gente no se lo había puesto.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Bloquea tus archivos y pide rescate. Se propaga solo por la red.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aprovechando una vulnerabilidad de Windows (EternalBlue) que permitía ejecutar código remotamente sin contraseña.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>La lección: <b>actualizá siempre tu sistema</b>. El parche que frenaba WannaCry existía meses antes. La mayoría de los ataques aprovechan fallos que ya tienen solución.</div>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>Si un archivo te parece sospechoso, no lo abras.</b> Subilo a VirusTotal primero. Y si tu PC se pone lenta, aparecen ventanas raras o tus archivos cambian de extensión, cortá internet y pedí ayuda. <b>No pagues rescates</b>: no garantiza que recuperes tus archivos.
+  </div>
+
 <!-- ==================== CAP 3: VULNERABILIDADES ==================== -->
 <section class="cap">
   <h2><span class="num">Capítulo 3</span>Ventanas abiertas y escaleras</h2>
