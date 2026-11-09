@@ -79,6 +79,7 @@
     <li><span class="t">4 · Hacking ético</span><span class="d">Permiso, sombreros, cajas (Clase 5)</span></li>
     <li><span class="t">5 · Escanear y explotar</span><span class="d">Nmap, CVE, exploits (Clase 6)</span></li>
     <li><span class="t">6 · Cifrar y ocultar</span><span class="d">Criptografía y esteganografía (Clase 9)</span></li>
+    <li><span class="t">7 · Analizar malware</span><span class="d">Estático vs dinámico, VirusTotal, MITRE (Clase 4)</span></li>
   </ul>
 </section>
 
@@ -381,9 +382,55 @@ ccrypt -d notas.txt.cpt
   </div>
 </section>
 
+<!-- ==================== CAP: ANALIZAR MALWARE ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 7</span>Analizar tu primer malware</h2>
+  <p class="promesa">Mirá el monstruo detrás del vidrio. Nunca lo sueltes en tu máquina.</p>
+
+  <div class="bloque">
+    <h3>Estático vs. dinámico: las dos formas de mirar</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Hay dos formas de analizar un malware: <b>estático</b> (mirás el código <b>sin ejecutarlo</b>: hash, cadenas de texto, estructura) y <b>dinámico</b> (lo ejecutás en un <b>entorno controlado</b> y observás qué hace: procesos, conexiones, archivos).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>desarmar un reloj sin encenderlo</b> (estático) versus <b>encenderlo bajo una campana de vidrio</b> y ver para qué tiembla (dinámico). Los dos se complementan: el estático te dice qué <em>podría</em> hacer; el dinámico te dice qué <em>hace</em>.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Responder: <b>¿qué es esto, qué toca y a quién le avisa?</b></div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El dinámico sigue un método: crear una <b>línea base</b> de la máquina virtual (snapshot), correr la muestra, capturar tráfico y procesos, y <b>comparar</b> contra la línea base. Todo lo que cambió es sospechoso.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Paso a paso: 1) Armá una VM aislada (sin red o red interna). 2) Tomá un snapshot (tu botón de "deshacer"). 3) Subí la muestra a VirusTotal o a tu sandbox. 4) Ejecutá y mirá en vivo: procesos, conexiones, archivos. 5) Tomá capturas. 6) Compará contra la línea base y escribí el informe.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>VirusTotal: el policía que reconoce a los malos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>VirusTotal</b> es una web (virustotal.com) donde subís un archivo y <b>más de 60 antivirus</b> lo analizan a la vez. Te dice si es malicioso y qué hace. Es gratis.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>llevar una muestra sospechosa a 60 policías a la vez</b>. Si 1 dice "es malo" y 59 dicen "no sé", probablemente sea un falso positivo. Si 40 dicen "es malo", es malo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te dice si un archivo es <b>malicioso o no</b>, y qué hace cuando se ejecuta.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Comparando el archivo contra bases de datos de firmas (como una huella dactilar) y ejecutándolo en sandboxes aislados.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Entrá a virustotal.com. 2) Subí el archivo (o pegá su hash). 3) Mirá el resultado: si muchos motores lo marcan como malicioso, no lo abras. 4) Mirá la pestaña "Behavior" para ver qué hace cuando se ejecuta (qué archivos crea, qué conexiones hace).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>El ciclo de ataque (Cyber Kill Chain)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un ataque no es un solo paso: es una <b>cadena de 7 pasos</b> — reconocimiento, desarrollo de recursos, entrega, explotación, instalación, comando y control, y acciones sobre el objetivo. Si cortás uno solo, el ataque se frena.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>un robo a un banco</b>: primero el ladrón estudia el banco (reconocimiento), después arma las herramientas (desarrollo), las lleva al banco (entrega), fuerza la puerta (explotación), instala la caja fuerte falsa (instalación), se comunica con su cómplice (comando y control) y se lleva el dinero (acción). Si en cualquiera de esos pasos lo atrapan, el robo no se completa.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te da un <b>mapa de dónde cortar</b> un ataque.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada paso depende del anterior. Si no hay reconocimiento, no hay ataque. Si no hay entrega, no hay infección.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para defender: 1) Bloqueá el reconocimiento (no expongas info en redes sociales). 2) Filtrá la entrega (no abras adjuntos). 3) Detectá la explotación (antivirus, EDR). 4) Cortá el comando y control (firewall, DNS filtering). Cada capa es una oportunidad de frenar el ataque.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>MITRE ATT&CK: el catálogo de técnicas</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>MITRE ATT&CK</b> es un catálogo gratuito de <b>tácticas y técnicas</b> que usan los atacantes reales. Cada técnica tiene un ID (ej. T1059) y explica cómo funciona y cómo mitigarla. VirusTotal lo usa para clasificar el comportamiento del malware.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>catálogo de jugadas de un equipo de fútbol</b>: cada jugada tiene nombre, cómo se ejecuta y cómo se defiende. Si sabés qué jugada va a hacer el rival, podés preparar la defensa.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te da un <b>lenguaje común</b> para describir y defender ataques.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Clasificando el comportamiento del malware en tácticas (ej. persistencia, escalación de privilegios, evasión de defensas) y técnicas (ej. inyección en memoria, robo de credenciales).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Entrá a attack.mitre.org. 2) Buscá una técnica por su ID. 3) Leé cómo funciona y cómo mitigarla. 4) Aplicá las mitigaciones en tu sistema (ej. activar el firewall, deshabilitar macros, monitorear el registro de Windows).</div>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>Nunca ejecutes malware en tu máquina real.</b> Usá siempre una máquina virtual aislada (sin red o red interna) y tomá un snapshot antes. Si algo sale mal, restaurá el snapshot y empezá de nuevo. <b>El snapshot es tu botón de "deshacer".</b>
+  </div>
+
 <!-- ==================== CIERRE ==================== -->
 <section class="cap">
-  <h2><span class="num">Cierre</span>Resumen en 6 ideas</h2>
+  <h2><span class="num">Cierre</span>Resumen en 7 ideas</h2>
   <div class="bloque">
     <div class="fila"><span class="lbl teoria">1</span>Una <b>red</b> es computadoras que se hablan en 7 capas (modelo OSI). Cada capa hace un trabajo.</div>
     <div class="fila"><span class="lbl ejemplo">2</span>La <b>ciberseguridad</b> protege 3 cosas: confidencialidad, integridad y disponibilidad (triada CIA).</div>
@@ -391,6 +438,7 @@ ccrypt -d notas.txt.cpt
     <div class="fila"><span class="lbl como">4</span>El <b>hacking ético</b> es probar la seguridad <b>con permiso escrito</b>. Sin permiso, es un delito.</div>
     <div class="fila"><span class="lbl ejecuta">5</span><b>Escanear</b> es tocar el timbre y anotar quién abrió. <b>Cifrar</b> es poner el mensaje en un idioma que nadie entiende.</div>
     <div class="fila"><span class="lbl ejecuta">6</span>Todo se practica en <b>tu propia computadora</b> o en labs autorizados (TryHackMe, Hack The Box, DockerLabs).</div>
+    <div class="fila"><span class="lbl ejecuta">7</span>Para analizar malware: <b>estático</b> (mirás el código sin ejecutarlo) + <b>dinámico</b> (lo ejecutás en una VM aislada y observás qué hace). El <b>snapshot</b> es tu botón de "deshacer".</div>
   </div>
   <div class="cierre">
     <h3>Ya sabés lo básico</h3>
