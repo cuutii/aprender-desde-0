@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ciberseguridad para todos</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI", Tahoma, sans-serif; font-size: 12pt; line-height: 1.6; color: #1f2a37; margin: 0; }
+  :root { --azul:#1b4f8a; --azul-humo:#eaf1fa; --naranja:#c2410c; --naranja-humo:#fff3ec; --verde:#15803d; --verde-humo:#edf9f0; --morado:#6d28d9; --gris:#475569; --borde:#d9e1ec; }
+  h1,h2,h3 { font-weight:700; color:var(--azul); line-height:1.25; margin:0; }
+  p { margin:0 0 10px 0; }
+  .portada { page-break-after:always; padding:26mm 0 0 0; }
+  .portada .serie { display:inline-block; background:var(--naranja); color:#fff; font-size:10pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:6px 14px; border-radius:3px; }
+  .portada h1 { font-size:42pt; margin:22px 0 0 0; }
+  .portada h1 span { color:var(--naranja); display:block; }
+  .portada .regla { height:5px; background:var(--azul); width:100%; margin:22px 0 18px 0; }
+  .portada .sub { font-size:14pt; color:#33445a; max-width:95%; line-height:1.55; margin:0 0 22px 0; }
+  .portada .caja-que { background:var(--azul-humo); border-left:6px solid var(--azul); padding:16px 20px; border-radius:0 6px 6px 0; font-size:11pt; }
+  .portada .meta { margin-top:26px; font-size:10pt; color:#64748b; border-top:1px solid var(--borde); padding-top:12px; }
+  .bloque { background:#fff; border:1px solid var(--borde); border-left:5px solid var(--azul); border-radius:0 7px 7px 0; padding:14px 18px 8px 18px; margin:16px 0; page-break-inside:avoid; }
+  .bloque > h3 { font-size:15pt; margin-bottom:10px; }
+  .fila { margin:0 0 8px 0; }
+  .lbl { display:inline-block; font-size:9pt; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#fff; padding:3px 9px; border-radius:3px; margin-right:8px; vertical-align:1.5px; }
+  .lbl.teoria  { background:var(--azul); }
+  .lbl.ejemplo { background:var(--naranja); }
+  .lbl.quehace { background:var(--verde); }
+  .lbl.como    { background:var(--morado); }
+  .lbl.ejecuta { background:var(--gris); }
+  .cap { page-break-before:always; }
+  .cap h2 { font-size:24pt; margin:0 0 4px 0; border-bottom:3px solid var(--azul); padding-bottom:10px; }
+  .cap h2 .num { display:block; font-size:10pt; letter-spacing:.18em; text-transform:uppercase; color:var(--naranja); margin-bottom:6px; }
+  .cap .promesa { font-size:12pt; color:#475569; font-style:italic; margin:12px 0 16px 0; border-left:3px solid var(--naranja); padding-left:12px; }
+  h3.sub { font-size:14pt; margin:14px 0 6px 0; color:var(--azul); }
+  .nota { background:var(--naranja-humo); border:1px solid #fed7aa; border-radius:6px; padding:12px 16px; margin:14px 0; page-break-inside:avoid; font-size:11pt; }
+  .nota b.t { color:var(--naranja); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  .aviso { background:var(--verde-humo); border:1px solid #bbf7d0; border-radius:6px; padding:12px 16px; margin:14px 0; page-break-inside:avoid; font-size:11pt; }
+  .aviso b.t { color:var(--verde); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 16px 0; font-size:10.5pt; page-break-inside:avoid; }
+  th { background:var(--azul); color:#fff; text-align:left; padding:8px 10px; font-weight:600; font-size:9.5pt; }
+  td { border-bottom:1px solid var(--borde); padding:6px 10px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f7f9fc; }
+  td b { color:var(--azul); }
+  code { font-family:Consolas,monospace; font-size:10pt; background:#f3f6fb; border:1px solid #e2e8f0; border-radius:4px; padding:1px 5px; color:#9a3412; }
+  pre { font-family:Consolas,monospace; font-size:10pt; line-height:1.5; background:#f3f6fb; border:1px solid #e2e8f0; border-left:4px solid var(--azul); border-radius:0 5px 5px 0; padding:10px 14px; margin:8px 0 12px 0; color:#0f172a; white-space:pre-wrap; page-break-inside:avoid; }
+  pre .c { color:#64748b; } pre .k { color:var(--azul-vivo); font-weight:700; } pre .s { color:var(--verde); } pre .n { color:var(--naranja); }
+  .cierre { background:var(--azul); color:#eaf1fa; padding:18px 22px; border-radius:8px; margin-top:22px; page-break-inside:avoid; }
+  .cierre h3 { color:#fff; margin-bottom:8px; font-size:15pt; }
+  .cierre p { color:#dbe7f7; font-size:10.8pt; }
+  .cierre b { color:#ffd8b0; }
+  .indice ul { list-style:none; padding:0; margin:10px 0 0 0; }
+  .indice li { padding:7px 0; border-bottom:1px dotted var(--borde); font-size:11.5pt; display:flex; justify-content:space-between; }
+  .indice li span.t { color:var(--azul); font-weight:600; }
+  .indice li span.d { color:#64748b; font-size:10pt; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Ciberseguridad para todos</div>
+  <h1>Ciberseguridad <span>para todos</span></h1>
+  <div class="regla"></div>
+  <p class="sub">Lo mismo que aprenden en el curso, pero explicado con palabras de todos los días. Para un chico de 5 años, para un señor de 60, y para cualquiera que quiera entender sin sentirse tonto.</p>
+  <div class="caja-que">
+    <strong>Cómo leer esto:</strong> cada idea usa 5 etiquetas — <b>Teoría</b> (qué es, en una frase), <b>Ejemplo</b> (una comparación con la vida real), <b>Qué hace</b>, <b>Cómo lo hace</b> y <b>Cómo se ejecuta</b> (el paso a paso). Si algo no se entiende, saltalo y volvé después. <b>No hay preguntas tontas.</b>
+  </div>
+  <p class="meta">Material de estudio personal · Ciberseguridad · Redes · Seguridad<br>Versión ultra-simple de las clases 0, 1, 3, 5, 6 y 9 del curso de Coderhouse. Todo lo que aparece acá se practica solo en tu propia computadora o en sistemas autorizados.</p>
+</section>
+
+<!-- ==================== ÍNDICE ==================== -->
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · ¿Qué es una red?</span><span class="d">Capas, IP, puertos (Clase 0)</span></li>
+    <li><span class="t">2 · ¿Qué es la ciberseguridad?</span><span class="d">La triada, las amenazas (Clase 1)</span></li>
+    <li><span class="t">3 · Ventanas abiertas y escaleras</span><span class="d">Vulnerabilidades y puertos (Clase 3)</span></li>
+    <li><span class="t">4 · Hacking ético</span><span class="d">Permiso, sombreros, cajas (Clase 5)</span></li>
+    <li><span class="t">5 · Escanear y explotar</span><span class="d">Nmap, CVE, exploits (Clase 6)</span></li>
+    <li><span class="t">6 · Cifrar y ocultar</span><span class="d">Criptografía y esteganografía (Clase 9)</span></li>
+  </ul>
+</section>
+
+<!-- ==================== CAP 1: REDES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 1</span>¿Qué es una red?</h2>
+  <p class="promesa">Antes de defender una casa, conviene saber cómo son las paredes. Así de simple.</p>
+
+  <div class="bloque">
+    <h3>El modelo OSI (las 7 capas)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Las computadoras se hablan en <b>7 pasos ordenados</b>, del cable (capa 1) hasta la aplicación (capa 7). Es como un cartero que recibe una carta, la mete en un sobre, la pone en un camión, y al llegar la abre capa por capa.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>correo postal</b>: escribís una carta (capa 7), la metés en un sobre (capa 6), la pasás al correo (capa 4), tiene dirección y ruta (capa 3), va en un camión con patente (capa 2), el camión rueda por la ruta (capa 1). Si algo falla, sabés en qué eslabón pasó.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Da un <b>lenguaje común</b>: permite decir "ese ataque golpea la capa 3" y que todos sepan de qué hablamos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada capa le agrega a los datos un <b>encabezado</b> (encapsulación). Al llegar, el receptor lo quita capa por capa hasta leer el mensaje (desencapsulación).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Cuando abrís una web, la petición baja por las capas: 1) el navegador manda la petición → 2) TCP la parte en segmentos → 3) IP le pone las direcciones → 4) la tarjeta de red la arma en tramas → 5) el cable manda los bits. En tu máquina lo ves con <code>tracert google.com</code>.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:8%">Capa</th><th style="width:24%">Nombre</th><th>Ejemplo real</th></tr>
+    <tr><td><b>7</b></td><td>Aplicación</td><td>Navegador, correo, DNS</td></tr>
+    <tr><td><b>6</b></td><td>Presentación</td><td>Cifrado, compresión, imágenes</td></tr>
+    <tr><td><b>5</b></td><td>Sesión</td><td>Abrir y mantener la conversación</td></tr>
+    <tr><td><b>4</b></td><td>Transporte</td><td>TCP (confiable) y UDP (rápido)</td></tr>
+    <tr><td><b>3</b></td><td>Red</td><td>IP, enrutamiento, ARP</td></tr>
+    <tr><td><b>2</b></td><td>Enlace</td><td>MAC, switches, Wi-Fi</td></tr>
+    <tr><td><b>1</b></td><td>Física</td><td>Cable, fibra, radio</td></tr>
+  </table>
+
+  <div class="bloque">
+    <h3>Dirección IP (pública y privada)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>IP</b> es el número que identifica a un dispositivo en la red. <b>Pública</b> = única en Internet (la asigna tu proveedor). <b>Privada</b> = la de tu casa, no se ve desde Internet.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La IP pública es tu <b>domicilio en el mapa del mundo</b>. Las privadas son los <b>cuartos de tu casa</b>: el repartidor solo ve el portón (el router); adentro, cada cuarto tiene su número pero no existe afuera.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite <b>encontrar</b> y <b>dirigir</b> el tráfico hasta el dispositivo correcto.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Tu router traduce las privadas a la pública (NAT) cuando el tráfico sale, y revierte al volver.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Windows: <code>Win+R</code> → <code>cmd</code> → <code>ipconfig</code> (buscá "Dirección IPv4"). En Linux: <code>ifconfig</code>. Para ver todo (IP, máscara, gateway y vecinos): <code>ipconfig /all</code> y <code>arp -a</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Puertos (las puertas de tu máquina)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>puerto</b> es una puerta numerada por la que entra o sale un servicio. Van del 0 al 65535. Los conocidos (0–1023) son los de siempre.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como las <b>puertas de un edificio</b>: la 80 es la puerta de la web (HTTP), la 443 la web segura (HTTPS), la 22 el acceso remoto (SSH). Si una puerta está abierta y nadie la cuida, cualquiera entra.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite que varios servicios compartan la misma IP sin mezclarse.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El sistema operativo escucha en cada puerto; si alguien llama a ese número, le pasa la conexión al servicio correspondiente.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver qué puertos tenés abiertos: <code>nmap 192.168.0.50</code> (tu propia IP) o <code>nmap -sV 192.168.0.50</code> para ver qué servicio corre en cada uno.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:14%">Puerto</th><th style="width:18%">Servicio</th><th style="width:14%">Puerto</th><th>Servicio</th></tr>
+    <tr><td><b>21</b></td><td>FTP (archivos)</td><td><b>80</b></td><td>HTTP (web sin cifrar)</td></tr>
+    <tr><td><b>22</b></td><td>SSH (acceso remoto)</td><td><b>110</b></td><td>POP3 (correo)</td></tr>
+    <tr><td><b>25</b></td><td>SMTP (envío correo)</td><td><b>143</b></td><td>IMAP (correo)</td></tr>
+    <tr><td><b>53</b></td><td>DNS (nombres → IP)</td><td><b>443</b></td><td>HTTPS (web cifrada)</td></tr>
+  </table>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>Todo lo de esta guía se hace en tu propia computadora o en sistemas autorizados.</b> Contra sistemas ajenos sin permiso escrito es ilegal — sin excepciones.
+  </div>
+</section>
+
+<!-- ==================== CAP 2: CIBERSEGURIDAD ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 2</span>¿Qué es la ciberseguridad?</h2>
+  <p class="promesa">No es "hackear": es proteger tres cosas que todas las organizaciones necesitan. Punto.</p>
+
+  <div class="bloque">
+    <h3>La triada CIA (las 3 patas)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>ciberseguridad</b> es el conjunto de prácticas para proteger sistemas, redes y datos. Su marco central es la <b>triada CIA</b>: <b>confidencialidad</b>, <b>integridad</b> y <b>disponibilidad</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en una <b>cámara de seguridad con llave</b>: solo la gente autorizada tiene la llave (confidencialidad), nadie puede borrar las grabaciones (integridad) y la cámara tiene que estar prendida y con batería (disponibilidad). Si falla una, el sistema entero falla.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Protege <b>información</b> (no solo equipos): datos de clientes, claves, planes.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando controles en tres frentes: <b>personas</b> (capacitación, contraseñas), <b>procesos</b> (permisos, respaldos, auditorías) y <b>tecnología</b> (cifrado, firewalls, antivirus).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ante cada dato, preguntá en orden: 1) ¿Quién lo puede ver? 2) ¿Puede alguien modificarlo sin que nadie se dé cuenta? 3) ¿Está disponible cuando hace falta? Si la respuesta a alguna es "no sé", hay trabajo pendiente.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:22%">Pata</th><th style="width:38%">Qué garantiza</th><th>Control típico</th></tr>
+    <tr><td><b>Confidencialidad</b></td><td>Solo ve lo que está autorizado</td><td>Cifrado, contraseñas, mínimo privilegio</td></tr>
+    <tr><td><b>Integridad</b></td><td>Nadie lo altera sin permiso</td><td>Firmas, hashes, registros de auditoría</td></tr>
+    <tr><td><b>Disponibilidad</b></td><td>Está funcionando cuando se necesita</td><td>Respaldos, UPS, redundancia</td></tr>
+  </table>
+
+  <div class="bloque">
+    <h3>Los 4 tipos de amenaza más comunes</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>ataque</b> es una acción para dañar o robar. Los más comunes: <b>ransomware</b> (cifra tus archivos y pide rescate), <b>phishing</b> (te engaña para que des tus datos), <b>inyección SQL</b> (mete código en un formulario) y <b>DoS/DDoS</b> (colapsa tu servidor con tráfico basura).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>ransomware</b> es como un ladrón que entra a tu casa, mete todas tus cosas en una caja con candado y te pide plata para devolverte la llave. El <b>phishing</b> es el estafador que se hace pasar por el banco por teléfono.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Robarte datos, plata, acceso o simplemente romper tu sistema.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Explotando la <b>superficie de ataque</b>: todo lo que puede ser atacado — hardware, software, sistema operativo, y <b>la persona</b> (la capa más blanda).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Un ataque se prepara y se ejecuta en dos tiempos: 1) primero los <b>pasivos</b> (vigilar sin tocar: espiar tráfico, buscar info en Google). 2) después los <b>activos</b> (penetrar, persistir, sabotear, robar). Primero mirás, después entrás.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Dato que duele</span><br>
+    Un ciberataque detectado cada <b>39 segundos</b>. Más del <b>80 %</b> de los eventos involucran phishing. La media mundial de detección de una brecha es de <b>186 días</b>. Y la frase clásica: <b>"Solo hay dos tipos de empresas: las hackeadas y las que lo serán."</b>
+  </div>
+</section>
+
+<!-- ==================== CAP 3: VULNERABILIDADES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 3</span>Ventanas abiertas y escaleras</h2>
+  <p class="promesa">Una vulnerabilidad es una ventana abierta. Un exploit es la escalera. La amenaza es el ladrón.</p>
+
+  <div class="bloque">
+    <h3>Vulnerabilidad vs. amenaza vs. exploit</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>vulnerabilidad</b> es un fallo accidental (de diseño, configuración o implementación). Una <b>amenaza</b> es la acción que la aprovecha. El <b>exploit</b> es el software o la secuencia que la materializa. <b>"Las vulnerabilidades nunca son deliberadas."</b></div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La <b>ventana abierta</b> es la vulnerabilidad (nadie la dejó a propósito). La <b>escalera</b> es el exploit, el instrumento con el que el ladrón entra. Y el ladrón que la usa es la amenaza. Podés quitar la escalera, pero si la ventana sigue abierta…</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>El exploit convierte un fallo en un <b>hecho</b>: acceso, roto, caído.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Hay exploits <b>remotos</b> (desde afuera) y <b>locales</b> (desde la máquina); <b>conocidos</b> (ya hay parche) y <b>de día cero</b> (el fabricante aún no sabe).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para saber si ya existe exploit para algo: 1) Buscá el fallo por su número en el <b>CVE</b> (base NVD, nvd.nist.gov). 2) En <b>Exploit Database</b> (exploit-db.com) preguntá: "¿existe exploit para esto?". 3) Anotá si ya hay parche: sin parche, el riesgo es urgente.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Los 6 pasos del análisis de riesgos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Analizar el riesgo es responder: qué protegemos, qué vale la pena, quién puede atacar, qué vulnerabilidades tiene, qué tan probable es que pase, y qué hacemos (evitar, mitigar, transferir o aceptar).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>revisar tu casa antes de irte de vacaciones</b>: ¿qué dejás? (activos), ¿quién podría entrar? (amenazas), ¿hay ventanas abiertas? (vulnerabilidades), ¿qué tan probable es un robo? (probabilidad), y ¿llamás a un vecino, instalás alarma o aceptás el riesgo? (tratamiento).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te da un <b>plan de acción ordenado</b> en vez de pánico.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>En 6 fases: 1) Alcance (¿qué protegemos?) → 2) Activos (¿qué vale?) → 3) Amenazas (¿quién ataca?) → 4) Características (¿qué vulnerabilidades?) → 5) Probabilidad (¿qué tan probable?) → 6) Tratamiento (evitar, mitigar, transferir o aceptar).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Hacé una tabla con tus sistemas, anotá qué vulnerabilidades tiene cada uno (con CVE si existe), el puntaje de gravedad (CVSS, 0 a 10), y decidí qué hacés con cada uno: parchear, mitigar o aceptar.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>Sin autorización escrita, probar la seguridad de un sistema ajeno es un delito.</b> Todo lo de esta guía se practica en tu propia computadora o en labs autorizados (TryHackMe, Hack The Box, DockerLabs).
+  </div>
+</section>
+
+<!-- ==================== CAP 4: HACKING ÉTICO ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 4</span>Hacking ético: el permiso es la diferencia</h2>
+  <p class="promesa">La única diferencia entre un hacker ético y un criminal es un papel: la autorización escrita.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es el hacking ético?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>probar la seguridad de un sistema con autorización escrita previa</b>, para encontrar fallas antes que los atacantes. Se diferencia del simple escaneo: el pentest implica tiempo, automatización, alcance definido y un informe final.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>seguro contra incendios</b>: nadie prende fuego a tu casa sin permiso, pero el bombero que la revisa <b>con autorización</b> te dice dónde está el matafuegos vencido. El hacker ético hace exactamente eso: busca las salidas de emergencia rotas, con permiso.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Encontrar las fallas <b>antes</b> que el atacante, con un informe accionable.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Recorriendo las fases: <b>reconocimiento → escaneo → obtener acceso → mantener acceso → reporte</b>. (En el ético NO se limpian huellas: se documenta todo.)</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Antes de tocar nada: 1) Definí el <b>alcance</b> por escrito (qué IPs, qué dominios, qué está prohibido). 2) Acordá las reglas de compromiso con el dueño. 3) Recién ahí se empieza a trabajar, guardando cada paso como evidencia.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Los 3 tipos de caja (cuánto sabe el tester)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Según cuánta información le das al tester, el pentest es de <b>caja negra</b> (no sabe nada, solo la URL), <b>caja gris</b> (info limitada) o <b>caja blanca</b> (acceso total o código fuente).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>probar la seguridad de una casa</b>: caja negra = sos un ladrón que no conoce la casa; caja gris = sos un invitado que conoce algo; caja blanca = sos el arquitecto que tiene los planos.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Simular distintos niveles de conocimiento del atacante.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Eligiendo la modalidad según el objetivo: caja negra para simular un atacante externo real, caja blanca para auditoría profunda del código.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Elegí la modalidad según qué querés probar: si querés saber qué ve un atacante de afuera → caja negra. Si querés revisar tu propio código → caja blanca.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Los sombreros (white / black / grey hat)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>White hat</b> = hacker ético (trabaja con permiso). <b>Black hat</b> = criminal (sin permiso, con ánimo de lucro o daño). <b>Grey hat</b> = encuentra fallos sin pedir permiso pero no siempre para dañar. <b>Script kiddie</b> = copia herramientas sin entenderlas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como los <b>sombreros de las películas del oeste</b>: el blanco es el bueno, el negro el malo, el gris está en el medio. Y el "script kiddie" es el que se pone el sombrero negro pero no sabe montar a caballo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Clasificar al profesional (o criminal) por su ética, no por su técnica.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Por el permiso: con autorización escrita previa → white hat. Sin permiso → black/grey hat (delito).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Antes de hacer cualquier prueba: conseguí la autorización por escrito. Sin eso, es un delito (en Argentina: Ley 25.326 y Código Penal en delitos informáticos).</div>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Labs legales para practicar</span><br>
+    <b>TryHackMe</b>, <b>Hack The Box</b>, <b>picoCTF</b>, <b>DockerLabs</b> — máquinas diseñadas para que las rompas. Ahí sí podés practicar todo lo de esta guía sin riesgo legal.
+  </div>
+</section>
+
+<!-- ==================== CAP 5: ESCANEO ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 5</span>Escanear y explotar</h2>
+  <p class="promesa">Un escáner no explota: solo toca el timbre y anota quién abrió. Barato, rápido y siempre útil.</p>
+
+  <div class="bloque">
+    <h3>Escaneo de vulnerabilidades</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Es <b>identificar debilidades</b> en sistemas y aplicaciones. Es más barato y rápido que un pentest completo. Su ciclo: <b>detección → clasificación → remediación</b>, y no termina nunca: es un proceso continuo.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es la <b>revisión del gasista</b>: no prende fuego a nada, solo revisa conexiones y te dice "acá hay una fuga". Un pentest en cambio es simular el incendio. Los dos sirven; el primero es la revisión de rutina.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Devolver una <b>lista priorizada por riesgo</b>, no un muro de alertas.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>1. Descubrimiento de activos → 2. Priorización → 3. Escaneo → 4. Análisis y remediación → 5. Ciberseguridad continua. Tipos: externo, interno, autenticado, no autenticado.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ejemplo con una web de práctica: 1) Entrás a snyk.io/website-scanner. 2) Pegás la URL de tu web. 3) Esperás el análisis: te devuelve cada vulnerabilidad con su severidad (crítica, alta, media, baja). 4) La escaneás de nuevo en unos días: el ciclo no termina nunca.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>CVE, NVD y Exploit Database</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>CVE</b> es el número de catálogo de una vulnerabilidad (ej. CVE-2017-0144). La <b>NVD</b> es la base de datos donde vive el catálogo con su puntaje <b>CVSS</b> (0 a 10). <b>Exploit Database</b> tiene los exploits listos para usar.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El CVE es como el <b>DNI de una vulnerabilidad</b>: un número único que la identifica en todo el mundo. El CVSS es la <b>gravedad</b> (0 = trivial, 10 = crítico). Exploit DB es el <b>catálogo de escaleras</b> que ya existen para esa ventana.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite saber <b>qué falla existe, qué tan grave es y si ya hay exploit</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Buscando el fallo por su número CVE en la NVD, y después consultando Exploit Database para ver si ya hay código que lo aproveche.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Buscá el fallo por su número CVE en nvd.nist.gov (ahí está la ficha y el puntaje). 2) En exploit-db.com preguntá: "¿existe exploit para esto?". 3) Anotá si ya hay parche: sin parche, el riesgo es urgente.</div>
+  </div>
+
+  <pre><span class="c"># Del CVE al exploit: searchsploit trae la Exploit Database a tu terminal</span>
+searchsploit eternalblue
+<span class="c"># → EDB-ID 41891 | Microsoft Windows 7 / 2008 R2 - Remote Code Execution (MS17-010)</span>
+<span class="c">#   Exploit DB: https://www.exploit-db.com/exploits/41891</span>
+
+searchsploit --nmap salida.nmap
+<span class="c"># → cruzá tu escaneo nmap con los exploits conocidos:</span>
+<span class="c">#   cada host sale listado con las vulnerabilidades candidatas a explotar</span></pre>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Caso célebre</span><br>
+    <b>EternalBlue</b>, un exploit de la NSA robado por Shadow Brokers y filtrado en 2017 — con él, WannaCry infectó 10.000 máquinas por hora en 150 países. Demuestra por qué un CVE sin parchear es peligroso.
+  </div>
+</section>
+
+<!-- ==================== CAP 6: CRIPTO ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 6</span>Cifrar y ocultar</h2>
+  <p class="promesa">Cifrar es poner el mensaje en un idioma que nadie entiende. Ocultarlo es fingir que no existe.</p>
+
+  <div class="bloque">
+    <h3>Cifrar, codificar y ocultar</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>criptografía</b> cifra y descifra mensajes con <b>clave</b>. Hay <b>hash</b> (función sin clave, unidireccional), <b>clave simétrica</b> (la misma clave cifra y descifra) y <b>clave asimétrica</b> (pública cifra, privada descifra). La <b>esteganografía</b> es otra cosa: <b>ocultar</b> un mensaje dentro de un archivo para que <b>ni se note que existe</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Cifrar es escribir una carta en un idioma que nadie habla (el cartero la ve pero no entiende). Codificar es cambiar A por 65 (se entiende con una tabla). La esteganografía es <b>esconder la carta dentro de una foto de familia</b>: nadie busca lo que no sabe que está ahí.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Criptografía: <b>confidencialidad</b> e <b>integridad</b>. Esteganografía: <b>ocultamiento</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>El hash convierte cualquier archivo en una huella única e irreversible (MD5, SHA256). El simétrico usa AES (128/192/256 bits). El asimétrico usa un par de claves matemáticamente enlazadas (RSA).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Kali, paso a paso: 1) Instalá Ccrypt: <code>sudo apt install ccrypt</code>. 2) Cifrá: <code>ccrypt -e archivo</code> → queda <code>archivo.cpt</code>. 3) Descifrá: <code>ccrypt -d archivo.cpt</code> (te pide la clave). 4) Sacá tu propio hash: <code>echo -n "texto" | md5sum</code>.</div>
+  </div>
+
+  <pre><span class="c"># 1. Tu huella dactilar digital: el mismo texto, siempre el mismo hash</span>
+echo -n "ciberseguridad" | md5sum
+<span class="c"># → 7d2ce74f4315609cd18878c920625ee9   -</span>
+<span class="c">#   cambiá UNA sola letra y el hash cambia por completo (efecto de difusión)</span>
+
+<span class="c"># 2. Cifrar un archivo (queda .cpt: ilegible sin la clave)</span>
+ccrypt -e notas.txt
+<span class="c"># → encrypting notas.txt to notas.txt.cpt ... enter passphrase: ****</span>
+
+<span class="c"># 3. Descifrarlo</span>
+ccrypt -d notas.txt.cpt
+<span class="c"># → decrypting notas.txt.cpt to notas.txt ... done</span></pre>
+
+  <table>
+    <tr><th style="width:22%">Tipo</th><th style="width:30%">Clave</th><th>Para qué</th></tr>
+    <tr><td><b>Hash</b></td><td>Ninguna</td><td>Integridad, contraseñas, firmas. No se revierte.</td></tr>
+    <tr><td><b>Simétrico</b></td><td>Una compartida</td><td>Cifrar archivos rápido (AES, Ccrypt).</td></tr>
+    <tr><td><b>Asimétrico</b></td><td>Pública + privada</td><td>Mensajería, firmas, HTTPS (RSA).</td></tr>
+    <tr><td><b>Esteganografía</b></td><td>Ocultamiento</td><td>Esconder un mensaje en una imagen.</td></tr>
+  </table>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">WhatsApp y el hash</span><br>
+    WhatsApp usa cifrado <b>extremo a extremo</b> (tu mensaje se cifra en tu teléfono y solo se descifra en el de quien lo recibe). El hash, en cambio, tiene 5 propiedades: es <b>determinista</b>, <b>imprevisible</b>, <b>no reversible</b>, <b>resistente a colisiones</b> (dos archivos distintos no pueden dar el mismo hash) y tiene <b>efecto de difusión</b> (un bit cambiado cambia todo el hash).
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Práctica: TP "El espía oculto"</span><br>
+    1) Descifrá el hash <code>0c51bf55a8dcf0529ebfb47b1dce32d7</code> en crackstation.net. 2) Cifrá/descifrá con Ccrypt y RSA online. 3) Desafío: descubrí el mensaje secreto escondido en una imagen usando <b>OpenStego</b> (ocultar) y <b>VSL</b> (detectar).
+  </div>
+</section>
+
+<!-- ==================== CIERRE ==================== -->
+<section class="cap">
+  <h2><span class="num">Cierre</span>Resumen en 6 ideas</h2>
+  <div class="bloque">
+    <div class="fila"><span class="lbl teoria">1</span>Una <b>red</b> es computadoras que se hablan en 7 capas (modelo OSI). Cada capa hace un trabajo.</div>
+    <div class="fila"><span class="lbl ejemplo">2</span>La <b>ciberseguridad</b> protege 3 cosas: confidencialidad, integridad y disponibilidad (triada CIA).</div>
+    <div class="fila"><span class="lbl quehace">3</span>Una <b>vulnerabilidad</b> es una ventana abierta; un <b>exploit</b> es la escalera; la <b>amenaza</b> es el ladrón.</div>
+    <div class="fila"><span class="lbl como">4</span>El <b>hacking ético</b> es probar la seguridad <b>con permiso escrito</b>. Sin permiso, es un delito.</div>
+    <div class="fila"><span class="lbl ejecuta">5</span><b>Escanear</b> es tocar el timbre y anotar quién abrió. <b>Cifrar</b> es poner el mensaje en un idioma que nadie entiende.</div>
+    <div class="fila"><span class="lbl ejecuta">6</span>Todo se practica en <b>tu propia computadora</b> o en labs autorizados (TryHackMe, Hack The Box, DockerLabs).</div>
+  </div>
+  <div class="cierre">
+    <h3>Ya sabés lo básico</h3>
+    <p>Recorriste redes, ciberseguridad, vulnerabilidades, hacking ético, escaneo y criptografía. Ya sabés <b>qué protegen</b>, <b>con qué se ataca</b> y <b>cómo se defiende</b>.</p>
+    <p><b>Siguiente paso concreto:</b> instalá VirtualBox + Kali esta semana, hacé la práctica de la Clase 0 (reconocimiento de red) y volvé mañana. La ciberseguridad se aprende practicando — <b>en tu laboratorio, siempre con autorización.</b></p>
+  </div>
+</section>
+
+</body>
+</html>
