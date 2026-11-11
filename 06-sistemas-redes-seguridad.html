@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sistemas, redes y seguridad desde 0</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI", Tahoma, sans-serif; font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0; }
+  :root { --azul:#1b4f8a; --azul-vivo:#1d4ed8; --azul-humo:#eaf1fa; --naranja:#c2410c; --naranja-humo:#fff3ec; --verde:#15803d; --verde-humo:#edf9f0; --morado:#6d28d9; --morado-humo:#f4f0ff; --gris:#475569; --borde:#d9e1ec; }
+  h1,h2,h3,h4 { font-weight:700; color:var(--azul); line-height:1.25; margin:0; }
+  p { margin:0 0 9px 0; }
+  .portada { page-break-after:always; padding:26mm 0 0 0; text-align:left; }
+  .portada .serie { display:inline-block; background:var(--naranja); color:#fff; font-size:10pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:6px 14px; border-radius:3px; }
+  .portada h1 { font-size:44pt; letter-spacing:-.02em; margin:26px 0 0 0; color:var(--azul); }
+  .portada h1 span { color:var(--naranja); display:block; }
+  .portada .regla { height:5px; background:var(--azul); width:100%; margin:26px 0 22px 0; }
+  .portada .sub { font-size:15pt; color:#33445a; max-width:95%; line-height:1.55; margin:0 0 26px 0; }
+  .portada .caja-que { background:var(--azul-humo); border-left:6px solid var(--azul); padding:16px 20px; border-radius:0 6px 6px 0; font-size:11pt; }
+  .portada .caja-que strong { color:var(--azul); }
+  .portada .meta { margin-top:30px; font-size:10pt; color:#64748b; border-top:1px solid var(--borde); padding-top:12px; }
+  .bloque { background:#fff; border:1px solid var(--borde); border-left:5px solid var(--azul); border-radius:0 7px 7px 0; padding:13px 17px 6px 17px; margin:16px 0; page-break-inside:avoid; }
+  .bloque > h3 { font-size:13.5pt; margin-bottom:8px; }
+  .fila { margin:0 0 6px 0; }
+  .lbl { display:inline-block; font-size:8.6pt; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#fff; padding:2px 8px; border-radius:3px; margin-right:7px; vertical-align:1.5px; }
+  .lbl.teoria { background:var(--azul); } .lbl.ejemplo { background:var(--naranja); } .lbl.quehace { background:var(--verde); } .lbl.como { background:var(--morado); } .lbl.ejecuta { background:var(--gris); }
+  .fila b.lead { color:#0f172a; } .fila p { display:inline; }
+  code { font-family:Consolas,"Courier New",monospace; font-size:10pt; background:#f3f6fb; border:1px solid #e2e8f0; border-radius:4px; padding:1px 5px; color:#9a3412; }
+  pre { font-family:Consolas,"Courier New",monospace; font-size:10pt; line-height:1.5; background:#f3f6fb; border:1px solid #e2e8f0; border-left:4px solid var(--azul); border-radius:0 5px 5px 0; padding:10px 14px; margin:8px 0 12px 0; color:#0f172a; white-space:pre-wrap; page-break-inside:avoid; }
+  pre .c { color:#64748b; } pre .k { color:var(--azul-vivo); font-weight:700; } pre .s { color:var(--verde); } pre .n { color:var(--naranja); }
+  .cap { page-break-before:always; }
+  .cap h2 { font-size:24pt; margin:0 0 4px 0; letter-spacing:-.01em; border-bottom:3px solid var(--azul); padding-bottom:10px; }
+  .cap h2 .num { display:block; font-size:10pt; letter-spacing:.18em; text-transform:uppercase; color:var(--naranja); margin-bottom:6px; }
+  .cap .promesa { font-size:11.5pt; color:#475569; font-style:italic; margin:12px 0 16px 0; border-left:3px solid var(--naranja); padding-left:12px; }
+  h3.sub { font-size:14pt; margin:15px 0 7px 0; color:var(--azul); }
+  .nota { background:var(--naranja-humo); border:1px solid #fed7aa; border-radius:6px; padding:11px 15px; margin:14px 0; page-break-inside:avoid; font-size:10.5pt; }
+  .nota b.t { color:var(--naranja); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  .aviso { background:var(--verde-humo); border:1px solid #bbf7d0; border-radius:6px; padding:11px 15px; margin:14px 0; page-break-inside:avoid; font-size:10.5pt; }
+  .aviso b.t { color:var(--verde); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 16px 0; font-size:10pt; page-break-inside:avoid; }
+  tr { page-break-inside:avoid; }
+  .grupo { page-break-inside:avoid; }
+  th { background:var(--azul); color:#fff; text-align:left; padding:8px 10px; font-weight:600; font-size:9.5pt; letter-spacing:.04em; }
+  td { border-bottom:1px solid var(--borde); padding:6px 10px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f7f9fc; }
+  td b { color:var(--azul); }
+  .recurso { border:1px solid var(--borde); border-radius:7px; padding:12px 16px; margin:12px 0; page-break-inside:avoid; background:#fff; }
+  .recurso h4 { font-size:12.5pt; margin-bottom:4px; }
+  .pills { margin:4px 0 7px 0; }
+  .pill { display:inline-block; font-size:8.4pt; font-weight:700; padding:2px 8px; border-radius:10px; margin-right:5px; letter-spacing:.04em; }
+  .pill.gratis { background:var(--verde-humo); color:var(--verde); border:1px solid #bbf7d0; }
+  .pill.mixto { background:#fff7ed; color:var(--naranja); border:1px solid #fed7aa; }
+  .pill.nivel { background:var(--azul-humo); color:var(--azul); border:1px solid #c7dbf3; }
+  .recurso p { font-size:10.3pt; margin-bottom:5px; }
+  .recurso .porque { color:#475569; font-size:10pt; }
+  .recurso .porque b { color:var(--naranja); }
+  .indice ul { list-style:none; padding:0; margin:10px 0 0 0; }
+  .indice li { padding:7px 0; border-bottom:1px dotted var(--borde); font-size:11.5pt; display:flex; justify-content:space-between; }
+  .indice li span.t { color:var(--azul); font-weight:600; }
+  .indice li span.d { color:#64748b; font-size:10pt; }
+  .cierre { background:var(--azul); color:#eaf1fa; padding:18px 22px; border-radius:8px; margin-top:22px; page-break-inside:avoid; }
+  .cierre h3 { color:#fff; margin-bottom:8px; font-size:15pt; }
+  .cierre p { color:#dbe7f7; font-size:10.8pt; }
+  .cierre b { color:#ffd8b0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<section class="portada">
+  <div class="serie">Serie · Aprender desde 0 · Fundamentos</div>
+  <h1>Sistemas, redes <span>y seguridad</span></h1>
+  <div class="regla"></div>
+  <p class="sub">Los cimientos que sostienen todo lo demás: cómo funcionan Windows y Linux, cómo se habla con la terminal (CMD, PowerShell, Bash), qué es programar, cómo viajan los datos por la red y cómo se protegen. De cero, sin asumir nada.</p>
+  <div class="caja-que">
+    <strong>Para quién es:</strong> para quien quiere entender cómo funciona una computadora por dentro y por fuera, antes de programar o de defenderse en ciberseguridad.<br><br>
+    <strong>Cómo está escrito:</strong> cada idea usa el mismo molde — <b>Teoría</b> (qué es), <b>Ejemplo</b> (una analogía cotidiana), <b>Qué hace</b>, <b>Cómo lo hace</b> y <b>Cómo se ejecuta</b> (el código real). Al final de cada capítulo, una <b>práctica</b>.
+  </div>
+  <p class="meta">Material de estudio personal · Windows · Linux · CMD · PowerShell · Bash · Programación · Redes · Seguridad<br>Fuentes verificadas: Wikipedia, documentación oficial de Microsoft, GNU y POSIX. Todo lo que aparece acá se practica en tu propia máquina.</p>
+</section>
+
+<!-- ==================== CÓMO LEER ==================== -->
+<section class="cap">
+  <h2><span class="num">Antes de empezar</span>Cómo leer este material</h2>
+  <p class="promesa">Si entendés estas cinco palabras, ya podés leer el documento entero.</p>
+  <table>
+    <tr><th style="width:22%">Etiqueta</th><th>Qué encontrarás</th></tr>
+    <tr><td><span class="lbl teoria">Teoría</span></td><td>La idea en una o dos oraciones. <b>Qué es</b> la cosa, explicada con palabras de todos los días.</td></tr>
+    <tr><td><span class="lbl ejemplo">Ejemplo</span></td><td>Una comparación con algo que ya conocés. <b>La analogía</b> es lo que hace que algo abstracto se vuelva visible.</td></tr>
+    <tr><td><span class="lbl quehace">Qué hace</span></td><td>Su <b>trabajo</b>, en una frase. Para qué sirve en la vida real.</td></tr>
+    <tr><td><span class="lbl como">Cómo lo hace</span></td><td>El <b>mecanismo</b> por dentro: qué capa, qué protocolo, qué herramienta lo hace posible.</td></tr>
+    <tr><td><span class="lbl ejecuta">Cómo se ejecuta</span></td><td>El <b>paso a paso</b> concreto: el comando, el clic, la ventana que mirás.</td></tr>
+  </table>
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>Todo lo de esta guía se practica en tu propia computadora.</b> Si un comando dice <code>sudo</code> o "ejecutar como administrador", es porque modifica el sistema — leé dos veces antes de apretar Enter.
+  </div>
+</section>
+
+<!-- ==================== ÍNDICE ==================== -->
+<section class="cap indice">
+  <h2><span class="num">Contenido</span>Índice</h2>
+  <ul>
+    <li><span class="t">1 · Windows</span><span class="d">Sistema operativo, archivos, registro, usuarios, permisos</span></li>
+    <li><span class="t">2 · Linux</span><span class="d">Sistema de archivos, permisos, sudo, procesos</span></li>
+    <li><span class="t">3 · CMD</span><span class="d">La consola clásica de Windows y sus comandos</span></li>
+    <li><span class="t">4 · PowerShell</span><span class="d">Cmdlets, pipeline, scripting, políticas de ejecución</span></li>
+    <li><span class="t">5 · Bash</span><span class="d">La shell de Linux/macOS: comandos, variables, scripts</span></li>
+    <li><span class="t">6 · Programación</span><span class="d">Variables, tipos, control de flujo, funciones, POO</span></li>
+    <li><span class="t">7 · Redes</span><span class="d">OSI, TCP/IP, DNS, HTTP, IP, puertos, subnetting</span></li>
+    <li><span class="t">8 · Seguridad informática</span><span class="d">CIA, amenazas, vulnerabilidades, crypto, defensa</span></li>
+    <li><span class="t">9 · Cierre y recursos</span><span class="d">Resumen y dónde seguir</span></li>
+  </ul>
+</section>
+
+<!-- ==================== CAP 1: WINDOWS ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 1</span>Windows: el sistema operativo</h2>
+  <p class="promesa">Windows es el traductor entre vos y el hardware. Sin él, la PC es un montón de metal mudo.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es un sistema operativo?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>sistema operativo (SO)</b> es el programa que gestiona el hardware y permite que otros programas (apps) funcionen. Es el intermediario entre el usuario y la máquina: tú le pedís "abrir un archivo" y él se encarga de hablar con el disco, la memoria y la pantalla.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>director de orquesta</b>: vos (el público) pedís una canción, y él coordina a los músicos (CPU, memoria, disco, pantalla) para que suene. Sin director, cada músico toca lo que quiere y es ruido.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Gestiona <b>recursos</b> (CPU, memoria, disco, dispositivos) y provee una <b>interfaz</b> (ventanas, consola) para que uses la máquina.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un <b>kernel</b> (el núcleo que habla con el hardware) y un <b>espacio de usuario</b> (donde corren las apps). Windows usa el kernel NT (desde Windows NT, 1993).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver tu SO: <code>Win+R</code> → <code>winver</code> → Enter. Ahí ves la versión exacta de Windows y el build.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Sistema de archivos (NTFS) y rutas</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Windows organiza los datos en <b>archivos y carpetas</b> dentro de <b>unidades</b> (C:, D:). El sistema de archivos por defecto es <b>NTFS</b>, que soporta permisos, cifrado (EFS), compresión y archivos grandes (>4 GB). Las rutas usan barra invertida: <code>C:\Users\Juan\documento.txt</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>archivador con cajones</b>: la unidad C: es el archivador, las carpetas son los cajones, y los archivos son las fichas. La ruta es la dirección exacta para encontrar una ficha: "archivador C, cajón Users, subcajón Juan, ficha documento.txt".</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Guardar, organizar y proteger los datos en el disco.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con una <b>tabla maestra de archivos (MFT)</b> que registra cada archivo, su ubicación en el disco, sus permisos y sus metadatos. NTFS también lleva un <b>journal</b> (registro de cambios) para recuperarse de cortes de luz.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver el sistema de archivos de un disco: <code>Win+R</code> → <code>diskmgmt.msc</code> → Enter. Para ver la letra y el tipo de sistema de archivos: <code>Win+R</code> → <code>cmd</code> → <code>fsutil fsinfo ntfsinfo C:</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>El Registro de Windows</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>Registro</b> es una base de datos jerárquica donde Windows guarda <b>toda su configuración</b>: hardware, software, usuarios, preferencias. Se organiza en <b>claves</b> (como carpetas) y <b>valores</b> (como archivos). Las claves raíz son: HKLM (máquina local), HKCU (usuario actual), HKCR (clases), HKU (usuarios), HKCC (configuración actual).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>manual de instrucciones del edificio</b>: cada apartamento (clave) tiene sus reglas (valores). Si alguien modifica el manual (el Registro), el edificio cambia de comportamiento — por eso el malware suele modificarlo para autoarrancar.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Centralizar la configuración del sistema y las aplicaciones.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con archivos binarios (hive) en <code>C:\Windows\System32\config\</code> y en el perfil del usuario (<code>NTUSER.DAT</code>). Se cargan en memoria al arrancar.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para abrir el editor del Registro: <code>Win+R</code> → <code>regedit</code> → Enter. <b>Ojo:</b> modificar el Registro puede romper el sistema. Siempre exportá una copia antes (Archivo → Exportar).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Usuarios, grupos y permisos (NTFS)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Windows tiene <b>usuarios</b> (cuentas individuales) y <b>grupos</b> (conjuntos de usuarios con los mismos permisos). Los permisos NTFS controlan qué puede hacer cada usuario con cada archivo/carpeta: <b>lectura, escritura, modificación, ejecución, control total</b>. El principio de <b>mínimo privilegio</b>: cada usuario tiene solo los permisos que necesita.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como las <b>llaves de un edificio</b>: el portero (administrador) tiene la llave maestra; los inquilinos (usuarios estándar) tienen la llave de su departamento; los visitantes (invitados) solo pueden entrar al lobby. Si le das la llave maestra a todos, cualquiera puede entrar a cualquier lado.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Controlar <b>quién puede hacer qué</b> con cada recurso.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con listas de control de acceso (ACL) en cada archivo/carpeta, que registran qué usuario o grupo tiene qué permiso.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver/editar permisos: clic derecho en un archivo/carpeta → Propiedades → pestaña Seguridad. Para crear un usuario: <code>Win+R</code> → <code>lusrmgr.msc</code> → Enter (solo en Pro/Enterprise).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Procesos y servicios</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>proceso</b> es un programa en ejecución (cada app que abrís es un proceso). Un <b>servicio</b> es un proceso que corre en segundo plano, sin interfaz visible, y suele arrancar con el sistema. El <b>Administrador de tareas</b> (<code>taskmgr</code>) muestra los procesos; <code>services.msc</code> muestra los servicios.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Los procesos son los <b>empleados trabajando</b> (cada uno en su escritorio). Los servicios son los <b>sistemas del edificio</b> (calefacción, seguridad) que funcionan solos, sin que nadie los vigile.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar programas y mantener servicios del sistema funcionando.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Windows asigna a cada proceso un PID (identificador único), memoria y recursos. Los servicios se registran en el Registro y se inician por el Service Control Manager (SCM).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver procesos: <code>Ctrl+Shift+Esc</code> (Administrador de tareas) → pestaña Procesos. Para ver servicios: <code>Win+R</code> → <code>services.msc</code> → Enter. Para ver desde consola: <code>tasklist</code> (CMD) o <code>Get-Process</code> (PowerShell).</div>
+  </div>
+</section>
+
+<!-- ==================== CAP 2: LINUX ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 2</span>Linux: el sistema operativo libre</h2>
+  <p class="promesa">Linux es el sistema operativo que corre en el 90 % de los servidores del mundo, en tu router, en tu TV y en tu celular (Android). Es libre, gratuito y abierto.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es Linux?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Linux</b> es un <b>kernel</b> (núcleo) de sistema operativo libre creado por Linus Torvalds en 1991. Lo que llamamos "Linux" en la práctica es una <b>distribución</b> (distro): el kernel + herramientas (GNU) + un gestor de paquetes + un entorno de escritorio. Ejemplos: Ubuntu, Debian, Fedora, Arch, Kali, Mint.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El kernel es el <b>motor del auto</b>; la distribución es el <b>auto completo</b> (motor + carrocería + radio + ruedas). Podés cambiar la carrocería (el entorno de escritorio) sin cambiar el motor.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Proveer un sistema operativo libre, estable y seguro para servidores, escritorios y dispositivos embebidos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un kernel monolítico (todo en un solo programa) que gestiona hardware, procesos, memoria y sistema de archivos. Las distros agregan las herramientas de usuario.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver tu distro y kernel: <code>cat /etc/os-release</code> y <code>uname -r</code>. Para instalar software: <code>sudo apt install paquete</code> (Debian/Ubuntu) o <code>sudo dnf install paquete</code> (Fedora).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Sistema de archivos (FHS) y rutas</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Linux organiza todo en un <b>único árbol</b> que arranca en <code>/</code> (raíz). No hay letras de unidad (C:, D:). Todo es un archivo: discos, dispositivos, procesos. El estándar <b>FHS</b> (Filesystem Hierarchy Standard) define dónde va cada cosa: <code>/home</code> (usuarios), <code>/etc</code> (configuración), <code>/var</code> (datos variables), <code>/tmp</code> (temporales), <code>/usr</code> (programas), <code>/bin</code> (binarios esenciales).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como un <b>árbol genealógico invertido</b>: la raíz <code>/</code> es el abuelo, y de él cuelgan todos los demás. No hay "cajones separados" (unidades C:, D:): todo cuelga del mismo árbol. Tu casa (<code>/home/tuusuario</code>) es una rama de ese árbol.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Organizar todo el sistema en una estructura única y predecible.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un sistema de archivos (ext4, btrfs, xfs) y puntos de montaje: cada disco o partición se "monta" en una carpeta del árbol.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver el árbol: <code>ls /</code>. Para ver dónde estás: <code>pwd</code>. Para navegar: <code>cd /home/tuusuario</code>. Para ver el espacio en disco: <code>df -h</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Permisos (rwx) y usuarios</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>En Linux cada archivo tiene <b>3 tipos de permiso</b> para <b>3 tipos de usuario</b>: <b>r</b> (read/leer), <b>w</b> (write/escribir), <b>x</b> (execute/ejecutar), para el <b>dueño</b>, el <b>grupo</b> y <b>otros</b>. Se ven como <code>-rwxr-xr-x</code> (9 letras). El dueño suele ser el usuario que creó el archivo; el grupo es un conjunto de usuarios; "otros" es todo el mundo.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como las <b>llaves de una casa</b>: el dueño (rwx) puede entrar, modificar y dar permiso; el grupo (r-x) puede entrar y mirar pero no cambiar nada; los demás (r--) solo pueden mirar desde la ventana. Si le das rwx a todos, cualquiera puede entrar y romper todo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Controlar <b>quién puede leer, modificar o ejecutar</b> cada archivo.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un número de 12 bits por archivo (modo, dueño, grupo) guardado en los metadatos del sistema de archivos (inodo).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver permisos: <code>ls -l archivo</code>. Para cambiar: <code>chmod 755 archivo</code> (rwxr-xr-x) o <code>chmod +x archivo</code> (agregar ejecución). Para cambiar dueño: <code>sudo chown usuario:grupo archivo</code>. Para ver tu usuario: <code>whoami</code> y <code>id</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>sudo y root</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>root</b> es el superusuario de Linux (UID 0): puede hacer todo, sin restricciones. <b>sudo</b> permite a un usuario normal ejecutar un comando como root, pidiendo su propia contraseña. El principio de <b>mínimo privilegio</b>: trabajá como usuario normal y usá <code>sudo</code> solo cuando haga falta.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>portero del edificio</b>: root es el dueño del edificio (puede abrir cualquier puerta); vos sos un inquilino (solo tu departamento). <code>sudo</code> es pedirle al portero que abra una puerta por vos, mostrando tu DNI.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite ejecutar comandos privilegiados sin loguearse como root.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con el archivo <code>/etc/sudoers</code> que define qué usuarios pueden usar sudo y para qué comandos. Se edita con <code>visudo</code> (nunca a mano).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para instalar algo: <code>sudo apt install paquete</code>. Para editar un archivo del sistema: <code>sudo nano /etc/hosts</code>. Para ver quién sos: <code>whoami</code> (sin sudo) vs <code>sudo whoami</code> (root).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Procesos y servicios</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>En Linux todo es un proceso. Cada programa en ejecución tiene un <b>PID</b> (identificador único). Los <b>servicios</b> (daemons) corren en segundo plano, gestionados por <b>systemd</b> (el init system moderno). Los comandos clave: <code>ps</code>, <code>top</code>, <code>htop</code>, <code>systemctl</code>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Los procesos son los <b>empleados trabajando</b> (cada uno con su número de legajo = PID). Los servicios son los <b>sistemas del edificio</b> (calefacción, seguridad) que funcionan solos. systemd es el <b>gerente</b> que los arranca y los para.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar programas y mantener servicios del sistema funcionando.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con el kernel (que gestiona CPU, memoria, I/O) y systemd (que gestiona el arranque y los servicios). Cada proceso tiene su propio espacio de memoria.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver procesos: <code>ps aux</code> o <code>top</code>. Para ver un servicio: <code>systemctl status ssh</code>. Para arrancar/parar: <code>sudo systemctl start/stop/restart ssh</code>. Para habilitar al arranque: <code>sudo systemctl enable ssh</code>.</div>
+  </div>
+</section>
+
+<!-- ==================== CAP 3: CMD ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 3</span>CMD: la consola clásica de Windows</h2>
+  <p class="promesa">CMD (Command Prompt) es la consola original de Windows, heredada de MS-DOS. Sigue viva y es útil para tareas rápidas.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es CMD?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>CMD</b> (cmd.exe) es el intérprete de comandos de Windows, heredado de MS-DOS (1981). Ejecuta comandos y <b>scripts batch</b> (.bat/.cmd). Es más limitado que PowerShell: trabaja con texto plano, no con objetos. Pero sigue siendo útil para tareas rápidas y compatibilidad.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>teléfono de disco</b>: viejo, simple, hace lo básico. PowerShell es el smartphone. Pero el teléfono de disco sigue funcionando y a veces es lo único que tenés a mano.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar comandos y scripts de automatización simples en Windows.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Interpretando línea por línea los comandos que le pasás, y ejecutando los programas externos que le indicás.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para abrir: <code>Win+R</code> → <code>cmd</code> → Enter. Para ejecutar como administrador: clic derecho en el ícono → "Ejecutar como administrador".</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Comandos esenciales de CMD</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los comandos más usados en CMD para navegar, listar, crear, copiar, mover y borrar archivos y carpetas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>vocabulario básico</b> para hablar con la computadora: con 15 palabras ya podés hacer el 90 % de las tareas diarias.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te permite operar el sistema desde la consola.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada comando es un programa (interno o externo) que CMD invoca con los argumentos que le pasás.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Probá estos en orden:
+<pre><span class="c"># Navegación</span>
+cd C:\Users\TuNombre\Desktop   <span class="c"># cambiar de carpeta</span>
+dir                             <span class="c"># listar archivos</span>
+cd ..                           <span class="c"># subir un nivel</span>
+cd \                            <span class="c"># ir a la raíz</span>
+
+<span class="c"># Crear / borrar</span>
+mkdir mi_carpeta                <span class="c"># crear carpeta</span>
+echo hola > archivo.txt         <span class="c"># crear archivo con texto</span>
+type archivo.txt                <span class="c"># ver contenido</span>
+copy archivo.txt copia.txt      <span class="c"># copiar</span>
+move copia.txt mi_carpeta\      <span class="c"># mover</span>
+del mi_carpeta\copia.txt        <span class="c"># borrar</span>
+rmdir mi_carpeta                <span class="c"># borrar carpeta vacía</span>
+
+<span class="c"># Red y sistema</span>
+ipconfig                        <span class="c"># ver IP</span>
+ping google.com                 <span class="c"># probar conexión</span>
+tasklist                        <span class="c"># ver procesos</span>
+systeminfo                      <span class="c"># info del sistema</span></pre>
+  </div>
+
+  <div class="bloque">
+    <h3>Scripts batch (.bat)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>script batch</b> es un archivo de texto con comandos CMD, uno por línea, que se ejecuta automáticamente. La extensión es <code>.bat</code> o <code>.cmd</code>. Se usan para automatizar tareas repetitivas en Windows.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como una <b>receta de cocina</b>: escribís los pasos una vez y después solo la ejecutás. En vez de tipear 10 comandos cada mañana, los guardás en un .bat y lo corrés con un doble clic.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar tareas repetitivas en Windows.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>CMD lee el archivo línea por línea y ejecuta cada comando. Podés usar variables (<code>%variable%</code>), condicionales (<code>if</code>), bucles (<code>for</code>) y pausas (<code>pause</code>).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Abrí el Bloc de notas. 2) Escribí los comandos. 3) Guardá como <code>mi_script.bat</code> (no .txt). 4) Doble clic para ejecutar. Ejemplo:
+<pre><span class="k">@echo off</span>
+<span class="c">rem Este script crea una carpeta y un archivo</span>
+mkdir mi_proyecto
+cd mi_proyecto
+echo Hola mundo > readme.txt
+type readme.txt
+pause</pre>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">CMD vs PowerShell</span><br>
+    <b>CMD</b> trabaja con <b>texto</b>. <b>PowerShell</b> trabaja con <b>objetos</b>. PowerShell es más potente y es el presente/futuro de Windows. CMD sigue existiendo por compatibilidad. Si vas a aprender uno solo, aprendé PowerShell.
+  </div>
+</section>
+
+<!-- ==================== CAP 4: POWERSHELL ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 4</span>PowerShell: la consola moderna de Windows</h2>
+  <p class="promesa">PowerShell no es "CMD con esteroides": es un lenguaje de scripting completo que trabaja con objetos, no con texto.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es PowerShell?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>PowerShell</b> es un shell y lenguaje de scripting de Microsoft, creado en 2006 (Monad). Es <b>orientado a objetos</b>: cada comando devuelve objetos .NET, no texto. Es <b>cross-platform</b> (Windows, macOS, Linux) desde PowerShell Core (2016). Es el estándar de administración de Windows.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>paso de texto a planilla de cálculo</b>: CMD te da texto suelto que tenés que parsear; PowerShell te da objetos con propiedades que podés filtrar, ordenar y encadenar. Como pasar de una carta manuscrita a una base de datos.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar tareas de administración y configuración en Windows (y ahora en Linux/macOS).</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con <b>cmdlets</b> (comandos .NET que siguen el patrón Verbo-Sustantivo, ej. <code>Get-Process</code>, <code>Set-Location</code>), un <b>pipeline</b> (encadenar comandos con <code>|</code>), y un lenguaje de scripting completo (variables, funciones, condicionales, bucles).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para abrir: <code>Win+R</code> → <code>pwsh</code> (PowerShell 7) o <code>powershell</code> (Windows PowerShell 5.1) → Enter. O buscá "PowerShell" en el menú inicio.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Cmdlets esenciales</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los <b>cmdlets</b> siguen el patrón <b>Verbo-Sustantivo</b>: <code>Get-Process</code>, <code>Set-Location</code>, <code>New-Item</code>, <code>Remove-Item</code>. Los verbos comunes: Get (obtener), Set (configurar), New (crear), Remove (borrar), Start (iniciar), Stop (detener).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>vocabulario de un idioma</b>: con 20 verbos y 20 sustantivos podés armar cientos de frases. <code>Get-ChildItem</code> = "obtener elementos hijos" = listar archivos. <code>Set-Location</code> = "establecer ubicación" = cambiar de carpeta.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Ejecutar operaciones sobre el sistema y los datos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada cmdlet es una clase .NET que procesa entrada y produce salida (objetos) que se pueden encadenar con <code>|</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Probá estos:
+<pre><span class="c"># Navegación y archivos</span>
+Get-Location                          <span class="c"># dónde estoy (pwd)</span>
+Set-Location C:\Users\TuNombre\Desktop <span class="c"># cambiar carpeta (cd)</span>
+Get-ChildItem                         <span class="c"># listar (ls/dir)</span>
+New-Item -ItemType Directory -Name mi_carpeta   <span class="c"># crear carpeta (mkdir)</span>
+New-Item -ItemType File -Name archivo.txt       <span class="c"># crear archivo</span>
+Get-Content archivo.txt              <span class="c"># ver contenido (cat/type)</span>
+Copy-Item archivo.txt copia.txt       <span class="c"># copiar (cp/copy)</span>
+Move-Item copia.txt mi_carpeta\      <span class="c"># mover (mv/move)</span>
+Remove-Item mi_carpeta\copia.txt     <span class="c"># borrar (rm/del)</span>
+
+<span class="c"># Sistema</span>
+Get-Process                          <span class="c"># ver procesos (ps/tasklist)</span>
+Get-Service                          <span class="c"># ver servicios</span>
+Get-ComputerInfo                     <span class="c"># info del sistema</span>
+Test-Connection google.com           <span class="c"># ping</span>
+Get-NetIPAddress                     <span class="c"># ver IP</span></pre>
+  </div>
+
+  <div class="bloque">
+    <h3>El pipeline (|): el superpoder</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>pipeline</b> (<code>|</code>) pasa la <b>salida de un comando como entrada del siguiente</b>. La diferencia con CMD/bash: en PowerShell se pasan <b>objetos</b>, no texto. Eso permite filtrar, ordenar y transformar sin parsear texto.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como una <b>cadena de montaje</b>: cada estación recibe un objeto, lo modifica y lo pasa a la siguiente. En CMD/bash, cada estación recibe texto y tiene que "adivinar" qué es. En PowerShell, cada estación sabe exactamente qué propiedades tiene el objeto.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Encadena comandos para filtrar, ordenar y transformar datos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Pasando objetos .NET de un cmdlet a otro. Los cmdlets intermedios (<code>Where-Object</code>, <code>Select-Object</code>, <code>Sort-Object</code>) filtran y transforman.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ejemplos:
+<pre><span class="c"># Procesos que usan más de 100 MB de RAM, ordenados</span>
+Get-Process | Where-Object { $_.WorkingSet64 -gt 100MB } | Sort-Object WorkingSet64 -Descending | Select-Object -First 5 Name, WorkingSet64
+
+<span class="c"># Servicios detenidos</span>
+Get-Service | Where-Object { $_.Status -eq "Stopped" } | Select-Object Name, Status
+
+<span class="c"># Archivos .txt modificados en los últimos 7 días</span>
+Get-ChildItem -Recurse -Filter *.txt | Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-7) } | Select-Object Name, LastWriteTime</pre>
+  </div>
+
+  <div class="bloque">
+    <h3>Scripting en PowerShell (.ps1)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los scripts de PowerShell tienen extensión <code>.ps1</code>. El lenguaje incluye variables (<code>$variable</code>), condicionales (<code>if/else</code>), bucles (<code>for/foreach/while</code>), funciones, manejo de errores (<code>try/catch</code>) y clases. La <b>política de ejecución</b> (<code>ExecutionPolicy</code>) controla si se pueden ejecutar scripts (por defecto está restringida).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>batch de CMD pero con superpoderes</b>: en vez de texto suelto, trabajás con objetos, funciones reutilizables y manejo de errores estructurado. Es el lenguaje de automatización de Windows.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar tareas complejas de administración.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un lenguaje completo basado en .NET, con cmdlets, funciones y módulos reutilizables.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Creá un archivo <code>script.ps1</code>. 2) Escribí el código. 3) Verificá la política: <code>Get-ExecutionPolicy</code>. 4) Si está en "Restricted", cambiala: <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code>. 5) Ejecutá: <code>.\script.ps1</code>.
+<pre><span class="c"># Ejemplo de script PowerShell</span>
+<span class="k">param</span>([string]$Nombre = "mundo")
+
+<span class="k">function</span> Saludar {
+    <span class="k">param</span>([string]$Quien)
+    Write-Host "Hola, $Quien!" -ForegroundColor Green
+}
+
+Saludar -Quien $Nombre
+
+<span class="c"># Bucle con condicional</span>
+<span class="k">for</span> ($i = 1; $i -le 5; $i++) {
+    <span class="k">if</span> ($i -eq 3) { Write-Host "Tres!" -ForegroundColor Yellow }
+    <span class="k">else</span> { Write-Host "Número $i" }
+}</pre>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Políticas de ejecución</span><br>
+    <b>Restricted</b> (por defecto): no ejecuta scripts. <b>RemoteSigned</b>: ejecuta scripts locales, los descargados deben estar firmados. <b>Unrestricted</b>: ejecuta todo (peligroso). <b>Bypass</b>: ignora la política (solo para pruebas). <b>Recomendación:</b> usá <code>RemoteSigned</code> para tu usuario.
+  </div>
+</section>
+
+<!-- ==================== CAP 5: BASH ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 5</span>Bash: la shell de Linux y macOS</h2>
+  <p class="promesa">Bash (Bourne Again Shell) es la shell por defecto en la mayoría de las distribuciones de Linux y en macOS. Es el lenguaje de automatización del mundo Unix.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es Bash?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Bash</b> es un intérprete de comandos y lenguaje de scripting para sistemas Unix/Linux, creado en 1989 por Brian Fox para el proyecto GNU. Es un <b>superset</b> del Bourne shell (sh): todo lo que funciona en sh funciona en Bash. Es el estándar de facto en Linux.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>idioma común del mundo Linux</b>: si sabés Bash, podés hablar con cualquier servidor Linux del planeta. Como el inglés en los aeropuertos: no es el único idioma, pero es el que todos entienden.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Interpretar comandos y ejecutar scripts de automatización en sistemas Unix/Linux.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Leyendo línea por línea, tokenizando (separando por espacios y metacaracteres), expandiendo variables y ejecutando comandos externos o builtins.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para abrir: en Linux/macOS, abrí la terminal (Ctrl+Alt+T en Ubuntu). En Windows: instalá WSL (Windows Subsystem for Linux) o Git Bash. Para ver tu shell: <code>echo $SHELL</code>. Para ver la versión: <code>bash --version</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Comandos esenciales de Bash</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los comandos más usados en Bash para navegar, listar, crear, copiar, mover, borrar, buscar y gestionar procesos.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>vocabulario básico</b> de cualquier administrador de sistemas Linux. Con 20 comandos ya podés operar un servidor.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te permite operar el sistema desde la terminal.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada comando es un programa (builtin o externo en <code>/bin</code>, <code>/usr/bin</code>) que Bash invoca con los argumentos que le pasás.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Probá estos:
+<pre><span class="c"># Navegación y archivos</span>
+pwd                              <span class="c"># dónde estoy</span>
+cd /home/tuusuario               <span class="c"># cambiar carpeta</span>
+ls -la                           <span class="c"># listar (incluyendo ocultos)</span>
+mkdir mi_carpeta                 <span class="c"># crear carpeta</span>
+echo "hola" > archivo.txt        <span class="c"># crear archivo con texto</span>
+cat archivo.txt                  <span class="c"># ver contenido</span>
+cp archivo.txt copia.txt         <span class="c"># copiar</span>
+mv copia.txt mi_carpeta/         <span class="c"># mover</span>
+rm mi_carpeta/copia.txt          <span class="c"># borrar archivo</span>
+rm -r mi_carpeta                 <span class="c"># borrar carpeta y contenido</span>
+
+<span class="c"># Búsqueda</span>
+grep "texto" archivo.txt         <span class="c"># buscar texto en archivo</span>
+find /home -name "*.txt"         <span class="c"># buscar archivos por nombre</span>
+
+<span class="c"># Procesos y sistema</span>
+ps aux                           <span class="c"># ver procesos</span>
+top                              <span class="c"># monitor en vivo</span>
+kill 1234                        <span class="c"># matar proceso por PID</span>
+df -h                            <span class="c"># espacio en disco</span>
+free -h                          <span class="c"># memoria RAM</span>
+uname -a                         <span class="c"># info del sistema</span></pre>
+  </div>
+
+  <div class="bloque">
+    <h3>Variables y scripting en Bash</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Las variables en Bash se asignan con <code>nombre=valor</code> (sin espacios) y se leen con <code>$nombre</code> o <code>${nombre}</code>. Los scripts tienen extensión <code>.sh</code> y empiezan con <b>shebang</b> (<code>#!/bin/bash</code> o <code>#!/usr/bin/env bash</code>). Bash soporta variables, arrays, condicionales, bucles, funciones y redirección de entrada/salida.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como una <b>receta de cocina escrita en un idioma que la cocina (el sistema) entiende</b>. El shebang (<code>#!/bin/bash</code>) le dice al sistema "usá Bash para leer esto". Sin shebang, el sistema no sabe qué intérprete usar.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Automatizar tareas en Linux/macOS.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con un lenguaje completo basado en el Bourne shell, con expansión de variables, control de flujo y redirección.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) Creá un archivo <code>script.sh</code>. 2) Primera línea: <code>#!/bin/bash</code>. 3) Escribí los comandos. 4) Dale permiso de ejecución: <code>chmod +x script.sh</code>. 5) Ejecutá: <code>./script.sh</code>.
+<pre><span class="c">#!/bin/bash</span>
+<span class="c"># Script de ejemplo</span>
+
+<span class="k">nombre</span>=<span class="s">"mundo"</span>
+echo "Hola, $nombre!"
+
+<span class="c"># Condicionales</span>
+<span class="k">if</span> [ "$nombre" = "mundo" ]; <span class="k">then</span>
+    echo "Es el mundo"
+<span class="k">else</span>
+    echo "No es el mundo"
+<span class="k">fi</span>
+
+<span class="c"># Bucle for</span>
+<span class="k">for</span> i in 1 2 3 4 5; <span class="k">do</span>
+    echo "Número $i"
+<span class="k">done</span>
+
+<span class="c"># Función</span>
+saludar() {
+    echo "Hola, $1!"
+}
+saludar "Juan"
+</pre>
+  </div>
+</section>
+
+<!-- ==================== CAP 6: PROGRAMACIÓN ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 6</span>Programación: los fundamentos</h2>
+  <p class="promesa">Programar no es escribir código: es resolver problemas con instrucciones ordenadas. El código viene después.</p>
+
+  <div class="bloque">
+    <h3>Variables y tipos de datos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>variable</b> es un nombre que guarda un valor. Los <b>tipos de datos</b> básicos son: <b>entero</b> (int, sin decimales), <b>decimal</b> (float/double, con decimales), <b>texto</b> (string, cadenas de caracteres), <b>booleano</b> (true/false) y <b>carácter</b> (char, una sola letra).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como las <b>cajas etiquetadas de un depósito</b>: la caja "edad" guarda el número 25, la caja "nombre" guarda el texto "Juan", la caja "activo" guarda true o false. El tipo de dato es el <b>tamaño y forma de la caja</b>: no podés meter un texto en una caja de números.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Guardar información para usarla después.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Reservando espacio en memoria y asociándole un nombre y un tipo.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Python: <code>edad = 25</code>, <code>nombre = "Juan"</code>, <code>activo = True</code>. En C/Java: <code>int edad = 25;</code>, <code>String nombre = "Juan";</code>. El tipo puede ser explícito (C/Java) o inferido (Python/JS).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Control de flujo: condicionales y bucles</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Los <b>condicionales</b> (<code>if/else</code>, <code>switch</code>) eligen un camino según una condición. Los <b>bucles</b> (<code>for</code>, <code>while</code>) repiten un bloque. Juntos permiten que el programa <b>tome decisiones y repita acciones</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>El <b>condicional</b> es el <b>semáforo</b>: si está en verde, avanzás; si está en rojo, parás. El <b>bucle</b> es el <b>metrónomo</b>: repite el mismo movimiento una y otra vez hasta que le digás "pará".</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Controlan <b>qué se ejecuta y cuántas veces</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Evaluando condiciones (true/false) y repitiendo bloques mientras la condición se cumpla.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Python:
+<pre><span class="k">if</span> edad >= 18:
+    print("Mayor de edad")
+<span class="k">else</span>:
+    print("Menor de edad")
+
+<span class="k">for</span> i in range(5):
+    print(i)   <span class="c"># 0,1,2,3,4</span>
+
+<span class="k">while</span> contador < 10:
+    contador += 1</pre>
+  </div>
+
+  <div class="bloque">
+    <h3>Funciones</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>función</b> es un bloque de código reutilizable que recibe <b>parámetros</b> y puede devolver un <b>valor</b>. Permite <b>no repetir código</b> y <b>organizar</b> el programa en piezas lógicas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es el <b>botón del microondas</b>: apretás "descongelar" y ejecuta una rutina entera guardada. No tenés que decirle paso por paso cada vez; solo apretás el botón.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span><b>Reusar</b> y <b>ordenar</b> el código.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Definiendo un bloque con nombre y parámetros, y llamándolo cuando se necesita. La función <code>void</code> ejecuta sin devolver nada; la que declara un tipo devuelve con <code>return</code>.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Python: <code>def saludar(nombre): return f"Hola, {nombre}"</code> → <code>saludar("Juan")</code> devuelve <code>"Hola, Juan"</code>. En C/Java: <code>int sumar(int a, int b) { return a + b; }</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>POO: clases y objetos</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>programación orientada a objetos (POO)</b> organiza el código en <b>clases</b> (moldes) y <b>objetos</b> (cosas hechas con ese molde). Los <b>atributos</b> son las propiedades, los <b>métodos</b> los comportamientos. Sus 4 pilares: <b>encapsulamiento</b>, <b>herencia</b>, <b>abstracción</b> y <b>polimorfismo</b>.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La clase <code>Persona</code> es el <b>molde de cédula</b>: define que toda persona tiene nombre, altura y año de nacimiento. Tus datos y los míos son dos <b>objetos</b> distintos hechos con el mismo molde — mismas variables, valores distintos.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Modelar el <b>mundo real</b> en software de forma ordenada y reutilizable.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con clases que definen atributos y métodos, y objetos que son instancias de esas clases. La herencia permite que una clase hija reutilice lo de la padre.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>En Python: <code>class Persona: def __init__(self, nombre): self.nombre = nombre</code> → <code>juan = Persona("Juan")</code> → <code>juan.nombre</code> devuelve <code>"Juan"</code>. En Java: <code>public class Persona { private String nombre; public Persona(String n) { nombre = n; } }</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Paradigmas de programación</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Un <b>paradigma</b> es una forma de pensar y estructurar el código. Los principales: <b>imperativo</b> (paso a paso: C, Python), <b>orientado a objetos</b> (clases y objetos: Java, C++), <b>funcional</b> (funciones puras, sin estado: Haskell, Lisp), <b>declarativo</b> (describís qué querés, no cómo: SQL, HTML).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>cocinar</b>: imperativo = "cortá la cebolla, calentá el aceite, agregá la cebolla" (paso a paso). Declarativo = "quiero una sopa de cebolla" (describís el resultado). Funcional = "transformá estos ingredientes con estas funciones" (sin modificar los originales).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Dar distintas formas de resolver problemas.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada paradigma impone restricciones y estilo distintos. La mayoría de los lenguajes modernos son multiparadigma (Python, JS, C#).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>No se "ejecuta": se elige. Para empezar, aprendé un lenguaje imperativo + POO (Python o Java). El paradigma funcional y declarativo se aprenden después, naturalmente.</div>
+  </div>
+</section>
+
+<!-- ==================== CAP 7: REDES ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 7</span>Redes: cómo viajan los datos</h2>
+  <p class="promesa">Una red es computadoras que se hablan. El secreto está en las capas y en los protocolos.</p>
+
+  <div class="bloque">
+    <h3>El modelo OSI (7 capas)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>El <b>modelo OSI</b> divide la comunicación en <b>7 capas</b>, de la más física (cable, capa 1) a la más abstracta (aplicación, capa 7). Cada capa hace un trabajo y se comunica solo con sus vecinas.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>correo postal</b>: escribís una carta (capa 7), la metés en un sobre (capa 6), la pasás al correo (capa 4), tiene dirección y ruta (capa 3), va en un camión con patente (capa 2), el camión rueda por la ruta (capa 1).</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Da un <b>lenguaje común</b> para hablar de redes y de dónde entra cada ataque.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Cada capa le agrega a los datos un <b>encabezado</b> (encapsulación). Al llegar, el receptor lo quita capa por capa (desencapsulación).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver el camino de un paquete: <code>tracert google.com</code> (Windows) o <code>traceroute google.com</code> (Linux). Para ver tu IP: <code>ipconfig</code> (Windows) o <code>ifconfig</code>/<code>ip a</code> (Linux).</div>
+  </div>
+
+  <table>
+    <tr><th style="width:8%">Capa</th><th style="width:24%">Nombre</th><th>Ejemplo real</th></tr>
+    <tr><td><b>7</b></td><td>Aplicación</td><td>Navegador, correo, DNS</td></tr>
+    <tr><td><b>6</b></td><td>Presentación</td><td>Cifrado, compresión, imágenes</td></tr>
+    <tr><td><b>5</b></td><td>Sesión</td><td>Abrir y mantener la conversación</td></tr>
+    <tr><td><b>4</b></td><td>Transporte</td><td>TCP (confiable) y UDP (rápido)</td></tr>
+    <tr><td><b>3</b></td><td>Red</td><td>IP, enrutamiento, ARP</td></tr>
+    <tr><td><b>2</b></td><td>Enlace</td><td>MAC, switches, Wi-Fi</td></tr>
+    <tr><td><b>1</b></td><td>Física</td><td>Cable, fibra, radio</td></tr>
+  </table>
+
+  <div class="bloque">
+    <h3>TCP/IP y DNS</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>TCP/IP</b> es el conjunto de protocolos que hace funcionar Internet. <b>TCP</b> (capa 4) garantiza que los datos lleguen completos y en orden. <b>IP</b> (capa 3) direcciona los paquetes. <b>DNS</b> traduce nombres (google.com) a IPs (142.250.185.46). <b>HTTP/HTTPS</b> (capa 7) es el protocolo de la web.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>servicio de correo</b>: TCP es el cartero que garantiza que la carta llegue (y pide confirmación); IP es la dirección postal; DNS es la <b>guía telefónica</b> que traduce "la casa de Juan" a "Calle Falsa 123". HTTP es el <b>idioma</b> en que se escriben las cartas.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Permite que millones de computadoras se comuniquen de forma ordenada.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con paquetes que llevan dirección de origen y destino, confirmación de recepción (TCP), y resolución de nombres (DNS).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para traducir un nombre: <code>nslookup google.com</code> o <code>ping google.com</code>. Para ver las conexiones activas: <code>netstat -an</code>. Para ver la IP pública: <code>curl ifconfig.me</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>IP, puertos y subnetting básico</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>IP</b> (v4) es un número de 32 bits (4 octetos, ej. 192.168.0.34). Se divide en <b>red</b> y <b>host</b> según la <b>máscara de subred</b> (ej. /24 = 255.255.255.0 = 256 IPs, 254 usables). Los <b>puertos</b> (0-65535) identifican el servicio dentro de la IP. Los conocidos (0-1023): HTTP=80, HTTPS=443, SSH=22, DNS=53, FTP=21.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La IP es la <b>dirección del edificio</b>; el puerto es el <b>número de departamento</b>. La máscara de subred es el <b>código postal</b>: define qué parte de la dirección es el barrio (red) y cuál es la casa (host). Subnetting es <b>dividir un barrio en manzanas más chicas</b> para organizar mejor.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Direccionar y organizar el tráfico de red.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con direccionamiento IP (capa 3) y puertos (capa 4), organizados en subredes.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver tu IP y máscara: <code>ipconfig</code> (Windows) o <code>ip a</code> (Linux). Para calcular subredes: usá una calculadora online (ej. subnet-calculator.com) o el comando <code>ipcalc 192.168.0.0/24</code> en Linux.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">IPv6</span><br>
+    IPv4 se está agotando (solo 4.300 millones de direcciones). <b>IPv6</b> usa 128 bits (ej. <code>2001:0db8:85a3::8a2e:0370:7334</code>) y tiene direcciones prácticamente infinitas. La transición es gradual; hoy conviven ambos (dual stack).
+  </div>
+</section>
+
+<!-- ==================== CAP 8: SEGURIDAD ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 8</span>Seguridad informática: los fundamentos</h2>
+  <p class="promesa">Seguridad no es "hackear": es proteger tres cosas que todas las organizaciones necesitan.</p>
+
+  <div class="bloque">
+    <h3>La triada CIA</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>ciberseguridad</b> protege sistemas, redes y datos. Su marco central es la <b>triada CIA</b>: <b>confidencialidad</b> (solo quien debe ver, ve), <b>integridad</b> (nadie altera sin permiso) y <b>disponibilidad</b> (funciona cuando se necesita).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Pensá en una <b>cámara de seguridad con llave</b>: solo la gente autorizada tiene la llave (confidencialidad), nadie puede borrar las grabaciones (integridad) y la cámara tiene que estar prendida (disponibilidad). Si falla una, el sistema entero falla.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Protege <b>información</b> (no solo equipos).</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Aplicando controles en tres frentes: <b>personas</b> (capacitación, contraseñas), <b>procesos</b> (permisos, respaldos, auditorías) y <b>tecnología</b> (cifrado, firewalls, antivirus).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Ante cada dato, preguntá: 1) ¿Quién lo puede ver? 2) ¿Puede alguien modificarlo sin que nadie se dé cuenta? 3) ¿Está disponible cuando hace falta? Si la respuesta a alguna es "no sé", hay trabajo pendiente.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Amenazas y vulnerabilidades</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>Una <b>vulnerabilidad</b> es un fallo accidental (de diseño, configuración o implementación). Una <b>amenaza</b> es la acción que la aprovecha. El <b>exploit</b> es el código que la materializa. <b>"Las vulnerabilidades nunca son deliberadas."</b> Las amenazas comunes: ransomware, phishing, inyección SQL, DoS/DDoS, malware.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>La <b>ventana abierta</b> es la vulnerabilidad (nadie la dejó a propósito). La <b>escalera</b> es el exploit. El <b>ladrón</b> que la usa es la amenaza. Podés quitar la escalera, pero si la ventana sigue abierta…</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>El exploit convierte un fallo en un <b>hecho</b>: acceso, roto, caído.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Explotando la <b>superficie de ataque</b>: hardware, software, sistema operativo y <b>la persona</b> (la capa más blanda).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para saber si ya existe exploit para un fallo: 1) Buscá el número CVE en nvd.nist.gov. 2) Consultá exploit-db.com. 3) Anotá si ya hay parche: sin parche, el riesgo es urgente.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Criptografía básica</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>criptografía</b> protege la información. <b>Hash</b>: huella única e irreversible (MD5, SHA256) — para integridad y contraseñas. <b>Cifrado simétrico</b>: misma clave para cifrar y descifrar (AES). <b>Cifrado asimétrico</b>: par de claves (pública cifra, privada descifra) — RSA, HTTPS. <b>Firma digital</b>: prueba quién envió y que no se modificó.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Cifrar es escribir una carta en un idioma que nadie habla (el cartero la ve pero no entiende). El hash es la <b>huella dactilar</b> del archivo: si alguien lo modifica, la huella cambia. La firma digital es el <b>sello de cera</b>: prueba quién la envió.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Confidencialidad (que solo el destinatario lea) e integridad (que nadie la altere).</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con algoritmos matemáticos que transforman datos legibles en datos ilegibles sin la clave correcta.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para generar un hash: <code>echo -n "texto" | sha256sum</code> (Linux) o <code>Get-FileHash archivo.txt</code> (PowerShell). Para cifrar: <code>gpg -c archivo.txt</code>. Para ver certificados HTTPS: clic en el candado del navegador.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Autenticación y autorización</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Autenticación</b> = verificar quién sos (login, contraseña, MFA). <b>Autorización</b> = qué podés hacer (permisos, roles). Son distintas. El <b>MFA</b> combina algo que sabés (contraseña) + algo que tenés (teléfono) + algo que sos (huella).</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como entrar a un <b>club</b>: autenticación es mostrar tu DNI en la puerta. Autorización es que el portero te diga "podés entrar al salón VIP porque sos socio". MFA es mostrar DNI + tarjeta de socio + huella.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Controlar <b>quién entra y qué puede hacer</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con sistemas de identidad (Active Directory, LDAP), tokens (JWT, OAuth) y políticas de acceso (RBAC, ABAC).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para activar MFA en Google/Microsoft: Configuración → Seguridad → Verificación en dos pasos. Para ver tus permisos en Windows: <code>whoami /groups</code>. En Linux: <code>sudo -l</code>.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Defensa en profundidad</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La <b>defensa en profundidad</b> usa <b>múltiples capas</b> de seguridad: si una falla, la siguiente frena al atacante. Capas: firewall (perímetro), IDS/IPS (detección), antivirus/EDR (endpoint), cifrado (datos), backups (recuperación), capacitación (personas). <b>Ninguna capa sola es suficiente.</b></div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como las <b>murallas de un castillo</b>: foso, muralla externa, muralla interna, torreón. Si el enemigo cruza el foso, todavía tiene 3 murallas más. Y si entra, el tesoro está en una caja fuerte (cifrado) con backup en otro castillo.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Garantizar que un solo fallo no comprometa todo.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con capas independientes que se refuerzan mutuamente.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Checklist: 1) Firewall activo. 2) Antivirus/EDR actualizado. 3) Contraseñas fuertes + MFA. 4) Respaldos automáticos (3-2-1). 5) SO actualizado. 6) No abrir archivos de desconocidos.</div>
+  </div>
+
+  <div class="nota">
+    <span class="b t" style="color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>La seguridad no es un producto, es un proceso.</b> No se "instala" una vez y se olvida. El eslabón más débil siempre es la persona.
+  </div>
+</section>
+
+<!-- ==================== CAP 9: CIERRE ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 9</span>Cierre y recursos</h2>
+  <p class="promesa">Recorriste sistemas, redes y seguridad. Ahora tenés el mapa completo.</p>
+
+  <div class="bloque">
+    <h3>Resumen en 6 ideas</h3>
+    <div class="fila"><span class="lbl teoria">1</span>Un <b>sistema operativo</b> es el traductor entre vos y el hardware. Windows (NTFS, Registro, ACL) y Linux (FHS, permisos rwx, sudo, systemd) son los dos grandes.</div>
+    <div class="fila"><span class="lbl ejemplo">2</span><b>CMD</b> trabaja con texto; <b>PowerShell</b> con objetos (cmdlets, pipeline, .ps1). <b>Bash</b> es el estándar de Linux/macOS (comandos, scripts .sh, shebang).</div>
+    <div class="fila"><span class="lbl quehace">3</span><b>Programar</b> es resolver problemas con instrucciones ordenadas: variables, tipos, control de flujo, funciones, POO, paradigmas.</div>
+    <div class="fila"><span class="lbl como">4</span>Las <b>redes</b> se organizan en capas (OSI). TCP/IP direcciona y transporta; DNS traduce nombres; HTTP/HTTPS es la web. IP + puertos + subnetting.</div>
+    <div class="fila"><span class="lbl ejecuta">5</span>La <b>seguridad</b> protege confidencialidad, integridad y disponibilidad (triada CIA). Amenazas + vulnerabilidades + exploits. Criptografía (hash, simétrico, asimétrico). Autenticación ≠ autorización. Defensa en profundidad.</div>
+    <div class="fila"><span class="lbl ejecuta">6</span>El eslabón más débil siempre es la <b>persona</b>. La seguridad es un proceso, no un producto.</div>
+  </div>
+
+  <div class="recurso">
+    <h4>Libros y recursos</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">FUNDAMENTAL</span></div>
+    <p><b>Windows:</b> "Windows Internals" (Russinovich) · <b>Linux:</b> "The Linux Command Line" (Shotts, gratis en linuxcommand.org) · <b>PowerShell:</b> "Learn PowerShell in a Month of Lunches" (Jones/Donald) · <b>Bash:</b> "The Bash Guide" (tldp.org) · <b>Redes:</b> "Computer Networking: A Top-Down Approach" (Kurose/Ross) · <b>Seguridad:</b> "Cybersecurity Essentials" (Cisco).</p>
+    <p class="porque"><b>Por qué:</b> son los libros que condensan lo que los mejores aprendieron en décadas. Leelos con lápiz y rehaciendo los ejemplos.</p>
+  </div>
+
+  <div class="recurso">
+    <h4>La serie "Aprender desde 0"</h4>
+    <div class="pills"><span class="pill gratis">GRATIS</span><span class="pill nivel">TU BASE</span></div>
+    <p><b>00 · Ruta de aprendizaje</b> (el mapa completo) · <b>01 · Programación desde 0</b> · <b>02 · Programación aplicada</b> (Java, web, Android, BD) · <b>03 · Ciberseguridad desde 0</b> · <b>04 · Cómo empezaron los mejores</b> · <b>05 · Ciberseguridad para todos</b> (versión ultra-simple).</p>
+    <p class="porque"><b>Por qué:</b> es el material de estudio que acompaña este curso. Si algo de acá te interesa, esos cursos lo desarrollan con el mismo molde.</p>
+  </div>
+
+  <div class="cierre">
+    <h3>Cerrá el círculo</h3>
+    <p>Recorriste sistemas operativos (Windows y Linux), consolas (CMD, PowerShell, Bash), programación, redes y seguridad. Ya sabés <b>cómo funciona una computadora por dentro y por fuera</b>, y <b>cómo se protege</b>.</p>
+    <p><b>Siguiente paso concreto:</b> elegí <b>un</b> sistema operativo, <b>una</b> consola y <b>un</b> lenguaje. Instalá Linux en una VM, abrí la terminal y escribí tu primer script. <b>Ya tenés el mapa; ahora falta caminar.</b></p>
+    <p style="margin-bottom:0">Sigue en la serie: <b>00 · Ruta de aprendizaje</b> · <b>01 · Programación desde 0</b> · <b>02 · Programación aplicada</b> · <b>03 · Ciberseguridad desde 0</b> · <b>04 · Cómo empezaron los mejores</b> · <b>05 · Ciberseguridad para todos</b>.</p>
+  </div>
+</section>
+
+</body>
+</html>

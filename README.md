@@ -11,6 +11,8 @@ Guías de estudio en HTML imprimible (A4) de la serie "Aprender desde 0". Cada c
 | 02 · Programación aplicada | [`02-programacion-teclab.html`](02-programacion-teclab.html) | Lógica, Java/POO, web, Android y bases de datos (20 capítulos) |
 | 03 · Ciberseguridad desde 0 | [`03-ciberseguridad-desde-0.html`](03-ciberseguridad-desde-0.html) | Las 14 clases del curso de Coderhouse + prácticas paso a paso (17 capítulos) |
 | 04 · Cómo empezaron los mejores | [`04-ruta-como-los-mejores.html`](04-ruta-como-los-mejores.html) | Ruta basada en las historias reales de los mejores hackers y programadores (10 patrones + plan por fases) |
+| 05 · Ciberseguridad para todos | [`05-ciberseguridad-para-todos.html`](05-ciberseguridad-para-todos.html) | Versión ultra-simple de la ciberseguridad (redes, triada CIA, vulnerabilidades, hacking ético, escaneo, cripto, análisis de malware) |
+| 06 · Sistemas, redes y seguridad | [`06-sistemas-redes-seguridad.html`](06-sistemas-redes-seguridad.html) | Fundamentos verificados: Windows, Linux, CMD, PowerShell, Bash, programación, redes, seguridad |
 
 ## Uso
 - **Online:** https://cuutii.github.io/aprender-desde-0/
