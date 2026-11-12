@@ -236,6 +236,55 @@ table tr:first-child th:last-child { border-top-right-radius: var(--radio); }
   .portada { background: #fff; }
 }
 
+/* ---------- Temas por curso (cada curso tiene su identidad visual) ---------- */
+/* Tema 00 · Ruta de aprendizaje — azul profundo (mapa/navegación) */
+body.theme-00 { --azul:#1e3a8a; --azul-vivo:#3b82f6; --azul-oscuro:#172554; --azul-humo:#e8eefb; --azul-claro:#f1f5ff; --naranja:#ea580c; --naranja-vivo:#f97316; --naranja-humo:#fff4ec; background:linear-gradient(180deg,#f1f5ff 0%,#f7f9fc 40%); }
+/* Tema 01 · Programación desde 0 — verde (fresco, principiante) */
+body.theme-01 { --azul:#15803d; --azul-vivo:#22c55e; --azul-oscuro:#14532d; --azul-humo:#eaf9f0; --azul-claro:#f2fcf5; --naranja:#d97706; --naranja-vivo:#f59e0b; --naranja-humo:#fff8ec; background:linear-gradient(180deg,#f0fdf4 0%,#f7f9fc 40%); }
+/* Tema 02 · Programación aplicada — índigo (código/tech) */
+body.theme-02 { --azul:#4f46e5; --azul-vivo:#6366f1; --azul-oscuro:#312e81; --azul-humo:#eef0fd; --azul-claro:#f5f6fe; --naranja:#e11d48; --naranja-vivo:#f43f5e; --naranja-humo:#fdf0f3; background:linear-gradient(180deg,#eef2ff 0%,#f7f9fc 40%); }
+/* Tema 03 · Ciberseguridad desde 0 — rojo (seguridad/alerta) */
+body.theme-03 { --azul:#b91c1c; --azul-vivo:#dc2626; --azul-oscuro:#7f1d1d; --azul-humo:#fdecec; --azul-claro:#fef5f5; --naranja:#ea580c; --naranja-vivo:#f97316; --naranja-humo:#fff4ec; background:linear-gradient(180deg,#fef2f2 0%,#f7f9fc 40%); }
+/* Tema 04 · Cómo empezaron los mejores — ámbar/dorado (inspiración/premium) */
+body.theme-04 { --azul:#92400e; --azul-vivo:#d97706; --azul-oscuro:#78350f; --azul-humo:#faf3e8; --azul-claro:#fdf8f0; --naranja:#b45309; --naranja-vivo:#f59e0b; --naranja-humo:#fef7e8; background:linear-gradient(180deg,#fef9ee 0%,#f7f9fc 40%); }
+/* Tema 05 · Ciberseguridad para todos — teal (amigable/simple) */
+body.theme-05 { --azul:#0d9488; --azul-vivo:#14b8a6; --azul-oscuro:#134e4a; --azul-humo:#e6f7f5; --azul-claro:#f0fdfb; --naranja:#f97316; --naranja-vivo:#fb923c; --naranja-humo:#fff4ec; background:linear-gradient(180deg,#f0fdfa 0%,#f7f9fc 40%); }
+/* Tema 06 · Sistemas, redes y seguridad — slate (infraestructura) */
+body.theme-06 { --azul:#334155; --azul-vivo:#475569; --azul-oscuro:#1e293b; --azul-humo:#eef1f5; --azul-claro:#f5f7fa; --naranja:#0ea5e9; --naranja-vivo:#38bdf8; --naranja-humo:#eaf6fd; background:linear-gradient(180deg,#f1f5f9 0%,#f7f9fc 40%); }
+
+/* Portada temática: gradiente sutil por tema */
+body[class^="theme-"] .portada {
+  background: linear-gradient(135deg, #ffffff 0%, var(--azul-claro) 100%);
+}
+body[class^="theme-"] .portada .regla {
+  background: linear-gradient(90deg, var(--azul), var(--azul-vivo), var(--naranja));
+}
+body[class^="theme-"] .portada .serie {
+  background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo));
+}
+body[class^="theme-"] .cap h2 {
+  border-bottom-color: var(--azul);
+  background: linear-gradient(90deg, var(--azul-humo), transparent);
+}
+body[class^="theme-"] .bloque {
+  border-left-color: var(--azul);
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+body[class^="theme-"] .bloque:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+body[class^="theme-"] .lbl.teoria { background: linear-gradient(135deg, var(--azul), var(--azul-vivo)); }
+body[class^="theme-"] .lbl.ejemplo { background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo)); }
+body[class^="theme-"] th { background: linear-gradient(135deg, var(--azul), var(--azul-vivo)); }
+body[class^="theme-"] .cierre { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-vivo) 100%); }
+body[class^="theme-"] .nota { border-left-color: var(--naranja); background: var(--naranja-humo); }
+body[class^="theme-"] .cap .promesa { border-left-color: var(--naranja); background: var(--naranja-humo); }
+body[class^="theme-"] .recurso:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+body[class^="theme-"] .persona:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+body[class^="theme-"] .fase { border-left-color: var(--azul); background: linear-gradient(135deg, var(--azul-humo), #fff); }
+body[class^="theme-"] .indice li:hover { background: var(--azul-humo); }
+body[class^="theme-"] .lbl.quehace { background: linear-gradient(135deg, var(--verde), #22a05a); }
+body[class^="theme-"] .lbl.como { background: linear-gradient(135deg, var(--morado), #8b5cf6); }
+body[class^="theme-"] .lbl.ejecuta { background: linear-gradient(135deg, var(--gris), #64748b); }
+
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   body { font-size: 10.5pt; }
