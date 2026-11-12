@@ -291,7 +291,7 @@ body[class^="theme-"]::after {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(-18deg);
   font-size: 18vw; font-weight: 900; letter-spacing: .05em;
-  color: var(--azul); opacity: .035;
+  color: var(--azul); opacity: .025;
   pointer-events: none; user-select: none; z-index: -1;
   white-space: nowrap; font-family: "Segoe UI", sans-serif;
 }
@@ -299,44 +299,30 @@ body[class^="theme-"]::after {
   content: ""; font-size: 0;
 }
 /* 00 · Ruta */
-body.theme-00::before { content: "RUTA"; opacity: .04; }
+body.theme-00::before { content: "RUTA"; opacity: .025; }
 /* 01 · Programación desde 0 */
-body.theme-01::before { content: "CODE"; opacity: .04; }
+body.theme-01::before { content: "CODE"; opacity: .025; }
 /* 02 · Programación aplicada */
-body.theme-02::before { content: "BUILD"; opacity: .04; }
-/* 03 · Ciberseguridad (peligro) */
-body.theme-03 { background: linear-gradient(180deg, #1a0a0a 0%, #2a0f0f 30%, #f7f9fc 70%); }
-body.theme-03::before { content: "PELIGRO"; color: #dc2626; opacity: .07; font-size: 16vw; }
+body.theme-02::before { content: "BUILD"; opacity: .025; }
+/* 03 · Ciberseguridad (peligro) — sin fondo oscuro, limpio */
+body.theme-03 { background: linear-gradient(180deg, #fef2f2 0%, #f7f9fc 40%); }
+body.theme-03::before { content: "PELIGRO"; color: #dc2626; opacity: .03; font-size: 14vw; }
 body.theme-03::after {
-  content: "DANGER"; position: fixed; top: 20%; left: 60%;
+  content: "DANGER"; position: fixed; top: 25%; left: 70%;
   transform: translate(-50%, -50%) rotate(12deg);
-  font-size: 12vw; font-weight: 900; color: #fbbf24; opacity: .05;
+  font-size: 10vw; font-weight: 900; color: #f59e0b; opacity: .03;
   pointer-events: none; user-select: none; z-index: -1; white-space: nowrap;
 }
 /* 04 · Cómo empezaron los mejores */
-body.theme-04::before { content: "HACK"; opacity: .04; }
+body.theme-04::before { content: "HACK"; opacity: .025; }
 /* 05 · Ciberseguridad para todos */
-body.theme-05::before { content: "SAFE"; opacity: .04; color: var(--verde); }
+body.theme-05::before { content: "SAFE"; opacity: .025; color: var(--verde); }
 /* 06 · Sistemas, redes y seguridad */
-body.theme-06::before { content: "SERVER"; opacity: .04; }
+body.theme-06::before { content: "SERVER"; opacity: .025; }
 
-/* Franjas de advertencia para el tema seguridad (03) */
-body.theme-03 .portada::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
-  background: repeating-linear-gradient(45deg, #dc2626 0 10px, #fbbf24 10px 20px);
-  opacity: .6;
-}
-body.theme-03 .portada { position: relative; }
+/* Portadas limpias, sin franjas */
 
-/* Patrón de puntos sutil para todos los temas (excepto 03, que tiene fondo oscuro) */
-body[class^="theme-"]:not(.theme-03) {
-  background-image: radial-gradient(circle at 1px 1px, rgba(27,79,138,.05) 1px, transparent 0);
-  background-size: 24px 24px;
-}
-/* Tema 03: franjas de advertencia muy sutiles */
-body.theme-03 {
-  background-image: repeating-linear-gradient(45deg, rgba(220,38,38,.03) 0 10px, transparent 10px 20px);
-}
+/* Sin patrón de fondo: fondos limpios por tema (definidos arriba en cada theme-XX) */
 
 /* Print: ocultar decoraciones */
 @media print {
