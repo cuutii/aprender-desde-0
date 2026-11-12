@@ -160,11 +160,12 @@
 
     // Mensaje de bienvenida
     print("Bienvenido al simulador de terminal. Escribí 'help' para ver los comandos.", "info");
+    print("⚠ Seguridad: los comandos son SIMULADOS. No ejecutan nada real en tu máquina. Es un entorno de práctica seguro.", "info");
     print("Probá: ls, cd documentos, cat notas.txt, whoami, ip a, ping google.com", "info");
 
     input.addEventListener("keydown", function (e) {
       if (e.key !== "Enter") return;
-      var raw = input.value.trim();
+      var raw = input.value.trim().slice(0, 200).replace(/[\x00-\x1f\x7f]/g, "");
       input.value = "";
       if (!raw) { updatePrompt(); return; }
       // echo del comando
