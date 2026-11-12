@@ -1,0 +1,251 @@
+/* ============================================================
+   styles.css — Diseño compartido de la serie "Aprender desde 0"
+   Paleta moderna, sombras suaves, transiciones, código oscuro.
+   Funciona con file:// y es imprimible a A4.
+   ============================================================ */
+
+@page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+
+:root {
+  --azul: #1b4f8a;
+  --azul-vivo: #2563eb;
+  --azul-oscuro: #0f3a6b;
+  --azul-humo: #eaf1fa;
+  --azul-claro: #f3f8fd;
+  --naranja: #c2410c;
+  --naranja-vivo: #ea580c;
+  --naranja-humo: #fff3ec;
+  --verde: #15803d;
+  --verde-humo: #edf9f0;
+  --morado: #6d28d9;
+  --morado-humo: #f4f0ff;
+  --gris: #475569;
+  --gris-claro: #94a3b8;
+  --borde: #d9e1ec;
+  --borde-suave: #e8edf4;
+  --sombra: 0 4px 14px rgba(27,79,138,.08);
+  --sombra-hover: 0 8px 24px rgba(27,79,138,.16);
+  --radio: 8px;
+  --radio-lg: 12px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; scroll-behavior: smooth; }
+body {
+  font-family: "Segoe UI", "Segoe UI Variable Text", "Inter", system-ui, -apple-system, Tahoma, sans-serif;
+  font-size: 11pt; line-height: 1.6; color: #1f2a37; margin: 0 auto;
+  max-width: 920px; padding: 0 24px;
+  background: #f7f9fc;
+  -webkit-font-smoothing: antialiased;
+}
+@media print {
+  body { max-width: none; padding: 0; margin: 0; }
+}
+
+h1,h2,h3,h4 { font-weight: 700; color: var(--azul); line-height: 1.2; margin: 0; letter-spacing: -.01em; }
+p { margin: 0 0 9px 0; }
+a { color: var(--azul-vivo); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Portada ---------- */
+.portada {
+  page-break-after: always; padding: 26mm 0 0 0; text-align: left;
+  background: linear-gradient(135deg, #ffffff 0%, var(--azul-claro) 100%);
+  border-radius: var(--radio-lg);
+}
+.portada .serie {
+  display: inline-block; background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo)); color: #fff;
+  font-size: 10pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 3px; box-shadow: 0 2px 8px rgba(194,65,12,.3);
+}
+.portada h1 { font-size: 46pt; letter-spacing: -.02em; margin: 26px 0 0 0; color: var(--azul); }
+.portada h1 span { color: var(--naranja); display: block; }
+.portada .regla { height: 5px; background: linear-gradient(90deg, var(--azul), var(--azul-vivo)); width: 100%; margin: 26px 0 22px 0; border-radius: 3px; }
+.portada .sub { font-size: 15pt; color: #33445a; max-width: 95%; line-height: 1.55; margin: 0 0 26px 0; }
+.portada .caja-que {
+  background: #fff; border-left: 6px solid var(--azul); padding: 16px 20px;
+  border-radius: 0 var(--radio) var(--radio) 0; font-size: 11pt;
+  box-shadow: var(--sombra);
+}
+.portada .caja-que strong { color: var(--azul); }
+.portada .meta { margin-top: 30px; font-size: 10pt; color: #64748b; border-top: 1px solid var(--borde); padding-top: 12px; }
+
+/* ---------- Bloques de concepto ---------- */
+.bloque {
+  background: #fff; border: 1px solid var(--borde-suave); border-left: 5px solid var(--azul);
+  border-radius: 0 var(--radio) var(--radio) 0; padding: 14px 18px 8px 18px; margin: 16px 0;
+  page-break-inside: avoid; box-shadow: var(--sombra);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.bloque:hover { transform: translateY(-2px); box-shadow: var(--sombra-hover); }
+.bloque > h3 { font-size: 13.5pt; margin-bottom: 8px; color: var(--azul); }
+.bloque > h3::before { content: "▸ "; color: var(--naranja); }
+.fila { margin: 0 0 6px 0; line-height: 1.55; }
+.lbl {
+  display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: #fff; padding: 3px 9px; border-radius: 4px;
+  margin-right: 7px; vertical-align: 1.5px; box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.lbl.teoria  { background: linear-gradient(135deg, var(--azul), var(--azul-vivo)); }
+.lbl.ejemplo { background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo)); }
+.lbl.quehace { background: linear-gradient(135deg, var(--verde), #22a05a); }
+.lbl.como    { background: linear-gradient(135deg, var(--morado), #8b5cf6); }
+.lbl.ejecuta { background: linear-gradient(135deg, var(--gris), #64748b); }
+.fila b.lead { color: #0f172a; }
+.fila p { display: inline; }
+
+/* ---------- Código (oscuro, estilo editor) ---------- */
+code {
+  font-family: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 10pt; background: #eef2f7; border: 1px solid #d9e1ec; border-radius: 4px;
+  padding: 1px 6px; color: #9a3412; font-weight: 500;
+}
+pre {
+  font-family: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 10pt; line-height: 1.55;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid #334155; border-left: 4px solid var(--naranja-vivo);
+  border-radius: 0 var(--radio) var(--radio) 0; padding: 12px 16px; margin: 10px 0 14px 0;
+  color: #e2e8f0; white-space: pre-wrap; page-break-inside: avoid;
+  box-shadow: 0 4px 12px rgba(15,23,42,.25);
+}
+pre .c { color: #64748b; font-style: italic; }
+pre .k { color: #60a5fa; font-weight: 700; }
+pre .s { color: #34d399; }
+pre .n { color: #fbbf24; }
+pre::before { content: "● ● ●"; display: block; color: #475569; font-size: 8pt; margin-bottom: 6px; letter-spacing: 4px; }
+
+/* ---------- Capítulos ---------- */
+.cap { page-break-before: always; }
+.cap h2 {
+  font-size: 24pt; margin: 0 0 4px 0; letter-spacing: -.01em;
+  border-bottom: 3px solid var(--azul); padding-bottom: 10px;
+  background: linear-gradient(90deg, var(--azul-humo), transparent);
+  padding-left: 8px; border-radius: 4px 4px 0 0;
+}
+.cap h2 .num {
+  display: block; font-size: 10pt; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--naranja); margin-bottom: 6px; font-weight: 700;
+}
+.cap .promesa {
+  font-size: 11.5pt; color: #475569; font-style: italic; margin: 12px 0 16px 0;
+  border-left: 3px solid var(--naranja); padding-left: 12px; background: var(--naranja-humo);
+  padding: 10px 12px; border-radius: 0 var(--radio) var(--radio) 0;
+}
+h3.sub { font-size: 14pt; margin: 15px 0 7px 0; color: var(--azul); border-bottom: 1px dashed var(--borde); padding-bottom: 4px; }
+
+/* ---------- Llamadas ---------- */
+.nota {
+  background: var(--naranja-humo); border: 1px solid #fed7aa; border-left: 5px solid var(--naranja);
+  border-radius: 0 var(--radio) var(--radio) 0; padding: 12px 16px; margin: 14px 0;
+  page-break-inside: avoid; font-size: 10.5pt; box-shadow: 0 2px 8px rgba(194,65,12,.08);
+}
+.nota b.t { color: var(--naranja); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+.aviso {
+  background: var(--verde-humo); border: 1px solid #bbf7d0; border-left: 5px solid var(--verde);
+  border-radius: 0 var(--radio) var(--radio) 0; padding: 12px 16px; margin: 14px 0;
+  page-break-inside: avoid; font-size: 10.5pt; box-shadow: 0 2px 8px rgba(21,128,61,.08);
+}
+.aviso b.t { color: var(--verde); text-transform: uppercase; letter-spacing: .06em; font-size: 9pt; }
+
+/* ---------- Tablas ---------- */
+table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 12px 0 16px 0; font-size: 10pt; page-break-inside: avoid; border-radius: var(--radio); overflow: hidden; box-shadow: var(--sombra); }
+tr { page-break-inside: avoid; }
+.grupo { page-break-inside: avoid; }
+th { background: linear-gradient(135deg, var(--azul), var(--azul-vivo)); color: #fff; text-align: left; padding: 9px 12px; font-weight: 600; font-size: 9.5pt; letter-spacing: .04em; }
+td { border-bottom: 1px solid var(--borde-suave); padding: 7px 12px; vertical-align: top; background: #fff; }
+tr:nth-child(even) td { background: #f7f9fc; }
+tr:hover td { background: #eef4fb; }
+td b { color: var(--azul); }
+table tr:first-child th:first-child { border-top-left-radius: var(--radio); }
+table tr:first-child th:last-child { border-top-right-radius: var(--radio); }
+
+/* ---------- Recursos ---------- */
+.recurso {
+  border: 1px solid var(--borde-suave); border-radius: var(--radio); padding: 14px 18px;
+  margin: 12px 0; page-break-inside: avoid; background: #fff; box-shadow: var(--sombra);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.recurso:hover { transform: translateY(-2px); box-shadow: var(--sombra-hover); }
+.recurso h4 { font-size: 12.5pt; margin-bottom: 4px; color: var(--azul); }
+.pills { margin: 4px 0 7px 0; }
+.pill { display: inline-block; font-size: 8.4pt; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-right: 5px; letter-spacing: .04em; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.pill.gratis { background: var(--verde-humo); color: var(--verde); border: 1px solid #bbf7d0; }
+.pill.mixto  { background: #fff7ed; color: var(--naranja); border: 1px solid #fed7aa; }
+.pill.nivel  { background: var(--azul-humo); color: var(--azul); border: 1px solid #c7dbf3; }
+.recurso p { font-size: 10.3pt; margin-bottom: 5px; }
+.recurso .porque { color: #475569; font-size: 10pt; }
+.recurso .porque b { color: var(--naranja); }
+
+/* ---------- Índice ---------- */
+.indice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
+.indice li {
+  padding: 9px 12px; border-bottom: 1px dotted var(--borde); font-size: 11.5pt;
+  display: flex; justify-content: space-between; border-radius: 4px;
+  transition: background .12s ease;
+}
+.indice li:hover { background: var(--azul-humo); }
+.indice li span.t { color: var(--azul); font-weight: 600; }
+.indice li span.d { color: #64748b; font-size: 10pt; }
+
+/* ---------- Cierre ---------- */
+.cierre {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-vivo) 100%);
+  color: #eaf1fa; padding: 20px 24px; border-radius: var(--radio-lg);
+  margin-top: 22px; page-break-inside: avoid; box-shadow: var(--sombra-hover);
+}
+.cierre h3 { color: #fff; margin-bottom: 8px; font-size: 15pt; }
+.cierre p { color: #dbe7f7; font-size: 10.8pt; }
+.cierre b { color: #ffd8b0; }
+
+/* ---------- Persona (biografías) ---------- */
+.persona {
+  background: #fff; border: 1px solid var(--borde-suave); border-radius: var(--radio);
+  padding: 12px 16px; margin: 10px 0; page-break-inside: avoid; box-shadow: var(--sombra);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.persona:hover { transform: translateY(-2px); box-shadow: var(--sombra-hover); }
+.persona h4 { font-size: 12pt; color: var(--azul); margin-bottom: 4px; }
+.persona .rol { font-size: 9.5pt; color: #64748b; font-style: italic; margin-bottom: 6px; }
+.persona .fila { margin: 0 0 4px 0; }
+
+/* ---------- Fase (ruta) ---------- */
+.fase {
+  background: linear-gradient(135deg, var(--azul-humo), #fff);
+  border-left: 5px solid var(--azul); border-radius: 0 var(--radio) var(--radio) 0;
+  padding: 14px 18px; margin: 14px 0; page-break-inside: avoid; box-shadow: var(--sombra);
+}
+.fase h3 { font-size: 13pt; color: var(--azul); margin-bottom: 6px; }
+.fase .semana { font-size: 9.5pt; color: var(--naranja); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* ---------- Utilidades ---------- */
+.grupo { page-break-inside: avoid; }
+.cierre-final { }
+
+/* ---------- Print: limpiar para impresión ---------- */
+@media print {
+  body { background: #fff; }
+  .bloque, .nota, .aviso, .recurso, .persona, .fase { box-shadow: none; }
+  .bloque:hover, .recurso:hover, .persona:hover { transform: none; }
+  pre { background: #f3f6fb; color: #0f172a; border-left: 4px solid var(--azul); }
+  pre .c { color: #64748b; } pre .k { color: var(--azul-vivo); } pre .s { color: var(--verde); } pre .n { color: var(--naranja); }
+  pre::before { display: none; }
+  table { box-shadow: none; }
+  tr:hover td { background: inherit; }
+  .indice li:hover { background: inherit; }
+  .portada { background: #fff; }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  body { font-size: 10.5pt; }
+  .portada h1 { font-size: 32pt; }
+  .portada .sub { font-size: 12.5pt; }
+  .cap h2 { font-size: 20pt; }
+  table { font-size: 9pt; }
+  th, td { padding: 5px 8px; }
+  .lbl { font-size: 8pt; padding: 2px 7px; }
+  pre { font-size: 9pt; padding: 8px 10px; }
+  code { font-size: 9pt; }
+  .bloque { padding: 10px 12px 6px 12px; }
+}

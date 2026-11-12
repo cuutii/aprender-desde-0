@@ -4,82 +4,101 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aprender desde 0 — Cursos</title>
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --azul: #1b4f8a;
-    --azul-vivo: #1d4ed8;
-    --azul-humo: #eaf1fa;
-    --naranja: #c2410c;
-    --naranja-humo: #fff3ec;
-    --verde: #15803d;
-    --gris: #475569;
-    --borde: #d9e1ec;
-  }
-  * { box-sizing: border-box; }
-  body {
-    font-family: "Segoe UI", "Segoe UI Variable Text", Tahoma, sans-serif;
-    font-size: 11pt; line-height: 1.57; color: #1f2a37; margin: 0;
-    background: #f7f9fc;
-  }
-  h1, h2, h3 { font-weight: 700; color: var(--azul); line-height: 1.25; margin: 0; }
+  /* ---------- Landing-specific ---------- */
+  body { background: radial-gradient(1200px 600px at 50% -10%, #dbeafe 0%, #f7f9fc 60%); }
 
-  .envoltura { max-width: 980px; margin: 0 auto; padding: 34px 20px 50px; }
-
-  /* ---------- Portada ---------- */
-  .serie {
-    display: inline-block; background: var(--naranja); color: #fff;
-    font-size: 10pt; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; padding: 6px 14px; border-radius: 3px;
+  .hero {
+    text-align: left; padding: 40px 0 20px;
+    position: relative;
   }
-  h1 { font-size: 40pt; letter-spacing: -.02em; margin: 22px 0 0 0; }
-  h1 span { color: var(--naranja); display: block; }
-  .regla { height: 5px; background: var(--azul); width: 100%; margin: 22px 0 18px 0; }
-  .sub { font-size: 14pt; color: #33445a; line-height: 1.55; margin: 0 0 8px 0; }
-  .meta { font-size: 10pt; color: #64748b; margin: 0 0 26px 0; }
+  .hero .serie {
+    display: inline-block; background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo));
+    color: #fff; font-size: 10pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 3px; box-shadow: 0 2px 8px rgba(194,65,12,.3);
+  }
+  .hero h1 { font-size: 48pt; letter-spacing: -.03em; margin: 22px 0 0 0; line-height: 1.05; }
+  .hero h1 span { color: var(--naranja); display: block; background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero .regla { height: 5px; background: linear-gradient(90deg, var(--azul), var(--azul-vivo), var(--naranja)); width: 100%; margin: 22px 0 18px 0; border-radius: 3px; }
+  .hero .sub { font-size: 14pt; color: #33445a; line-height: 1.55; margin: 0 0 8px 0; max-width: 720px; }
+  .hero .meta { font-size: 10pt; color: #64748b; margin: 0 0 26px 0; }
 
-  /* ---------- Tarjetas ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin: 18px 0 28px;
+  }
+  .stat {
+    background: #fff; border: 1px solid var(--borde-suave); border-radius: var(--radio);
+    padding: 14px 16px; text-align: center; box-shadow: var(--sombra);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .stat:hover { transform: translateY(-3px); box-shadow: var(--sombra-hover); }
+  .stat .n { font-size: 26pt; font-weight: 800; color: var(--azul); line-height: 1; }
+  .stat .l { font-size: 9pt; color: #64748b; text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; font-weight: 600; }
+
   .grilla {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 16px; margin-top: 10px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px; margin-top: 10px;
   }
   .curso {
     display: block; text-decoration: none; background: #fff;
-    border: 1px solid var(--borde); border-left: 5px solid var(--azul);
-    border-radius: 0 8px 8px 0; padding: 16px 18px;
-    transition: transform .12s ease, box-shadow .12s ease;
+    border: 1px solid var(--borde-suave); border-left: 5px solid var(--azul);
+    border-radius: 0 var(--radio-lg) var(--radio-lg) 0; padding: 18px 20px;
+    box-shadow: var(--sombra);
+    transition: transform .15s ease, box-shadow .15s ease, border-left-color .15s ease;
+    position: relative; overflow: hidden;
   }
-  .curso:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(27,79,138,.14); border-left-color: var(--naranja); }
+  .curso::before {
+    content: ""; position: absolute; top: 0; right: 0; width: 80px; height: 80px;
+    background: radial-gradient(circle at top right, var(--azul-humo), transparent 70%);
+    opacity: .6; pointer-events: none;
+  }
+  .curso:hover { transform: translateY(-4px); box-shadow: var(--sombra-hover); border-left-color: var(--naranja); }
+  .curso:hover .num { background: linear-gradient(135deg, var(--naranja), var(--naranja-vivo)); }
   .num {
     display: inline-block; font-size: 8.6pt; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: #fff; background: var(--azul);
-    padding: 2px 9px; border-radius: 3px; margin-bottom: 8px;
+    text-transform: uppercase; color: #fff; background: linear-gradient(135deg, var(--azul), var(--azul-vivo));
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.15);
   }
   .curso h3 { font-size: 15pt; margin-bottom: 6px; color: var(--azul); }
-  .curso p { font-size: 10.5pt; color: #475569; margin: 0 0 8px 0; }
+  .curso p { font-size: 10.5pt; color: #475569; margin: 0 0 10px 0; line-height: 1.5; }
   .tags { font-size: 9pt; color: var(--naranja); font-weight: 700; letter-spacing: .04em; }
 
-  /* ---------- Nota final ---------- */
   .nota {
-    background: var(--naranja-humo); border: 1px solid #fed7aa; border-radius: 6px;
-    padding: 12px 16px; margin-top: 26px; font-size: 10.5pt;
+    background: linear-gradient(135deg, var(--naranja-humo), #fff);
+    border: 1px solid #fed7aa; border-left: 5px solid var(--naranja);
+    border-radius: 0 var(--radio) var(--radio) 0; padding: 14px 18px; margin-top: 26px;
+    font-size: 10.5pt; box-shadow: var(--sombra);
   }
   .nota b { color: var(--naranja); }
-  footer { font-size: 9.5pt; color: #94a3b8; text-align: center; margin-top: 30px; }
+  footer { font-size: 9.5pt; color: #94a3b8; text-align: center; margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--borde); }
 
-  @media (max-width: 480px) {
-    h1 { font-size: 30pt; }
-    .sub { font-size: 12.5pt; }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 32pt; }
+    .hero .sub { font-size: 12.5pt; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grilla { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <div class="envoltura">
 
-  <div class="serie">Serie · Aprender desde 0</div>
-  <h1>Cursos <span>desde 0</span></h1>
-  <div class="regla"></div>
-  <p class="sub">Una ruta completa para aprender a programar y después defenderse en ciberguridad — de la primera variable al análisis de malware, en seis guías que se leen de punta a punta.</p>
-  <p class="meta">Material de estudio personal · Español · Imprimible en A4 · Cada curso se abre como página web</p>
+  <div class="hero">
+    <div class="serie">Serie · Aprender desde 0</div>
+    <h1>Cursos <span>desde 0</span></h1>
+    <div class="regla"></div>
+    <p class="sub">Una ruta completa para aprender a programar, entender sistemas, redes y seguridad, y después defenderse en ciberseguridad — de la primera variable al análisis de malware, en siete guías que se leen de punta a punta.</p>
+    <p class="meta">Material de estudio personal · Español · Imprimible en A4 · Cada curso se abre como página web · Sin dependencias ni build</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n">7</div><div class="l">Guías</div></div>
+    <div class="stat"><div class="n">100+</div><div class="l">Capítulos</div></div>
+    <div class="stat"><div class="n">A4</div><div class="l">Imprimible</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">Dependencias</div></div>
+  </div>
 
   <div class="grilla">
     <a class="curso" href="00-ruta-aprendizaje.html">
@@ -133,11 +152,10 @@
   </div>
 
   <div class="nota">
-    <b>Recomendación:</b> si estás empezando de verdad, arrancá por la <b>00 · Ruta</b> para ver el mapa, seguí con la <b>01</b> y recién después elegí entre la <b>02</b> (construir) y la <b>03</b> (defender). Todas las prácticas están pensadas para hacerse en tu propia computadora.
+    <b>Recomendación:</b> si estás empezando de verdad, arrancá por la <b>00 · Ruta</b> para ver el mapa, seguí con la <b>01</b> y recién después elegí entre la <b>02</b> (construir), la <b>03</b> (defender) o la <b>06</b> (fundamentos de sistemas). Todas las prácticas están pensadas para hacerse en tu propia computadora.
   </div>
 
-  <footer>Serie "Aprender desde 0" · material de estudio personal · todos los cursos se pueden imprimir en A4 desde el navegador</footer>
-
+  <footer>Serie "Aprender desde 0" · material de estudio personal · todos los cursos se pueden imprimir en A4 desde el navegador (Ctrl+P)</footer>
 </div>
 </body>
 </html>
