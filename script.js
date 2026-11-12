@@ -138,7 +138,7 @@
     term.innerHTML =
       "<div class='console-bar'><span class='dot red'></span><span class='dot yellow'></span><span class='dot green'></span><span class='console-title'>terminal — practicá aquí</span></div>" +
       "<div class='console-body' id='console-body-" + containerId + "'></div>" +
-      "<div class='console-input-row'><span class='prompt'>" + user + "@" + host + ":" + cwd + "$</span><input class='console-input' type='text' autocomplete='off' spellcheck='false' placeholder='escribí un comando y Enter…'></div>";
+      "<div class='console-input-row'><span class='prompt'>" + user + "@" + host + ":" + cwd + "$</span><input class='console-input' id='console-input-" + containerId + "' name='console-input' type='text' autocomplete='off' spellcheck='false' placeholder='escribí un comando y Enter…'></div>";
     container.appendChild(term);
 
     var body = term.querySelector(".console-body");
