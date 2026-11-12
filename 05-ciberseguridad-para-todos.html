@@ -3,9 +3,59 @@
 <head>
 <meta charset="utf-8">
 <title>Ciberseguridad para todos</title>
-<link rel="stylesheet" href="styles.css">
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI", Tahoma, sans-serif; font-size: 12pt; line-height: 1.6; color: #1f2a37; margin: 0; }
+  :root { --azul:#1b4f8a; --azul-humo:#eaf1fa; --naranja:#c2410c; --naranja-humo:#fff3ec; --verde:#15803d; --verde-humo:#edf9f0; --morado:#6d28d9; --gris:#475569; --borde:#d9e1ec; }
+  h1,h2,h3 { font-weight:700; color:var(--azul); line-height:1.25; margin:0; }
+  p { margin:0 0 10px 0; }
+  .portada { page-break-after:always; padding:26mm 0 0 0; }
+  .portada .serie { display:inline-block; background:var(--naranja); color:#fff; font-size:10pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:6px 14px; border-radius:3px; }
+  .portada h1 { font-size:42pt; margin:22px 0 0 0; }
+  .portada h1 span { color:var(--naranja); display:block; }
+  .portada .regla { height:5px; background:var(--azul); width:100%; margin:22px 0 18px 0; }
+  .portada .sub { font-size:14pt; color:#33445a; max-width:95%; line-height:1.55; margin:0 0 22px 0; }
+  .portada .caja-que { background:var(--azul-humo); border-left:6px solid var(--azul); padding:16px 20px; border-radius:0 6px 6px 0; font-size:11pt; }
+  .portada .meta { margin-top:26px; font-size:10pt; color:#64748b; border-top:1px solid var(--borde); padding-top:12px; }
+  .bloque { background:#fff; border:1px solid var(--borde); border-left:5px solid var(--azul); border-radius:0 7px 7px 0; padding:14px 18px 8px 18px; margin:16px 0; page-break-inside:avoid; }
+  .bloque > h3 { font-size:15pt; margin-bottom:10px; }
+  .fila { margin:0 0 8px 0; }
+  .lbl { display:inline-block; font-size:9pt; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#fff; padding:3px 9px; border-radius:3px; margin-right:8px; vertical-align:1.5px; }
+  .lbl.teoria  { background:var(--azul); }
+  .lbl.ejemplo { background:var(--naranja); }
+  .lbl.quehace { background:var(--verde); }
+  .lbl.como    { background:var(--morado); }
+  .lbl.ejecuta { background:var(--gris); }
+  .cap { page-break-before:always; }
+  .cap h2 { font-size:24pt; margin:0 0 4px 0; border-bottom:3px solid var(--azul); padding-bottom:10px; }
+  .cap h2 .num { display:block; font-size:10pt; letter-spacing:.18em; text-transform:uppercase; color:var(--naranja); margin-bottom:6px; }
+  .cap .promesa { font-size:12pt; color:#475569; font-style:italic; margin:12px 0 16px 0; border-left:3px solid var(--naranja); padding-left:12px; }
+  h3.sub { font-size:14pt; margin:14px 0 6px 0; color:var(--azul); }
+  .nota { background:var(--naranja-humo); border:1px solid #fed7aa; border-radius:6px; padding:12px 16px; margin:14px 0; page-break-inside:avoid; font-size:11pt; }
+  .nota b.t { color:var(--naranja); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  .aviso { background:var(--verde-humo); border:1px solid #bbf7d0; border-radius:6px; padding:12px 16px; margin:14px 0; page-break-inside:avoid; font-size:11pt; }
+  .aviso b.t { color:var(--verde); text-transform:uppercase; letter-spacing:.06em; font-size:9pt; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 16px 0; font-size:10.5pt; page-break-inside:avoid; }
+  th { background:var(--azul); color:#fff; text-align:left; padding:8px 10px; font-weight:600; font-size:9.5pt; }
+  td { border-bottom:1px solid var(--borde); padding:6px 10px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f7f9fc; }
+  td b { color:var(--azul); }
+  code { font-family:Consolas,monospace; font-size:10pt; background:#f3f6fb; border:1px solid #e2e8f0; border-radius:4px; padding:1px 5px; color:#9a3412; }
+  pre { font-family:Consolas,monospace; font-size:10pt; line-height:1.5; background:#f3f6fb; border:1px solid #e2e8f0; border-left:4px solid var(--azul); border-radius:0 5px 5px 0; padding:10px 14px; margin:8px 0 12px 0; color:#0f172a; white-space:pre-wrap; page-break-inside:avoid; }
+  pre .c { color:#64748b; } pre .k { color:var(--azul-vivo); font-weight:700; } pre .s { color:var(--verde); } pre .n { color:var(--naranja); }
+  .cierre { background:var(--azul); color:#eaf1fa; padding:18px 22px; border-radius:8px; margin-top:22px; page-break-inside:avoid; }
+  .cierre h3 { color:#fff; margin-bottom:8px; font-size:15pt; }
+  .cierre p { color:#dbe7f7; font-size:10.8pt; }
+  .cierre b { color:#ffd8b0; }
+  .indice ul { list-style:none; padding:0; margin:10px 0 0 0; }
+  .indice li { padding:7px 0; border-bottom:1px dotted var(--borde); font-size:11.5pt; display:flex; justify-content:space-between; }
+  .indice li span.t { color:var(--azul); font-weight:600; }
+  .indice li span.d { color:#64748b; font-size:10pt; }
+</style>
 </head>
-<body class="theme-05">
+<body>
 
 <!-- ==================== PORTADA ==================== -->
 <section class="portada">
@@ -30,6 +80,7 @@
     <li><span class="t">5 · Escanear y explotar</span><span class="d">Nmap, CVE, exploits (Clase 6)</span></li>
     <li><span class="t">6 · Cifrar y ocultar</span><span class="d">Criptografía y esteganografía (Clase 9)</span></li>
     <li><span class="t">7 · Analizar malware</span><span class="d">Estático vs dinámico, VirusTotal, MITRE (Clase 4)</span></li>
+    <li><span class="t">8 · Privacidad y rastreo</span><span class="d">Tracking, Snowden, cómo protegerte</span></li>
   </ul>
 </section>
 
@@ -378,9 +429,55 @@ ccrypt -d notas.txt.cpt
     <b>Nunca ejecutes malware en tu máquina real.</b> Usá siempre una máquina virtual aislada (sin red o red interna) y tomá un snapshot antes. Si algo sale mal, restaurá el snapshot y empezá de nuevo. <b>El snapshot es tu botón de "deshacer".</b>
   </div>
 
+<!-- ==================== CAP: PRIVACIDAD Y RASTREO ==================== -->
+<section class="cap">
+  <h2><span class="num">Capítulo 8</span>Privacidad: quién te mira cuando navegás</h2>
+  <p class="promesa">Cada vez que abrís una página, alguien anota que estuviste ahí. Y casi nunca sos vos.</p>
+
+  <div class="bloque">
+    <h3>¿Qué es el rastreo web (tracking)?</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span><b>Rastrear</b> es anotar qué hacés en internet: qué páginas visitás, cuánto tiempo, desde dónde, con qué dispositivo. Lo hacen las páginas que visitás, las redes sociales, los anunciantes y, a veces, los gobiernos. <b>No necesitan "hackearte": vos les das los datos al entrar.</b></div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como el <b>portero de un edificio</b> que anota en una libreta: "Juan entró a las 10:02, fue al departamento 3, estuvo 15 minutos, salió". Vos no le pediste que anote, pero él lo hace igual. Y después le vende esa libreta a quien quiera.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Arma un <b>perfil</b> de quién sos, qué te gusta, dónde vivís y qué comprás.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con 4 herramientas: 1) <b>Tu IP pública</b> (dice de dónde te conectás). 2) <b>Cookies</b> (pequeños archivos que la página guarda en tu navegador para "recordarte"). 3) <b>Fingerprinting</b> (tu navegador deja una "huella" única por su configuración: fuente, resolución, plugins). 4) <b>Trackers/píxeles invisibles</b> (imágenes de 1x1 píxel que llaman a servidores de anunciantes para anotar que estuviste ahí).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Para ver quién te rastrea en una página: instalá la extensión <b>Privacy Badger</b> o <b>uBlock Origin</b> en tu navegador. Te muestra en tiempo real qué trackers hay y los bloquea. También podés entrar a <code>coveryourtracks.eff.org</code> (de la EFF) para ver qué tan único es tu navegador.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>El caso Snowden (la escena de la película)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>En la película <b>"Snowden" (2016)</b>, hay una escena donde se demuestra lo fácil que es rastrear a una persona solo con su actividad web: <b>qué páginas visitó, desde qué IP, en qué momento</b>. No era ficción: la NSA lo hacía a escala masiva con programas como <b>PRISM</b> (acceso a datos de Google, Facebook, Apple, Microsoft) y <b>XKeyscore</b> (búsqueda en tiempo real de todo el tráfico). Los datos los daban las propias empresas, por ley.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como si el <b>portero del edificio</b> no solo anotara que entraste, sino que le pasara esa libreta a la policía, al banco y a la tienda de ropa. Y la policía pudiera buscar "¿quién visitó la página de X en los últimos 30 días?" y obtener una lista de nombres. Eso es lo que hacía XKeyscore.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Demuestra que <b>la vigilancia masiva es real y técnica, no teoría conspirativa</b>.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Interceptando el tráfico de internet (en los cables y servidores) y obligando a las empresas a entregar datos por ley (Sección 702 de FISA en EE.UU.).</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>La lección práctica: <b>asumí que todo lo que hacés online es visible para alguien</b>. Si no querés que se sepa, cifrá (VPN, Tor, HTTPS) y usá herramientas que no te rastreen (DuckDuckGo, navegador con bloqueo de trackers).</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Cómo protegerte (paso a paso)</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>La privacidad no es "no tener nada que ocultar": es <b>controlar quién sabe qué de vos</b>. Se protege en capas, como la defensa en profundidad.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>cerrar las cortinas de tu casa</b>: no es que estés haciendo algo malo, es que no querés que cualquiera mire. Cerrar las cortinas no te hace sospechoso; te da privacidad.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Reduce la cantidad de datos que otros tienen sobre vos.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con herramientas que bloquean trackers, cifran tu tráfico y te dan control sobre tus datos.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>1) <b>Navegador:</b> usá Firefox o Brave con extensiones uBlock Origin + Privacy Badger. 2) <b>Búsqueda:</b> DuckDuckGo en vez de Google. 3) <b>VPN:</b> para cifrar tu tráfico (WireGuard, Proton VPN, Tailscale). 4) <b>Tor:</b> para anonimato total (navegador Tor). 5) <b>DNS cifrado:</b> Cloudflare (1.1.1.1) o Quad9 (9.9.9.9) con DoH/DoT. 6) <b>Google Takeout:</b> entrá a takeout.google.com y descargá todo lo que Google sabe de vos. 7) <b>Cookies:</b> configurá tu navegador para borrarlas al cerrar.</div>
+  </div>
+
+  <div class="bloque">
+    <h3>Los 4 niveles de privacidad</h3>
+    <div class="fila"><span class="lbl teoria">Teoría</span>No todos necesitan el mismo nivel. Elegí el que se ajuste a tu situación.</div>
+    <div class="fila"><span class="lbl ejemplo">Ejemplo</span>Es como <b>la ropa</b>: para ir al supermercado alcanza con ropa cómoda; para una boda necesitás traje. Cada situación requiere un nivel distinto.</div>
+    <div class="fila"><span class="lbl quehace">Qué hace</span>Te da un <b>marco para decidir</b> cuánta privacidad querés.</div>
+    <div class="fila"><span class="lbl como">Cómo lo hace</span>Con 4 niveles: <b>Nivel 1</b> (básico): navegador con bloqueo de trackers + DuckDuckGo. <b>Nivel 2</b> (intermedio): + VPN + cookies borradas al cerrar. <b>Nivel 3</b> (avanzado): + Tor + DNS cifrado + correo cifrado (ProtonMail). <b>Nivel 4</b> (paranoico): + Tails (SO amnésico) + sin smartphone + sin redes sociales.</div>
+    <div class="fila"><span class="lbl ejecuta">Cómo se ejecuta</span>Empezá por el Nivel 1 esta semana. Si te interesa, subí al 2. El Nivel 4 es para periodistas, activistas y gente en riesgo real — no es necesario para la mayoría.</div>
+  </div>
+
+  <div class="aviso">
+    <span class="b t" style="color:#15803d;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:9pt;">Regla de oro</span><br>
+    <b>La privacidad no es "no tener nada que ocultar": es controlar quién sabe qué de vos.</b> Snowden dijo: "Decir que no te importa la privacidad porque no tenés nada que ocultar es como decir que no te importa la libertad de expresión porque no tenés nada que decir." <b>Asumí que todo lo que hacés online es visible para alguien.</b>
+  </div>
+
 <!-- ==================== CIERRE ==================== -->
 <section class="cap">
-  <h2><span class="num">Cierre</span>Resumen en 7 ideas</h2>
+  <h2><span class="num">Cierre</span>Resumen en 8 ideas</h2>
   <div class="bloque">
     <div class="fila"><span class="lbl teoria">1</span>Una <b>red</b> es computadoras que se hablan en 7 capas (modelo OSI). Cada capa hace un trabajo.</div>
     <div class="fila"><span class="lbl ejemplo">2</span>La <b>ciberseguridad</b> protege 3 cosas: confidencialidad, integridad y disponibilidad (triada CIA).</div>
@@ -389,6 +486,7 @@ ccrypt -d notas.txt.cpt
     <div class="fila"><span class="lbl ejecuta">5</span><b>Escanear</b> es tocar el timbre y anotar quién abrió. <b>Cifrar</b> es poner el mensaje en un idioma que nadie entiende.</div>
     <div class="fila"><span class="lbl ejecuta">6</span>Todo se practica en <b>tu propia computadora</b> o en labs autorizados (TryHackMe, Hack The Box, DockerLabs).</div>
     <div class="fila"><span class="lbl ejecuta">7</span>Para analizar malware: <b>estático</b> (mirás el código sin ejecutarlo) + <b>dinámico</b> (lo ejecutás en una VM aislada y observás qué hace). El <b>snapshot</b> es tu botón de "deshacer".</div>
+    <div class="fila"><span class="lbl ejecuta">8</span>La <b>privacidad</b> es controlar quién sabe qué de vos. Te rastrean con IP, cookies, fingerprinting y trackers. Protegete con VPN, Tor, extensiones y DNS cifrado. Snowden: "Decir que no te importa la privacidad porque no tenés nada que ocultar es como decir que no te importa la libertad de expresión porque no tenés nada que decir."</div>
   </div>
   <div class="cierre">
     <h3>Ya sabés lo básico</h3>
@@ -397,6 +495,5 @@ ccrypt -d notas.txt.cpt
   </div>
 </section>
 
-<script src="script.js" defer></script>
 </body>
 </html>
